@@ -1,0 +1,10 @@
+#
+127.0.0.1 localhost
+::1 localhost
+
+127.0.0.1 checkhost.local
+109.94.209.70      fitgirl-repacks.cc              # Fake FitGirl site
+109.94.209.70      fitgirl-repack.com              # Fake FitGirl site
+109.94.209.70      www.fitgirlrepacks.co           # Fake FitGirl site
+109.94.209.70      www.fitgirl-repacks.cc          # Fake FitGirl site
+109.94.209.70      www.fitgirl-repack.com          # Fake FitGirl site
