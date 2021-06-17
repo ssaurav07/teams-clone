@@ -1,5 +1,9 @@
 const socket = io('/')
-const videoGrid = document.getElementById('video-grid')
+const videoGrid =  document.getElementById('video-grid');
+var i=-1;
+var k=0;
+var j=0;
+
 const myPeer = new Peer(undefined, {
   host: '/',
   port: '3001'
@@ -48,7 +52,7 @@ function connectToNewUser(userId, stream) {
     addVideoStream(video, userVideoStream)
   })
   call.on('close', () => {
-    video.remove()
+    video.remove();
   })
 
   peers[userId] = call
@@ -59,5 +63,26 @@ function addVideoStream(video, stream) {
   video.addEventListener('loadedmetadata', () => {
     video.play()
   })
-  videoGrid.append(video)
+
+  if(videoGrid.childElementCount===0 || k>5){
+    var node=document.createElement("div");    
+    node.className = "vidCon row"; 
+    videoGrid.appendChild(node);
+    i+=1;
+    if(i==0) k=1;
+    else k=0;
+  }
+  
+  videoGrid.children[i].appendChild(video);
+  video.className=`col-6 rounded-mg vidClass`;
+  k+=1;
+  
+}
+
+function muteMic() {
+  myStream.getAudioTracks().forEach(track => track.enabled = !track.enabled);
+}
+
+function muteCam() {
+  myStream.getVideoTracks().forEach(track => track.enabled = !track.enabled);
 }

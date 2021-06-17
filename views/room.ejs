@@ -1,31 +1,79 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <script>
-    const ROOM_ID = "<%= roomId %>"
-  </script>
-  <script defer src="https://unpkg.com/peerjs@1.2.0/dist/peerjs.min.js"></script>
-  <script src="/socket.io/socket.io.js" defer></script>
-  <script src="script.js" defer></script>
-  <title>Document</title>
-  <style>
-    #video-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, 300px);
-      grid-auto-rows: 300px;
-    }
+<%- include('partials/header') %>
+
+<title>MS Teams</title>
+
+<script>
+  const ROOM_ID = "<%= roomId %>"
+</script>
+
+<style>
+  body{
+    background-color:black;
+  }
+  #video-grid {
+    display: flex;
+    flex-direction: column;
+    width:100%;
+    margin:auto;
+    padding:35px;
     
-    video {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-  </style>
+  }
+  .vidClass{
+    border-radius:10px;
+    padding: 2px;
+  }
+
+  .vidCon{
+    justify-content:space-around
+  }
+  video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    padding: 5px;
+  }
+
+  .focus{
+    display:flex;
+    background-color: rgba(27,26,26,1);
+  }
+  .screen{
+    display:flex;
+    margin-top: 50px;
+  }
+
+  .vert-nav{
+    display:flex;
+
+  }
+
+  .link-icons{
+    color:white;
+    opacity: 0.3
+  }
+  .link-icons:hover{
+    color:white;
+    opacity: 1;
+  }
+  
+</style>
 </head>
+
 <body>
-  <div id="video-grid"></div>
-</body>
-</html>
+  <!-- <%- include('partials/navbar') %> -->
+  <div class="screen">
+  <nav class="nav flex-column vert-nav">
+    <a class="nav-link link-icons active " href="#"><i class="fas fa-2x fa-bell" style="margin-top: 30px;"></i></a>
+    <a class="nav-link link-icons" href="#"><i class="fas fa-2x fa-comments" style="margin-top: 10px;"></i></a>
+    <a class="nav-link link-icons" href="#"><i class="far fa-2x fa-calendar-alt" style="margin-top: 10px;"></i></a>
+    <a class="nav-link link-icons" href="#"><i class="fas fa-2x fa-phone-alt" style="margin-top: 10px;"></i></a>
+    <a class="nav-link link-icons" href="#"><i class="fas fa-2x fa-ellipsis-h" style="margin-top:30px;"></i></i></a>
+  </nav>
+  <div class="focus container">
+    <div id="video-grid"></div>
+  </div>
+  </div>
+
+  <!-- <div id="video-grid" class="col-4"></div> -->
+
+  <%- include('partials/footer') %>
