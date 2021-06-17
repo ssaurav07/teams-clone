@@ -4,10 +4,7 @@ var i=-1;
 var k=0;
 var j=0;
 
-const myPeer = new Peer(undefined, {
-  host: '/',
-  port: '3001'
-})
+myPeer = new Peer({host:'peerjs-server.herokuapp.com', secure:true, port:443})
 
 const myVideo = document.createElement('video')
 myVideo.muted = true
@@ -32,7 +29,7 @@ navigator.mediaDevices.getUserMedia({
   socket.on('user-connected', userId => {
     console.log('New User Connected: ' + userId)
     const fc = () => connectToNewUser(userId, stream)
-    timerid = setTimeout(fc, 1000 )
+    timerid = setTimeout(fc, 300 )
     })
     // })
 })
@@ -74,7 +71,7 @@ function addVideoStream(video, stream) {
   }
   
   videoGrid.children[i].appendChild(video);
-  video.className=`col-6 rounded-mg vidClass`;
+  video.className=`col-4 rounded-mg vidClass`;
   k+=1;
   
 }
