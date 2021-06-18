@@ -6,16 +6,20 @@
   const ROOM_ID = "<%= roomId %>"
 </script>
 
+<script>
+  
+</script>
+
 <style>
   body{
     background-color:black;
+    margin: 0 auto;
   }
   #video-grid {
     display: flex;
-    flex-direction: column;
+    /* flex-direction: column; */
     width:100%;
-    margin:auto;
-    padding:35px;
+    margin:0 auto;
     
   }
   .vidClass{
@@ -28,9 +32,10 @@
   }
   video {
     width: 100%;
-    height: 100%;
+    height: 90vh;
     object-fit: cover;
-    padding: 5px;
+    margin : 0 auto;
+    padding:5px;
   }
 
   .focus{
@@ -38,13 +43,14 @@
     background-color: rgba(27,26,26,1);
   }
   .screen{
+    width: 100%;
+    height: 90vh;
     display:flex;
-    margin-top: 50px;
+    margin-top: 10px;
   }
 
   .vert-nav{
     display:flex;
-
   }
 
   .link-icons{
@@ -55,23 +61,38 @@
     color:white;
     opacity: 1;
   }
+
+  .mute{
+    display:flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin:0 auto;
+    position: relative;
+    width:10%;
+    top:30em;
+    right:0em;
+    z-index: 10;
+    /* background-color:white;     */
+  }
   
 </style>
 </head>
 
 <body>
+  <div class="mute">
+    <button type="button" id="mute-mic" class="btn btn-warning"><i class="fas fa-microphone"></i></button>
+    <button type="button" id="mute-vid" class="btn btn-danger"><i class="fas fa-video"></i></button>
+  </div>
   <!-- <%- include('partials/navbar') %> -->
   <div class="screen">
-  <nav class="nav flex-column vert-nav">
-    <a class="nav-link link-icons active " href="#"><i class="fas fa-2x fa-bell" style="margin-top: 30px;"></i></a>
-    <a class="nav-link link-icons" href="#"><i class="fas fa-2x fa-comments" style="margin-top: 10px;"></i></a>
-    <a class="nav-link link-icons" href="#"><i class="far fa-2x fa-calendar-alt" style="margin-top: 10px;"></i></a>
-    <a class="nav-link link-icons" href="#"><i class="fas fa-2x fa-phone-alt" style="margin-top: 10px;"></i></a>
-    <a class="nav-link link-icons" href="#"><i class="fas fa-2x fa-ellipsis-h" style="margin-top:30px;"></i></i></a>
-  </nav>
-  <div class="focus container">
-    <div id="video-grid"></div>
-  </div>
+    <%- include('partials/leftIcons') %>
+    <div class="focus container">
+      <div id="video-grid" class="row row-cols-1 row-cols-sm-2 row-cols-md-3"></div>
+      <!-- <div class="vid-options"></div> -->
+    </div>
+    <div>
+      <%- include('partials/leftIcons') %>
+    </div>
   </div>
 
   <!-- <div id="video-grid" class="col-4"></div> -->

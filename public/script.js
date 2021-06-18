@@ -1,10 +1,14 @@
 const socket = io('/')
-const videoGrid =  document.getElementById('video-grid');
-var i=-1;
-var k=0;
-var j=0;
+const myPeer = new Peer({host:'peerjs-server.herokuapp.com', secure:true, port:443})
 
-myPeer = new Peer({host:'peerjs-server.herokuapp.com', secure:true, port:443})
+const videoGrid =  document.getElementById('video-grid');
+const muteAudio = document.getElementById('mute-mic');
+const muteVideo = document.getElementById('mute-vid');
+
+muteAudio.onclick = function() { muteMic() }
+muteVideo.onclick = function() { muteCam() }
+
+let myStream;
 
 const myVideo = document.createElement('video')
 myVideo.muted = true
@@ -13,6 +17,7 @@ navigator.mediaDevices.getUserMedia({
   video: true,
   audio: true
 }).then(stream => {
+  myStream = stream;
   addVideoStream(myVideo, stream)
 
   myPeer.on('call', call => {
@@ -60,20 +65,9 @@ function addVideoStream(video, stream) {
   video.addEventListener('loadedmetadata', () => {
     video.play()
   })
-
-  if(videoGrid.childElementCount===0 || k>5){
-    var node=document.createElement("div");    
-    node.className = "vidCon row"; 
-    videoGrid.appendChild(node);
-    i+=1;
-    if(i==0) k=1;
-    else k=0;
-  }
   
-  videoGrid.children[i].appendChild(video);
-  video.className=`col-4 rounded-mg vidClass`;
-  k+=1;
-  
+  video.className="col";
+  videoGrid.appendChild(video);
 }
 
 function muteMic() {
