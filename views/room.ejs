@@ -29,6 +29,7 @@
     margin : 0 auto;
     padding:5px;
     flex:1;
+    border-radius: 20px;
   }
   
   .screen{
@@ -45,27 +46,37 @@
     opacity: 1;
   }
 
-  .mute{
+  #vidActions{
     display:flex;
     flex-direction: row;
-    justify-content: space-between;
+    justify-content: space-around;
     margin:0 auto;
-    position: relative;
-    width:10%;
-    top:30em;
-    z-index: 10;
+    width:30%;
+    /* background-color: white; */
+    /* border: 1px solid grey; */
+    /* border-radius: 10px; */
+    /* top:30em;
+    z-index: 10; */
+  }
+
+  #vidActions button{
+      background-color:black;
+      border-radius:50px;
+      border: none;
+      padding:8px;
+      color:white;
+  }
+
+  #vid2{
+    height:100px;
+    width:100px;
+    float:right;
   }
   
 </style>
 </head>
 
 <body>
-  <div class="mute">
-    <button type="button" id="mute-mic" class="btn btn-warning"><i class="fas fa-microphone"></i></button>
-    <button type="button" id="mute-vid" class="btn btn-danger"><i class="fas fa-video"></i></button>
-    <button type="button" id="share-screen" class="btn btn-primary">hi</button>  
-  </div>
-
   <div class="screen">
     <%- include('partials/leftIcons') %>
 
@@ -73,5 +84,31 @@
     <%- include('partials/leftIcons') %>
 
   </div>
+  
+  <div id="vidActions" class="btn-group" role="group" aria-label="Button group with nested dropdown">
+    <button type="button" id="mute-mic" ><i class="fas fa-microphone"></i></button>
+    <button type="button" id="mute-vid" ><i class="fas fa-video"></i></button>
+    <button type="button" id="share-screen" ><i class="fas fa-desktop"></i></button>  
+    <button type="button" id="btnStart"><i class="fas fa-play"></i></button>
+    <button type="button" id="btnStop" ><i class="fas fa-stop"></i></button>
+    <button type="button" ><i class="fas fa-share-alt"></i></button>
+  
+    <div class="btn-group" role="group">
+      <button id="btnGroupDrop1" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <i class="fas fa-ellipsis-v"></i>
+      </button>
+      <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+        <a class="dropdown-item" href="#">Dropdown link</a>
+        <a class="dropdown-item" href="#">Dropdown link</a>
+      </div>
+    </div>
+  </div>
+
+  
+
+  <!--  For Recording Own Camera  -->
+
+  <!-- <video controls></video> -->
+  <!-- <video id="vid2" controls></video> -->
 
   <%- include('partials/footer') %>
