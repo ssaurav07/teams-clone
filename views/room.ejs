@@ -19,12 +19,13 @@
   #video-grid {
     width:100%;
     height:100%;
+    margin: 0 auto;
   }
 
   /* @media{} */
   video {
     width: 100%;
-    height:100%;
+    height:90vh;
     object-fit: cover;
     margin : 0 auto;
     padding:5px;
@@ -88,10 +89,14 @@
   <div id="vidActions" class="btn-group" role="group" aria-label="Button group with nested dropdown">
     <button type="button" id="mute-mic" ><i class="fas fa-microphone"></i></button>
     <button type="button" id="mute-vid" ><i class="fas fa-video"></i></button>
-    <button type="button" id="share-screen" ><i class="fas fa-desktop"></i></button>  
+    <button type="button" id="share-screen" ><i class="fas fa-desktop"></i></button>
+    <button type="button" id="stop-share" >S</button>   
     <button type="button" id="btnStart"><i class="fas fa-play"></i></button>
     <button type="button" id="btnStop" ><i class="fas fa-stop"></i></button>
     <button type="button" ><i class="fas fa-share-alt"></i></button>
+    <button id="pipButtonElement"><i class="fas fa-share-alt"></i></button>
+    <!-- <video id="vid" controls></video> -->
+  <video id="vid2" controls></video>
   
     <div class="btn-group" role="group">
       <button id="btnGroupDrop1" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -103,12 +108,12 @@
       </div>
     </div>
   </div>
-
+  
+  <!-- <video id="self-view"></video> -->
   
 
   <!--  For Recording Own Camera  -->
 
-  <!-- <video controls></video> -->
-  <!-- <video id="vid2" controls></video> -->
+  
 
   <%- include('partials/footer') %>
