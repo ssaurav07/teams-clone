@@ -41,8 +41,27 @@ navigator.mediaDevices.getUserMedia({
     const fc = () => connectToNewUser(userId, stream)
     timerid = setTimeout(fc, 0 )
     })
-    // })
+    
+    let text = $("input");
+  // when press enter send message
+  $('html').keydown(function (e) {
+    if (e.which == 13 && text.val().length !== 0) {
+      socket.emit('message', text.val());
+      text.val('')
+    }
+  });
+  socket.on("createMessage", message => {
+    $("ul").append(`<li class="message"><b>user</b><br/>${message}</li>`);
+    scrollToBottom()
+  })
+
 })
+
+const scrollToBottom = () => {
+  var d = $('.main__chat_window');
+  d.scrollTop(d.prop("scrollHeight"));
+}
+
 
 socket.on('user-disconnected', userId => {
   if (peers[userId]){
@@ -53,6 +72,7 @@ socket.on('user-disconnected', userId => {
 myPeer.on('open', id => {
   socket.emit('join-room', ROOM_ID, id)
 })
+
 
 function connectToNewUser(userId, stream) {
   const call = myPeer.call(userId, stream)
@@ -84,11 +104,29 @@ function addVideoStream(video, stream) {
 
 function muteMic() {
   myStream.getAudioTracks().forEach(track => track.enabled = !track.enabled);
+  let ih = document.getElementById("mute-mic");
+  if(ih.innerHTML==='<i class="fas fa-microphone-slash"></i>'){
+    ih.innerHTML='<i class="fas fa-microphone"></i>';
+  }
+  else{
+    ih.innerHTML='<i class="fas fa-microphone-slash"></i>';
+  }
+
 }
 
 function muteCam() {
   myStream.getVideoTracks().forEach(track => track.enabled = !track.enabled);
+  let ih = document.getElementById("mute-vid");
+  if(ih.innerHTML==='<i class="fas fa-video-slash"></i>'){
+    ih.innerHTML='<i class="fas fa-video"></i>';
+  }
+  else{
+    ih.innerHTML='<i class="fas fa-video-slash"></i>';
+  }
 }
+
+
+// For screen sharing ,f
 
 function screenShare (){
   navigator.mediaDevices.getDisplayMedia({

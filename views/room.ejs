@@ -1,8 +1,5 @@
 <%- include('partials/header') %>
 
-<script defer src="script.js"></script>
-<script defer src="recordMeeting.js"></script>
-
 <title>MS Teams</title>
 
 <script>
@@ -47,31 +44,64 @@
   }
 
   #vidActions{
-    display:flex;
+    display:flex;    
+    width: 100%;
+    background-color: grey;
+    height:10vh;
     flex-direction: row;
-    justify-content: space-around;
+    justify-content: center;
     margin:0 auto;
-    width:30%;
-    /* background-color: white; */
-    /* border: 1px solid grey; */
-    /* border-radius: 10px; */
-    /* top:30em;
-    z-index: 10; */
   }
 
   #vidActions button{
-      background-color:black;
-      border-radius:50px;
+    background-color:grey;
       border: none;
-      padding:8px;
-      color:white;
+      padding:10px;
+      color:black;
+  }
+  
+  #vidActions button i:hover{
+    transform: scale(2);
   }
 
   #vid2{
-    height:100px;
-    width:100px;
-    float:right;
+    height:10px;
+    width:10px;
   }
+
+  .main__right {
+    flex:0.2;
+    background-color: #242324;
+    border-left: 1px solid #3D3D42;
+    display: flex;
+    flex-direction: column;
+}
+  .main__header {
+    padding-top: 5px;
+    color: #F5F5F5;
+    text-align: center;
+}
+  .main__chat_window {
+    flex-grow: 1;
+    overflow-y: auto;
+}
+
+.messages {
+    color: white;
+    list-style: none;
+}
+
+.main__message_container {
+    padding: 22px 12px;
+    display: flex;
+}
+
+.main__message_container input {
+    flex-grow: 1;
+    background-color: transparent;
+    border: none;
+    color: #F5F5F5;
+}
   
 </style>
 </head>
@@ -81,7 +111,23 @@
     <%- include('partials/leftIcons') %>
 
     <div id="video-grid" class="d-flex flex-wrap"></div>
-    <%- include('partials/leftIcons') %>
+
+     <!-- Chat Section -->
+
+    <div class="main__right">
+      <div class="main__header">
+          <h6>Chat</h6>
+      </div>
+      <div class="main__chat_window">
+          <ul class="messages">
+
+          </ul>
+
+      </div>
+      <div class="main__message_container">
+          <input id="chat_message" type="text" placeholder="Type message here...">
+      </div>
+  </div>
 
   </div>
   
@@ -93,9 +139,9 @@
     <button type="button" id="btnStart"><i class="fas fa-play"></i></button>
     <button type="button" id="btnStop" ><i class="fas fa-stop"></i></button>
     <button type="button" ><i class="fas fa-share-alt"></i></button>
-    <button id="pipButtonElement"><i class="fas fa-share-alt"></i></button>
+    <button id="pipButtonElement"><i class="far fa-images"></i></button>
     <!-- <video id="vid" controls></video> -->
-  <video id="vid2" controls></video>
+  <!-- <video id="vid2" controls></video> -->
   
     <div class="btn-group" role="group">
       <button id="btnGroupDrop1" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -107,12 +153,8 @@
       </div>
     </div>
   </div>
-  
-  <!-- <video id="self-view"></video> -->
-  
 
-  <!--  For Recording Own Camera  -->
-
-  
+<script defer src="script.js"></script>
+<script defer src="recordMeeting.js"></script>
 
   <%- include('partials/footer') %>
