@@ -131,7 +131,8 @@ function muteCam() {
 }
 
 
-// For screen sharing ,f
+
+// For screen sharing 
 
 function screenShare (){
   navigator.mediaDevices.getDisplayMedia({
@@ -153,29 +154,48 @@ function screenShare (){
   })
 }
 
-//Picture IN Picture 
+
+
+//Picture IN Picture
+
 var pip = document.getElementById("pipButtonElement");
 
 pip.addEventListener('click', async function() {
   pip.disabled = true;
 
   try {
-    await myVideo.requestPictureInPicture();
-  }
-  catch(error) {
-    // TODO: Show error message to user.
-    console.log("error",error);
-  }
-  finally {
-    pipButtonElement.disabled = false;
-  }
+    // If there is no element in Picture-in-Picture yet, request for it
+    if (myVideo !== document.pictureInPictureElement) {
+        await myVideo.requestPictureInPicture();
+    }
+    // If Picture-in-Picture already exists, exit the mode
+    else {
+        await document.exitPictureInPicture();
+    }
+
+} catch (error) {
+    console.log(`Oh Horror! ${error}`);
+} finally {
+    pip.disabled = false; //enable toggle button after the event
+}
 })
 
-// Show Calendar
+// Toggle Calendar
 
 function showCalendar(){
-  if(document.getElementById('calendar').style.display=='none')
+  if(document.getElementById('calendar').style.display==='none')
     $("#calendar").css("display", "block");
   else 
   $("#calendar").css("display", "none");
+}
+
+
+
+// Toggle Chat
+
+function showChat(){
+  if(document.querySelector('.main__right').style.display==='none')
+    $(".main__right").css("display", "flex");
+  else 
+  $(".main__right").css("display", "none");
 }

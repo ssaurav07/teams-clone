@@ -20,10 +20,11 @@
 
   /* @media{} */
   video {
-    width: 30%;
+    width: 33%;
     /* height:90vh; */
     object-fit: cover;
     margin : 0 auto;
+    /* flex:1; */
     padding:5px;
     border-radius: 20px;
   }
@@ -114,7 +115,7 @@
 
      <!-- Chat Section -->
 
-    <div class="main__right container">
+    <div class="main__right" style="display:none">
       <div class="main__header">
           <h6>Chat</h6>
       </div>
@@ -125,7 +126,7 @@
 
       </div>
       <div class="main__message_container">
-          <input id="chat_message" type="text" placeholder="Type message here...">
+          <input id="chat_message" type="text" placeholder="Type">
       </div>
   </div>
 
@@ -135,7 +136,7 @@
     <button type="button" id="mute-mic" ><i class="fas fa-microphone"></i></button>
     <button type="button" id="mute-vid" ><i class="fas fa-video"></i></button>
     <button type="button" id="share-screen" ><i class="fas fa-desktop"></i></button>
-    <button type="button" id="stop-share" >S</button>   
+    <button type="button" id="show-chat" onclick="showChat()"><i class="far fa-comment-alt"></i></button>   
     <button type="button" id="btnStart"><i class="fas fa-play"></i></button>
     <button type="button" id="btnStop" ><i class="fas fa-stop"></i></button>
     <button type="button" ><i class="fas fa-share-alt"></i></button>
