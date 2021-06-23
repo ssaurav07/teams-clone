@@ -37,6 +37,7 @@ navigator.mediaDevices.getUserMedia({
 //   })
   socket.on('user-connected', userId => {
     currId=userId;
+    alert('New User Connected');
     console.log('New User Connected: ' + userId)
     const fc = () => connectToNewUser(userId, stream)
     timerid = setTimeout(fc, 0 )
@@ -107,9 +108,11 @@ function muteMic() {
   let ih = document.getElementById("mute-mic");
   if(ih.innerHTML==='<i class="fas fa-microphone-slash"></i>'){
     ih.innerHTML='<i class="fas fa-microphone"></i>';
+    $("#mute-mic").css("color", "black")
   }
   else{
     ih.innerHTML='<i class="fas fa-microphone-slash"></i>';
+    $("#mute-mic").css("color", "red")
   }
 
 }
@@ -118,10 +121,12 @@ function muteCam() {
   myStream.getVideoTracks().forEach(track => track.enabled = !track.enabled);
   let ih = document.getElementById("mute-vid");
   if(ih.innerHTML==='<i class="fas fa-video-slash"></i>'){
-    ih.innerHTML='<i class="fas fa-video"></i>';
+    $("#mute-vid").css("color", "black")
+    ih.innerHTML='<i class="fas fa-video"></i>'
   }
   else{
     ih.innerHTML='<i class="fas fa-video-slash"></i>';
+    $("#mute-vid").css("color", "red")
   }
 }
 
@@ -165,3 +170,12 @@ pip.addEventListener('click', async function() {
     pipButtonElement.disabled = false;
   }
 })
+
+// Show Calendar
+
+function showCalendar(){
+  if(document.getElementById('calendar').style.display=='none')
+    $("#calendar").css("display", "block");
+  else 
+  $("#calendar").css("display", "none");
+}
