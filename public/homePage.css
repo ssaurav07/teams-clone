@@ -1,7 +1,7 @@
 body{ 
     margin:0;
     padding: 0;
-    background-color: beige;
+    background-color: white;
 }
 
 .homeScreen{
@@ -44,9 +44,40 @@ p{
 }
 
 .home-bottom{
-    height:10em;
     background-color:#4b53bc;
     color:white;
     text-align:center;
-    padding:3em;
+    padding:2.5em;
+}
+
+.heading{
+    font-weight: bold;
+    font-size:3vw;
+    font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode',Geneva, Verdana, sans-serif;
+}
+
+.description{
+    text-align:center;
+    font-size:2vw;
+}
+
+@media screen and (max-width:991px){
+    .homeScreen{
+        flex-direction: column-reverse;
+    }
+    .accessOptions,.homeImage{
+        width: 100%;
+        text-align: center;
+    }
+    .buttons{
+        margin:0 auto;
+    }
+
+    .heading{
+        font-size: 5vw;
+    }
+
+    .description{
+        font-size: 3vw;
+    }
 }
