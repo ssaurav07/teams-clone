@@ -16,8 +16,16 @@ app.set('view engine', 'ejs')
 app.use(express.static('public'))
 
 app.get('/', (req, res) => {
-  res.render('homePage')
+  res.render('homepage')
   // res.redirect(`/${uuidV4()}`)
+})
+
+app.get('/register', (req, res) => {
+  res.render('signup')
+})
+
+app.get('/login', (req, res) => {
+  res.render('signin')
 })
 
 app.get('/room', (req, res) => {
