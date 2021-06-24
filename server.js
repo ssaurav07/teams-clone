@@ -16,8 +16,12 @@ app.set('view engine', 'ejs')
 app.use(express.static('public'))
 
 app.get('/', (req, res) => {
+  res.render('homePage')
+  // res.redirect(`/${uuidV4()}`)
+})
+
+app.get('/room', (req, res) => {
   res.redirect(`/${uuidV4()}`)
-  // res.redirect('/chat/app');
 })
 
 app.get('/:room', (req, res) => {
@@ -31,19 +35,6 @@ app.get('/chat/app', (req, res) => {
 
 const users = {}
 
-// io.on('connection', socket => {
-//   socket.on('new-user', name => {
-//     users[socket.id] = name
-//     socket.broadcast.emit('user-connected', name)
-//   })
-//   socket.on('send-chat-message', message => {
-//     socket.broadcast.emit('chat-message', { message: message, name: users[socket.id] })
-//   })
-//   socket.on('disconnect', () => {
-//     socket.broadcast.emit('user-disconnected', users[socket.id])
-//     delete users[socket.id]
-//   })
-// })
 
 io.on('connection', socket => {
 
