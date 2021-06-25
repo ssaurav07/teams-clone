@@ -10,8 +10,12 @@ muteAudio.onclick = function() { muteMic() }
 muteVideo.onclick = function() { muteCam() }
 shareScreen.onclick = function() { screenShare() }
 
+let userName = window.prompt("Enter your Name: ");
 let myStream;
 var currPeer;
+var perm;
+
+
 
 const myVideo = document.createElement('video')
 myVideo.muted = true
@@ -27,16 +31,16 @@ navigator.mediaDevices.getUserMedia({
     call.answer(stream)
     const video = document.createElement('video')
     call.on('stream', userVideoStream => {
-      currPeer = call.peerConnection
+      
+      currPeer = call.peerConnection;
+
       addVideoStream(video, userVideoStream)
     })
   })
-
-//   socket.on('user-connected', userId => {
-//     connectToNewUser(userId, stream)
-//   })
+  
   socket.on('user-connected', userId => {
     currId=userId;
+
     alert('New User Connected');
     console.log('New User Connected: ' + userId)
     const fc = () => connectToNewUser(userId, stream)
@@ -47,12 +51,18 @@ navigator.mediaDevices.getUserMedia({
   // when press enter send message
   $('html').keydown(function (e) {
     if (e.which == 13 && text.val().length !== 0) {
-      socket.emit('message', text.val());
+
+      let msg = {
+        text : text.val(), 
+        name : userName
+      }
+
+      socket.emit('message',msg);
       text.val('')
     }
   });
   socket.on("createMessage", message => {
-    $("ul").append(`<li class="message"><b>user</b><br/>${message}</li>`);
+    $("ul").append(`<li class="message"><b>${message.name}</b><br/>${message.text}</li>`);
     scrollToBottom()
   })
 
@@ -78,8 +88,8 @@ myPeer.on('open', id => {
 function connectToNewUser(userId, stream) {
   const call = myPeer.call(userId, stream)
   const video = document.createElement('video')
-  call.on('stream', userVideoStream => {
-    currPeer = call.peerConnection
+  call.on('stream', (userVideoStream) => {
+    currPeer = call.peerConnection;
     addVideoStream(video, userVideoStream)
   })
   call.on('close', () => {
@@ -87,6 +97,7 @@ function connectToNewUser(userId, stream) {
   })
 
   peers[userId] = call
+  console.log(peers)
 }
 
 function addVideoStream(video, stream) {
@@ -95,12 +106,7 @@ function addVideoStream(video, stream) {
     video.play()
   })
   
-  // video.className="col";
   videoGrid.appendChild(video);
-  // let count = (90/videoGrid.childElementCount);
-  // var h = count.toString();
-  // console.log(count);
-  // video.style.height = h+"vh";
 }
 
 function muteMic() {
@@ -145,10 +151,13 @@ function screenShare (){
     }
   }).then((stream)=>{
     let videoTrack = stream.getVideoTracks()[0];
-    let sender = currPeer.getSenders().find( function(s){
-      return s.track.kind === "video"
-    })
-    sender.replaceTrack(videoTrack);
+    for (let [key, rtcObj] of Object.entries(peers)) {
+     let sender = rtcObj.peerConnection.getSenders().find( function(s){
+        return s.track.kind === "video"
+      })
+      sender.replaceTrack(videoTrack);
+  
+    }
   }).catch((err)=>{
     console.log("unable to display media" + err);
   })

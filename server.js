@@ -52,6 +52,7 @@ io.on('connection', socket => {
     socket.broadcast.to(roomId).emit('user-connected', userId)
 
     socket.on('message', (message) => {
+      
       //send message to the same room
       io.to(roomId).emit('createMessage', message)
   }); 
