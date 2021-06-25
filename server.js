@@ -16,6 +16,10 @@ app.set('view engine', 'ejs')
 app.use(express.static('public'))
 
 app.get('/', (req, res) => {
+  res.redirect('/home')
+})
+
+app.get('/home', (req, res) => {
   res.render('homepage')
   // res.redirect(`/${uuidV4()}`)
 })
