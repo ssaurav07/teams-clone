@@ -22,8 +22,10 @@
             </p>
 
             <span class="buttons">
-                <button type="button" class="btn btn-outline" onClick="location.href='/register'">Signup for free</button><br>
-                <button type="button" class="btn btn-outline" onClick="location.href='/login'">Signin</button>
+                <button type="button" class="btn btn-outline" onClick="location.href='/room'">
+                    <i class="fas fa-video" style="padding:0.7em 0.7em 0.7em 0.3em"></i> New meeting </button>
+                <input type="required" id="link" placeholder="Enter the meeting link" onfocus="showJoin()" onblur="removeJoin()">
+                <button type="button" id="join" class="btn btn-outline" onClick="location.href='/'">Join</button>
             </span>
 
         </div>
@@ -42,5 +44,14 @@
         </span>
     </div>
 
-</body>
-</html>
+    <script>
+        function showJoin() {
+            $("#join").show();
+        }
+
+        function removeJoin() {
+            $("#join").hide();
+        }
+    </script>
+
+<%- include('partials/footer') %>

@@ -15,6 +15,8 @@ app.use('/peerjs', peerServer);
 app.set('view engine', 'ejs')
 app.use(express.static('public'))
 
+// Routes 
+
 app.get('/', (req, res) => {
   res.render('home')
 })
@@ -37,10 +39,6 @@ app.get('/room', (req, res) => {
 
 app.get('/:room', (req, res) => {
   res.render('room', { roomId: req.params.room })
-})
-
-app.get('/chat/app', (req, res) => {
-  res.render('chat')
 })
 
 
