@@ -28,6 +28,10 @@ app.get('/login', (req, res) => {
   res.render('signin')
 })
 
+app.get('/explore',(req, res) => {
+  res.render('explore')
+})
+
 app.get('/room', (req, res) => {
   res.redirect(`/${uuidV4()}`)
 })
