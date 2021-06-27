@@ -49,10 +49,10 @@
               <div class="formbg">
                 <div class="formbg-inner padding-horizontal--48">
                   <span class="padding-bottom--15">Sign in to your account</span>
-                  <form id="stripe-login" action="/explore" method="get">
+                  <form id="stripe-login" action="/login" method="POST">
                     <div class="field padding-bottom--24">
-                      <label for="email">Email</label>
-                      <input type="email" name="email" placeholder="@abc.com">
+                      <label for="username">User Id</label>
+                      <input type="text" name="username" placeholder="Enter Your Name" required>
                     </div>
                     <div class="field padding-bottom--24">
                       <div class="grid--50-50">
@@ -61,7 +61,7 @@
                           <a href="#">Forgot your password?</a>
                         </div>
                       </div>
-                      <input type="password" name="password" placeholder="********">
+                      <input type="password" name="password" placeholder="********" required>
                     </div>
                     <div class="field field-checkbox padding-bottom--24 flex-flex align-center">
                       <label for="checkbox">
@@ -78,7 +78,7 @@
                 </div>
               </div>
               <div class="footer-link padding-top--24">
-                <span style="color: white">Don't have an account? <a href="/register" style="color:burlywood">Sign up</a></span>
+                <span style="color: burlywood">Don't have an account? <a href="/register" style="color:burlywood">Sign up</a></span>
                 <div class="listing padding-top--24 padding-bottom--24 flex-flex center-center">
                   <span><a href="#">© MICROSOFT</a></span>
                   <span><a href="#">Contact</a></span>

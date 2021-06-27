@@ -4,6 +4,7 @@
 
 <script>
   const ROOM_ID = "<%= roomId %>"
+  const currentUser = "<%= currentUser.name %>"
 </script>
 
 <link rel="stylesheet" href="room.css" type="text/css">
@@ -42,7 +43,7 @@
     <button type="button" id="show-chat" onclick="showChat()"><i class="far fa-comment-alt"></i></button>   
     <button type="button" id="btnStart"><i class="fas fa-play"></i></button>
     <button type="button" id="btnStop" ><i class="fas fa-stop"></i></button>
-    <button type="button" ><i class="fas fa-share-alt"></i></button>
+    <button type="button" onclick=Copy()><i class="fas fa-share-alt"></i></button>
     <button id="pipButtonElement"><i class="far fa-images"></i></button>
     <!-- <video id="vid" controls></video> -->
   <!-- <video id="vid2" controls></video> -->

@@ -10,7 +10,8 @@ muteAudio.onclick = function() { muteMic() }
 muteVideo.onclick = function() { muteCam() }
 shareScreen.onclick = function() { screenShare() }
 
-let userName = window.prompt("Enter your Name: ");
+console.log(currentUser);
+let userName = currentUser;
 let myStream;
 var currPeer;
 var perm;
@@ -30,10 +31,8 @@ navigator.mediaDevices.getUserMedia({
   myPeer.on('call', call => {
     call.answer(stream)
     const video = document.createElement('video')
-    call.on('stream', userVideoStream => {
-      
+    call.on('stream', userVideoStream => {      
       currPeer = call.peerConnection;
-
       addVideoStream(video, userVideoStream)
     })
   })

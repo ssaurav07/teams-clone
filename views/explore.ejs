@@ -5,7 +5,9 @@
 </title>
 
 <link rel="stylesheet" type="text/css" href="explore.css">
-
+<script>
+    
+</script>
 </head>
 <body>
     <%- include('partials/navbar') %>
@@ -24,8 +26,8 @@
             <span class="buttons">
                 <button type="button" class="btn btn-outline" onClick="location.href='/room'">
                     <i class="fas fa-video" style="padding:0.7em 0.7em 0.7em 0.3em"></i> New meeting </button>
-                <input type="required" id="link" placeholder="Enter the meeting link" onfocus="showJoin()" onblur="removeJoin()">
-                <button type="button" id="join" class="btn btn-outline" onClick="location.href='/'">Join</button>
+                <input type="required" id="link" placeholder="Enter the meeting link" onfocus="showJoin()"">
+                <button type="button" id="join" class="btn btn-outline" onClick="location.href=document.getElementById('link').value">Join</button>
             </span>
 
         </div>
@@ -52,6 +54,8 @@
         function removeJoin() {
             $("#join").hide();
         }
+
+        
     </script>
 
 <%- include('partials/footer') %>
