@@ -15,7 +15,7 @@ body,html{
     /* height:90vh; */
     object-fit: cover;
     margin : 0 auto;
-    /* flex:1; */
+    flex:1;
     padding:5px;
     border-radius: 20px;
   }

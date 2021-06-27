@@ -13,8 +13,8 @@ const User = require('./models/user');
 const MongoStore = require('connect-mongo');
 const {isLoggedIn} = require('./middleWare');
 const port = process.env.PORT || 3000;
-// const db_URL = 'mongodb://localhost:27017/msUserDb';
-const db_URL = 'mongodb+srv://ssquare:ssquare@cluster0.jq82u.mongodb.net/teams-clone?retryWrites=true&w=majority';
+const db_URL = 'mongodb://localhost:27017/msUserDb';
+// const db_URL = 'mongodb+srv://ssquare:ssquare@cluster0.jq82u.mongodb.net/teams-clone?retryWrites=true&w=majority';
 
 
 app.use(express.static('public'));
@@ -78,7 +78,7 @@ app.post('/register', async (req, res , next) => {
   
   req.login(registeredUser , err =>{
       if(err) return next(err);
-
+      req.flash('success',"Welcome to MS Teams! You're all set to rock!");
       res.redirect('/explore');
   });
 })
@@ -88,7 +88,7 @@ app.get('/login', (req, res) => {
 })
 
 app.post('/login', passport.authenticate('local' , {failureFlash: true , failureRedirect:'/login'}),(req, res) => {
-  console.log("Logged in successfully!")
+  req.flash('success',"Logged in successfully!");
   res.redirect('/explore')
 })
 
@@ -97,6 +97,7 @@ app.get('/explore', isLoggedIn , (req, res) => {
 })
 
 app.get('/logout', (req, res)=>{
+  req.flash('error',"Logged out successfully!");
   req.logout();
   res.redirect('/');
 })
