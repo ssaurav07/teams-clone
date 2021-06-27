@@ -17,6 +17,8 @@ const port = process.env.PORT || 3000;
 const db_URL = 'mongodb+srv://ssquare:ssquare@cluster0.jq82u.mongodb.net/teams-clone?retryWrites=true&w=majority';
 
 
+app.use(express.static('public'));
+
 mongoose.connect(db_URL,{useNewUrlParser: true, useUnifiedTopology: true})
     .then(() =>{
       console.log("Mongo ready to rock")
@@ -39,7 +41,6 @@ app.use(flash());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.set('view engine', 'ejs');
 app.use('/peerjs', peerServer);
-app.use(express.static('public'));
 
 app.use(passport.initialize());
 app.use(passport.session());
