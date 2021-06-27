@@ -46,7 +46,11 @@ p{
 }
 
 .buttons input::placeholder{
-    font-size:1.3em;
+    font-size:1.3vw;
+}
+
+.buttons button i{
+    padding:0.7em 0.7em 0.7em 0.3em
 }
 
 #join{
@@ -88,13 +92,24 @@ p{
         flex-direction: column;
         width: 50%;
     }
+    .buttons button{
+        padding:0;
+        font-size: 2.5vw;
+    }
     .buttons input{
         margin: 2em auto;
         width:100%;
+        padding:1.8em;
+    }
+
+    .buttons input::placeholder{
+        font-size:2.5vw;
     }
 
     #join{
-        padding:1.2em
+        padding:0.3em;
+        width: 25%;
+        margin: 0 auto;
     }
 
     .heading{
