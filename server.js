@@ -19,7 +19,7 @@ const db_URL = 'mongodb+srv://ssquare:ssquare@cluster0.jq82u.mongodb.net/teams-c
 
 app.use(express.static('public'));
 
-mongoose.connect(db_URL,{useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify:false ,useCreateIndex:true})
+mongoose.connect(db_URL,{useNewUrlParser: true, useUnifiedTopology: true})
     .then(() =>{
       console.log("Mongo ready to rock")
     })
