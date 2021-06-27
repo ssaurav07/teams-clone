@@ -2,6 +2,8 @@ const express = require('express');
 const app = express();
 const server = require('http').Server(app);
 const io = require('socket.io')(server);
+const cors = require('cors');
+app.use(cors());
 const { v4: uuidV4 } = require('uuid');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
@@ -122,6 +124,10 @@ io.on('connection', socket => {
     socket.on('message', (message) => {
       io.to(roomId).emit('createMessage', message)
   }); 
+
+    socket.on('know-my-id', (herObj)=>{
+      socket.broadcast.to(roomId).emit('know-my-id', herObj);
+    })
 
     socket.on('disconnect', () => {
       socket.broadcast.to(roomId).emit('user-disconnected', userId)

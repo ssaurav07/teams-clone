@@ -1,5 +1,6 @@
 const socket = io('/')
-const myPeer = new Peer({host:'peerjs-server.herokuapp.com', secure:true, port:443})
+// const myPeer = new Peer({host:'peerjs-server.herokuapp.com', secure:true, port:443})
+const myPeer = new Peer({secure:true, port:443})
 
 const videoGrid =  document.getElementById('video-grid');
 const muteAudio = document.getElementById('mute-mic');
@@ -15,7 +16,8 @@ let userName = currentUser;
 let myStream;
 var currPeer;
 var perm;
-
+var myId;
+var participants = [];
 
 
 const myVideo = document.createElement('video')
@@ -33,14 +35,21 @@ navigator.mediaDevices.getUserMedia({
     const video = document.createElement('video')
     call.on('stream', userVideoStream => {      
       currPeer = call.peerConnection;
-      addVideoStream(video, userVideoStream)
+
+      addVideoStream(video, userVideoStream , call.peer)
     })
+  })
+
+  socket.on('know-my-id',(herObj)=>{
+    if(herObj.userId == myId){
+      participants.push(herObj.myId);
+      console.log(herObj.myId);
+    }
   })
   
   socket.on('user-connected', userId => {
     currId=userId;
-
-    alert('New User Connected');
+    socket.emit('know-my-id',{myId: myId,userId: userId});
     console.log('New User Connected: ' + userId)
     const fc = () => connectToNewUser(userId, stream)
     timerid = setTimeout(fc, 0 )
@@ -77,10 +86,15 @@ socket.on('user-disconnected', userId => {
   if (peers[userId]){
     peers[userId].close()
   }
+  var left = document.getElementById(userId);
+    console.log(left);
+    left.parentNode.removeChild(left);
+    console.log("child removed");
 })
 
 myPeer.on('open', id => {
   socket.emit('join-room', ROOM_ID, id)
+  myId = id;
 })
 
 
@@ -89,7 +103,7 @@ function connectToNewUser(userId, stream) {
   const video = document.createElement('video')
   call.on('stream', (userVideoStream) => {
     currPeer = call.peerConnection;
-    addVideoStream(video, userVideoStream)
+    addVideoStream(video, userVideoStream , call.peer)
   })
   call.on('close', () => {
     video.remove();
@@ -99,14 +113,18 @@ function connectToNewUser(userId, stream) {
   console.log(peers)
 }
 
-function addVideoStream(video, stream) {
+//adding new Video Stream
+
+function addVideoStream(video, stream , id) {
   video.srcObject = stream
   video.addEventListener('loadedmetadata', () => {
     video.play()
   })
-  
+  if(id) video.id=id;
   videoGrid.appendChild(video);
 }
+
+//mute Mic
 
 function muteMic() {
   myStream.getAudioTracks().forEach(track => track.enabled = !track.enabled);
@@ -121,6 +139,8 @@ function muteMic() {
   }
 
 }
+
+// mute Video
 
 function muteCam() {
   myStream.getVideoTracks().forEach(track => track.enabled = !track.enabled);
