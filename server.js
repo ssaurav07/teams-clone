@@ -13,8 +13,8 @@ const User = require('./models/user');
 const MongoStore = require('connect-mongo');
 const {isLoggedIn} = require('./middleWare');
 const port = process.env.PORT || 3000;
-const db_URL = 'mongodb://localhost:27017/msUserDb';
-// const db_URL = 'mongodb+srv://ssquare:ssquare@cluster0.jq82u.mongodb.net/teams-clone?retryWrites=true&w=majority';
+// const db_URL = 'mongodb://localhost:27017/msUserDb';
+const db_URL = 'mongodb+srv://ssquare:ssquare@cluster0.jq82u.mongodb.net/teams-clone?retryWrites=true&w=majority';
 
 
 app.use(express.static('public'));
