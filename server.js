@@ -68,7 +68,7 @@ app.get('/', (req, res) => {
 })
 
 app.get('/register', (req, res) => {
-  res.render('signup')
+  res.render('signup');
 })
 
 app.post('/register', async (req, res , next) => {
