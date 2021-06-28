@@ -88,7 +88,7 @@ socket.on('user-disconnected', userId => {
   }
   var left = document.getElementById(userId);
     console.log(left);
-    left.parentNode.removeChild(left);
+    if(left) left.parentNode.removeChild(left);
     console.log("child removed");
 })
 

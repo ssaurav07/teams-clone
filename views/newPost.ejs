@@ -1,0 +1,31 @@
+<%- include('partials/header') %>
+
+<title>Feed || MS Teams</title>
+<link rel="stylesheet" href="/newPost.css" type="text/css">
+
+</head>
+
+<body>
+    <%- include('partials/navbar') %>
+    
+    <div class="form-container">
+        <h2>New Post</h2>
+        <form action="/feed" method="post">
+            <div class="mb-3">
+                <label class="form-label">Title</label>
+                <input type="text" class="form-control" name="posts[title]" id="title" placeholder="Enter the title of the post">
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Image</label>
+                <input type="text" class="form-control" name="posts[image]" id="title" placeholder="Link for the image">
+            </div>
+            <div class="form-floating">
+                <textarea class="form-control" name="posts[description]" placeholder="Leave a comment here" id="description"></textarea>
+                <label for="floatingTextarea2">Description</label>
+            </div>
+            <button type="submit" class="btn btn-outline-primary">Post</button>
+        </form>
+    </div>
+    
+
+<%- include('partials/footer') %>

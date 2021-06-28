@@ -1,0 +1,30 @@
+<%- include('partials/header') %>
+
+<title>Feed || MS Teams</title>
+<link rel="stylesheet" href="/newPost.css" type="text/css">
+</head>
+
+<body>
+    <%- include('partials/navbar') %>
+    
+    <div class="form-container">
+        <h2>Edit <%= post.title %></h2>
+        <form action="/post/<%= post._id %>?_method=PUT" method="POST">
+            <div class="mb-3">
+                <label class="form-label">Title</label>
+                <input type="text" class="form-control" name="posts[title]" id="title" value="<%= post.title %>">
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Image</label>
+                <input type="text" class="form-control" name="posts[image]" id="title" value="<%= post.image %>">
+            </div>
+            <div class="form-floating">
+                <textarea class="form-control" name="posts[description]" id="description" ><%= post.description %></textarea>
+                <label for="floatingTextarea2">Description</label>
+            </div>
+            <button type="submit" class="btn btn-outline-primary">Update</button>
+        </form>
+    </div>
+    
+
+<%- include('partials/footer') %>

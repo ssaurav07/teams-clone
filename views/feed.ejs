@@ -1,0 +1,39 @@
+<%- include('partials/header') %>
+
+<title>Feed || MS Teams</title>
+<link rel="stylesheet" href="/postFeed.css" type="text/css">
+
+<style>
+	.read{
+		border:1.5px solid #4b53bc;
+	}
+	.read:hover{
+		color: white;
+		background-color: #4b53bc;
+	}
+</style>
+
+</head>
+
+<body>
+    <%- include('partials/navbar') %>
+
+    <div class="body">
+	
+		<% posts.forEach((post)=>{ %>
+	<div class="container posts">
+		<div class="image">
+			<img class= "post-img" src="<%= post.image %>">
+		</div>
+		<div class="brief">
+			<h2><%= post.title %></h2><%= post.date.toDateString()%> , <%= post.author%><br><br>
+			<%= post.description.substring(0,100) %><br><br>
+			<a href="/post/show/<%= post._id %>"><button type="button" class="btn btn-outline read">Read more <i class="angle right icon"></i></button></a>
+		</div>
+	</div>
+	<hr>
+	<% }) %>
+</div>
+
+
+<%- include('partials/footer') %>
