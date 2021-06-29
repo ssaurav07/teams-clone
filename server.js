@@ -30,7 +30,7 @@ mongoose.connect(db_URL,{useNewUrlParser: true, useUnifiedTopology: true})
     .then(() =>{
       console.log("Mongo ready to rock")
     })
-    .catch(err => console.error)
+    .catch(err => console.error);
     
 const { ExpressPeerServer } = require('peer');
 const peerServer = ExpressPeerServer(server, {
