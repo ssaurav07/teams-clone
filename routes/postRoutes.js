@@ -4,9 +4,12 @@ const post = require('../models/post');
 const {isLoggedIn} = require('../middleWare');
 let flag=true;
 
+router.use((req,res,next)=>{
+    res.locals.flag=flag;
+    next();
+  })
+
 router.get('/feed', isLoggedIn ,(req, res)=>{
-    console.log(flag);
-    if(flag===true){
       post.find({},(err,posts)=>{
         if(err){
           console.log(err);
@@ -14,13 +17,7 @@ router.get('/feed', isLoggedIn ,(req, res)=>{
         else{
           res.render("feed", {posts : posts});
         }
-      });
-    }
-    else{
-      flag=true;
-      res.redirect('/feed');
-    }
-    
+      });    
   })
   
   router.post('/feed', isLoggedIn ,(req, res)=>{

@@ -8,13 +8,14 @@ const postSchema = new Schema({
 
 	author : {
         type:String ,
-        default:"Saurav"
+        default: 'Saurav'
     },
 
 	date : {
         type:Date ,
         default:Date.now
     }
+    
 });
 
 const post = mongoose.model('post',postSchema);
