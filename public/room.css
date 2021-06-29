@@ -1,29 +1,38 @@
-body,html{
-    background-color:black;
-    margin: 0;
-    padding: 0;
+body{
+    background-color:rgb(53, 51, 51);
   }
+
+    
+  #screen{
+    width: 100%;
+    height: 90vh;
+    margin: 0;
+    display:flex;
+    /* background-color:green; */
+  }
+
   #video-grid {
     width:100%;
-    height:90vh;
+    display:flex;
+    flex-direction: row;
+    height: auto;
     margin: 0 auto;
     flex-wrap: wrap;
+    /* background-color:pink; */
+    /* object-fit:contain */
   }
 
   /* @media{} */
   video {
-    /* object-fit: contain; */
-    object-fit: cover;
+    object-fit: contain;
+    /* object-fit: cover; */
+    width: 50%;
     margin : 0 auto;
-    flex-grow: 1;
+    /* flex-grow: 1; */
     /* flex-basis: 0; */
     padding:5px;
     border-radius: 20px;
-  }
-  
-  .screen{
-    width: 100%;
-    display:flex;
+    /* background-color:yellow; */
   }
 
   .link-icons{
@@ -38,7 +47,7 @@ body,html{
   #vidActions{
     display:flex;    
     width: 100%;
-    background-color: grey;
+    background-color: black;
     height:10vh;
     flex-direction: row;
     justify-content: center;
@@ -46,14 +55,15 @@ body,html{
   }
 
   #vidActions button{
-    background-color:grey;
+    background-color:black;
+      font-size:1.3em;
       border: none;
       padding:10px;
-      color:black;
+      color:white;
   }
   
   #vidActions button i:hover{
-    transform: scale(2);
+    transform: scale(1.3);
   }
 
   #vid2{
@@ -63,35 +73,51 @@ body,html{
 
   .main__right {
     /* flex:0.2; */
-    width:20%;
-    background-color: #242324;
-    border-left: 1px solid #3D3D42;
+    background-color: white;
+    border-left: 1px solid #4b53bc;
     display: flex;
     flex-direction: column;
 }
   .main__header {
     padding-top: 5px;
-    color: #F5F5F5;
+    color: white;
     text-align: center;
+    background-color:#4b53bc;
 }
   .main__chat_window {
     flex-grow: 1;
-    overflow-y: auto;
+    overflow-x: auto;
 }
 
 .messages {
-    color: white;
+    color: black;
     list-style: none;
 }
 
 .main__message_container {
-    padding: 22px 12px;
+  padding:0em 1em 2em 1em;
     display: flex;
 }
 
 .main__message_container input {
     flex-grow: 1;
-    background-color: transparent;
+    background-color: white;
     border: none;
-    color: #F5F5F5;
+    color: black;
+}
+
+.main__message_container div {
+  flex-grow: 1;
+  background-color: white;
+  border: none;
+  color: black;
+}
+
+#chat_message{
+  border-width: 0;
+  border:none
+}
+
+#name{
+  color: #4b53bc
 }

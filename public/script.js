@@ -11,14 +11,15 @@ muteAudio.onclick = function() { muteMic() }
 muteVideo.onclick = function() { muteCam() }
 shareScreen.onclick = function() { screenShare() }
 
-console.log(currentUser);
 let userName = currentUser;
 let myStream;
 var currPeer;
 var perm;
 var myId;
 var participants = [];
+var people = [];
 
+$(".participants").append(`<li class="message"><b id="name">${userName}</b></li>`);
 
 const myVideo = document.createElement('video')
 myVideo.muted = true
@@ -45,7 +46,16 @@ navigator.mediaDevices.getUserMedia({
       participants.push(herObj.myId);
       console.log(herObj.myId);
     }
+   
   })
+
+  
+  // socket.on("addParticipant",username =>{
+  //   console.log("hi");
+  //   console.log(username);
+  //   $(".participants").append(`<li class="message"><b id="name">${username}</b></li>`);
+  //   scrollToBottom()
+  // })
   
   socket.on('user-connected', userId => {
     currId=userId;
@@ -53,8 +63,12 @@ navigator.mediaDevices.getUserMedia({
     console.log('New User Connected: ' + userId)
     const fc = () => connectToNewUser(userId, stream)
     timerid = setTimeout(fc, 0 )
+
+    // socket.emit('joined',userName);
+   
     })
-    
+
+
     let text = $("input");
   // when press enter send message
   $('html').keydown(function (e) {
@@ -70,7 +84,7 @@ navigator.mediaDevices.getUserMedia({
     }
   });
   socket.on("createMessage", message => {
-    $("ul").append(`<li class="message"><b>${message.name}</b><br/>${message.text}</li>`);
+    $(".messages").append(`<li class="message"><b id="name">${message.name}</b><br/>${message.text}</li>`);
     scrollToBottom()
   })
 
@@ -109,8 +123,8 @@ function connectToNewUser(userId, stream) {
     video.remove();
   })
 
-  peers[userId] = call
-  console.log(peers)
+  peers[userId] = call;
+
 }
 
 //adding new Video Stream
@@ -131,7 +145,7 @@ function muteMic() {
   let ih = document.getElementById("mute-mic");
   if(ih.innerHTML==='<i class="fas fa-microphone-slash"></i>'){
     ih.innerHTML='<i class="fas fa-microphone"></i>';
-    $("#mute-mic").css("color", "black")
+    $("#mute-mic").css("color", "white")
   }
   else{
     ih.innerHTML='<i class="fas fa-microphone-slash"></i>';
@@ -146,7 +160,7 @@ function muteCam() {
   myStream.getVideoTracks().forEach(track => track.enabled = !track.enabled);
   let ih = document.getElementById("mute-vid");
   if(ih.innerHTML==='<i class="fas fa-video-slash"></i>'){
-    $("#mute-vid").css("color", "black")
+    $("#mute-vid").css("color", "white")
     ih.innerHTML='<i class="fas fa-video"></i>'
   }
   else{
@@ -221,9 +235,31 @@ function showCalendar(){
 
 // Toggle Chat
 
-function showChat(){
+function toggleChat(){
   if(document.querySelector('.main__right').style.display==='none')
     $(".main__right").css("display", "flex");
   else 
   $(".main__right").css("display", "none");
+}
+
+
+//Invite Participants
+
+function invite(){
+  let link = location.href;
+  const el = document.createElement('textarea');
+  el.value = link;
+  document.body.appendChild(el);
+  el.select();
+  document.execCommand('copy');
+  document.body.removeChild(el);
+
+  alert("Invitation link copied to clipboard!" , link)
+}
+
+
+// Show Participants
+
+function showParticipants(){
+  
 }
