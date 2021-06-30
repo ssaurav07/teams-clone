@@ -1,3 +1,4 @@
+require('dotenv').config();
 const express             = require('express');
 const app                 = express();
 const server              = require('http').Server(app);
@@ -20,7 +21,8 @@ const userRoutes          = require('./routes/userRoutes');
 const roomRoutes          = require('./routes/roomRoutes');
 const port                = process.env.PORT || 3000;
 // const db_URL              = 'mongodb://localhost:27017/msUserDb';
-const db_URL              = 'mongodb+srv://ssquare:ssquare@cluster0.jq82u.mongodb.net/teams-clone?retryWrites=true&w=majority';
+const db_URL              = process.env.DB_URL;
+require('./googleAuthenticate');
 
 let flag=false;
 let username="";
@@ -85,6 +87,16 @@ app.get('/explore', isLoggedIn , (req, res) => {
   flag=false;
   res.render('explore')
 })
+
+app.get('/auth/google',
+  passport.authenticate('google', { scope: ['email' , 'profile'] }));
+
+app.get('/auth/google/callback', 
+  passport.authenticate('google', { failureRedirect: '/login' }),
+  function(req, res) {
+    // Successful authentication, redirect home.
+    res.redirect('/');
+});
 
 app.use(userRoutes);
 app.use(postRoutes);
