@@ -19,7 +19,7 @@
 
      <!-- Chat Section -->
 
-    <div class="main__right" style="display:none">
+    <div id="chat_box" class="main__right" style="display:none">
       <div class="main__header">
           <h6>Chat <a style="float:right;margin-right: 1em;" onclick="toggleChat()"><i class="fas fa-times"></i></a></h6>
       </div>
@@ -35,28 +35,30 @@
       </div>
     </div>
 
-        <!-- <div class="main__right" style="display:flex">
+
+    <!-- Participant Section -->
+        <div id="participant_box" class="main__right" style="display:none">
       <div class="main__header">
           <h6>Participants <a style="float:right;margin-right: 1em;" onclick="toggleParticipants()"><i class="fas fa-times"></i></a></h6>
       </div>
-      <div class="main__chat_window">
+      <div class="participant_window">
           <ul class="participants">
-              <li>Suman Saurav</li>
           </ul>
 
       </div>
       <hr>
-      <div class="main__message_container">
-          <input id="chat_message" type="text" placeholder="Invite participants" disabled>
+      <div class="participant_container">
+          <input id="ivitePeople" type="text" placeholder="Invite participants" disabled>
       </div>
-    </div> -->
+    </div>
 
   </div>
   
   <div id="vidActions" class="btn-group" role="group" aria-label="Button group with nested dropdown">
     <button type="button" id="mute-mic" ><i class="fas fa-microphone"></i></button>
     <button type="button" id="mute-vid" ><i class="fas fa-video"></i></button>
-    <button type="button" id="show-chat" onclick="toggleChat()"><i class="far fa-comment-dots"></i></button>   
+    <button type="button" id="show-chat" onclick="toggleChat()"><i class="far fa-comment-dots"></i></button>
+    <button type="button" id="show-participants" onclick="toggleParticipants()"><i class="fas fa-users"></i></button>  
     <!-- <button type="button" id="btnStart"><i class="fas fa-play"></i></button>
     <button type="button" id="btnStop" ><i class="fas fa-stop"></i></button> -->
     <button type="button" id="share-screen" ><i class="fas fa-desktop"></i></button>
@@ -78,6 +80,7 @@
 
 <script defer src="script.js"></script>
 <script defer src="recordMeeting.js"></script>
+<script defer src="roomControls.js"></script>
 
 
 <!-- GOOGLE CALENDAR -->

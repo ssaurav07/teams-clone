@@ -121,3 +121,24 @@ body{
 #name{
   color: #4b53bc
 }
+
+.participant_window {
+  flex-grow: 1;
+  overflow-x: auto;
+}
+
+.participant_container div {
+  flex-grow: 1;
+  background-color: white;
+  border: none;
+  color: black;
+}
+
+#invitePeople{
+  border-width: 0;
+  border:none
+}
+
+ul{
+  list-style: none;
+}

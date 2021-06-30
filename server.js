@@ -23,6 +23,7 @@ const port                = process.env.PORT || 3000;
 const db_URL              = 'mongodb+srv://ssquare:ssquare@cluster0.jq82u.mongodb.net/teams-clone?retryWrites=true&w=majority';
 
 let flag=false;
+let username="";
 
 app.use(express.static('public'));
 
@@ -58,7 +59,7 @@ app.use(passport.session());
 app.use((req,res,next)=>{
   res.locals.flag=flag;
   res.locals.currentUser="";
-	if(req.isAuthenticated()) res.locals.currentUser = req.user;
+	if(req.isAuthenticated()){ res.locals.currentUser = req.user; username=req.user.name;}
 	res.locals.error=req.flash("error");
 	res.locals.success=req.flash("success");
 	next();
@@ -95,7 +96,8 @@ io.on('connection', socket => {
 
   socket.on('join-room', (roomId, userId) => {
     socket.join(roomId)
-    socket.broadcast.to(roomId).emit('user-connected', userId)
+    let user = {userId: userId , username: username}
+    socket.broadcast.to(roomId).emit('user-connected', user);
 
     socket.on('message', (message) => {
       io.to(roomId).emit('createMessage', message)

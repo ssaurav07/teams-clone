@@ -2,14 +2,10 @@ const socket = io('/')
 // const myPeer = new Peer({host:'peerjs-server.herokuapp.com', secure:true, port:443})
 const myPeer = new Peer({secure:true, port:443})
 
-const videoGrid =  document.getElementById('video-grid');
-const muteAudio = document.getElementById('mute-mic');
-const muteVideo = document.getElementById('mute-vid');
-const shareScreen = document.getElementById('share-screen');
+const videoGrid =  document.getElementById('video-grid'); // Grid containing participant videos
 
-muteAudio.onclick = function() { muteMic() }
-muteVideo.onclick = function() { muteCam() }
-shareScreen.onclick = function() { screenShare() }
+
+// --------------------- Global Variables (current User Infos) -------------------------------------------
 
 let userName = currentUser;
 let myStream;
@@ -17,9 +13,13 @@ var currPeer;
 var perm;
 var myId;
 var participants = [];
-var people = [];
 
-$(".participants").append(`<li class="message"><b id="name">${userName}</b></li>`);
+
+
+$(".participants").append(`<li class="message"><b>${userName} (You)</b></li>`); // Adds your name to participant box
+
+
+// --------------------- Create your video  -------------------------------------------
 
 const myVideo = document.createElement('video')
 myVideo.muted = true
@@ -31,6 +31,8 @@ navigator.mediaDevices.getUserMedia({
   myStream = stream;
   addVideoStream(myVideo, stream)
 
+// --------------------- Answer Calls -------------------------------------------
+
   myPeer.on('call', call => {
     call.answer(stream)
     const video = document.createElement('video')
@@ -41,35 +43,36 @@ navigator.mediaDevices.getUserMedia({
     })
   })
 
+// --------------------- Get Ids of people already in meet -------------------------------------------
+
   socket.on('know-my-id',(herObj)=>{
     if(herObj.userId == myId){
       participants.push(herObj.myId);
-      console.log(herObj.myId);
+      $(".participants").append(`<li class="message"><b id="name" class=${herObj.myId}>${herObj.myName}</b></li>`);
+      console.log(herObj.myId,herObj.myName);
     }
    
   })
+  
+  // --------------------- ON User Connection -------------------------------------------
 
-  
-  // socket.on("addParticipant",username =>{
-  //   console.log("hi");
-  //   console.log(username);
-  //   $(".participants").append(`<li class="message"><b id="name">${username}</b></li>`);
-  //   scrollToBottom()
-  // })
-  
-  socket.on('user-connected', userId => {
-    currId=userId;
-    socket.emit('know-my-id',{myId: myId,userId: userId});
-    console.log('New User Connected: ' + userId)
-    const fc = () => connectToNewUser(userId, stream)
+  socket.on('user-connected', user => {
+    $(".participants").append(`<li class="message"><b id="name" class=${user.userId}>${user.username}</b></li>`);
+    currId=user.userId;
+    socket.emit('know-my-id',{myId: myId,userId: user.userId,myName:userName});
+
+    // alert(user.username + " has joined the call!")
+    console.log('New User Connected: ' + user.userId + user.username);
+
+    const fc = () => connectToNewUser(user.userId, stream)
     timerid = setTimeout(fc, 0 )
-
-    // socket.emit('joined',userName);
-   
-    })
+       
+  })
 
 
-    let text = $("input");
+  // --------------------- For Text Messaging -------------------------------------------
+
+  let text = $("input");
   // when press enter send message
   $('html').keydown(function (e) {
     if (e.which == 13 && text.val().length !== 0) {
@@ -96,6 +99,8 @@ const scrollToBottom = () => {
 }
 
 
+// --------------------- ON User Disconnection -------------------------------------------
+
 socket.on('user-disconnected', userId => {
   if (peers[userId]){
     peers[userId].close()
@@ -104,13 +109,23 @@ socket.on('user-disconnected', userId => {
     console.log(left);
     if(left) left.parentNode.removeChild(left);
     console.log("child removed");
+
+  var leftPart = document.getElementsByClassName(userId)[0];
+    console.log(leftPart);
+    if(leftPart) leftPart.parentNode.removeChild(leftPart);
+    console.log("child removed");
 })
+
+
+// --------------------- ON Joining Room -------------------------------------------
 
 myPeer.on('open', id => {
   socket.emit('join-room', ROOM_ID, id)
   myId = id;
 })
 
+
+// --------------------- Connecting to new User -------------------------------------------
 
 function connectToNewUser(userId, stream) {
   const call = myPeer.call(userId, stream)
@@ -127,7 +142,7 @@ function connectToNewUser(userId, stream) {
 
 }
 
-//adding new Video Stream
+// --------------------- For Adding new video stream to screen -------------------------------------------
 
 function addVideoStream(video, stream , id) {
   video.srcObject = stream
@@ -136,130 +151,4 @@ function addVideoStream(video, stream , id) {
   })
   if(id) video.id=id;
   videoGrid.appendChild(video);
-}
-
-//mute Mic
-
-function muteMic() {
-  myStream.getAudioTracks().forEach(track => track.enabled = !track.enabled);
-  let ih = document.getElementById("mute-mic");
-  if(ih.innerHTML==='<i class="fas fa-microphone-slash"></i>'){
-    ih.innerHTML='<i class="fas fa-microphone"></i>';
-    $("#mute-mic").css("color", "white")
-  }
-  else{
-    ih.innerHTML='<i class="fas fa-microphone-slash"></i>';
-    $("#mute-mic").css("color", "red")
-  }
-
-}
-
-// mute Video
-
-function muteCam() {
-  myStream.getVideoTracks().forEach(track => track.enabled = !track.enabled);
-  let ih = document.getElementById("mute-vid");
-  if(ih.innerHTML==='<i class="fas fa-video-slash"></i>'){
-    $("#mute-vid").css("color", "white")
-    ih.innerHTML='<i class="fas fa-video"></i>'
-  }
-  else{
-    ih.innerHTML='<i class="fas fa-video-slash"></i>';
-    $("#mute-vid").css("color", "red")
-  }
-}
-
-
-
-// For screen sharing 
-
-function screenShare (){
-  navigator.mediaDevices.getDisplayMedia({
-    video: {
-      cursor : "always"
-    },
-    audio: {
-      echoCancellation : true,
-      noiseSuppression : true
-    }
-  }).then((stream)=>{
-    let videoTrack = stream.getVideoTracks()[0];
-    for (let [key, rtcObj] of Object.entries(peers)) {
-     let sender = rtcObj.peerConnection.getSenders().find( function(s){
-        return s.track.kind === "video"
-      })
-      sender.replaceTrack(videoTrack);
-  
-    }
-  }).catch((err)=>{
-    console.log("unable to display media" + err);
-  })
-}
-
-
-
-//Picture IN Picture
-
-var pip = document.getElementById("pipButtonElement");
-
-pip.addEventListener('click', async function() {
-  pip.disabled = true;
-
-  try {
-    // If there is no element in Picture-in-Picture yet, request for it
-    if (myVideo !== document.pictureInPictureElement) {
-        await myVideo.requestPictureInPicture();
-    }
-    // If Picture-in-Picture already exists, exit the mode
-    else {
-        await document.exitPictureInPicture();
-    }
-
-} catch (error) {
-    console.log(`Oh Horror! ${error}`);
-} finally {
-    pip.disabled = false; //enable toggle button after the event
-}
-})
-
-// Toggle Calendar
-
-function showCalendar(){
-  if(document.getElementById('calendar').style.display==='none')
-    $("#calendar").css("display", "block");
-  else 
-  $("#calendar").css("display", "none");
-}
-
-
-
-// Toggle Chat
-
-function toggleChat(){
-  if(document.querySelector('.main__right').style.display==='none')
-    $(".main__right").css("display", "flex");
-  else 
-  $(".main__right").css("display", "none");
-}
-
-
-//Invite Participants
-
-function invite(){
-  let link = location.href;
-  const el = document.createElement('textarea');
-  el.value = link;
-  document.body.appendChild(el);
-  el.select();
-  document.execCommand('copy');
-  document.body.removeChild(el);
-
-  alert("Invitation link copied to clipboard!" , link)
-}
-
-
-// Show Participants
-
-function showParticipants(){
-  
 }
