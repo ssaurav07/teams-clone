@@ -12,10 +12,12 @@ passport.serializeUser(function(user, done) {
     });
   });
 
+  
+    // callbackURL: "http://localhost:3000/auth/google/callback"
+
 passport.use(new GoogleStrategy({
     clientID: process.env.CLIENT_ID,
     clientSecret:process.env.CLIENT_SECRET,
-    // callbackURL: "http://localhost:3000/auth/google/callback"
     callbackURL: "engageclone.herokuapp.com/auth/google/callback"
   },
   function(accessToken, refreshToken, profile, done) {
