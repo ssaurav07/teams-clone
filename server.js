@@ -1,4 +1,3 @@
-
 const express             = require('express');
 const app                 = express();
 const server              = require('http').Server(app);
@@ -20,10 +19,10 @@ const postRoutes          = require('./routes/postRoutes');
 const userRoutes          = require('./routes/userRoutes');
 const roomRoutes          = require('./routes/roomRoutes');
 const port                = process.env.PORT || 3000;
-const db_URL              = 'mongodb://localhost:27017/msUserDb';
-// const db_URL   = 'mongodb+srv://ssquare:ssquare@cluster0.jq82u.mongodb.net/teams-clone?retryWrites=true&w=majority';
+// const db_URL              = 'mongodb://localhost:27017/msUserDb';
+const db_URL   = 'mongodb+srv://ssquare:ssquare@cluster0.jq82u.mongodb.net/teams-clone?retryWrites=true&w=majority'
 // const db_URL              = process.env.DB_URL;
-// require('./googleAuthenticate');
+require('./googleAuthenticate'); 
 
 let flag=false;
 let username="";
