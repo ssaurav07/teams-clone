@@ -13,12 +13,12 @@ passport.serializeUser(function(user, done) {
   });
 
   
-    // callbackURL: "http://localhost:3000/auth/google/callback"
 
 passport.use(new GoogleStrategy({
-    clientID: process.env.CLIENT_ID,
-    clientSecret:process.env.CLIENT_SECRET,
-    callbackURL: "engageclone.herokuapp.com/auth/google/callback"
+    clientID: '928952573368-u2tuks6q3jsdg37m9srpk00mgp3rjgt9.apps.googleusercontent.com',
+    clientSecret:'9wij992iKVe8ON6HOb95Ucja',
+    callbackURL: "http://localhost:3000/auth/google/callback"
+    // callbackURL: "engageclone.herokuapp.com/auth/google/callback"
   },
   function(accessToken, refreshToken, profile, done) {
     User.findOne({
