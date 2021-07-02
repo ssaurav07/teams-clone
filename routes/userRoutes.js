@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const passport = require('passport');
 const User = require('../models/user');
-const {isLoggedIn} = require('../middleWare');
+const {isLoggedIn} = require('../middleWares/middleWare');
 
 router.get('/register', (req, res) => {
   if(!req.isAuthenticated()){

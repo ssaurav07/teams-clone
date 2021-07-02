@@ -67,8 +67,8 @@ body{
   }
 
   #vid2{
-    height:10px;
-    width:10px;
+    height:100px;
+    width:100px;
   }
 
   .main__right {
@@ -113,8 +113,18 @@ body{
 }
 
 #chat_message{
-  border-width: 0;
-  border:none
+  border: 1px #4b53bc solid;
+  border-radius: 10em;
+  padding: 0.5em;
+}
+
+#send{
+  display: none;
+  padding:0.2em;
+}
+
+input:focus{
+  outline: none;
 }
 
 #name{
@@ -145,4 +155,14 @@ ul{
 #invitePeople::placeholder{
   color: #4b53bc;
   padding:1em
+}
+
+.newMember{
+  margin-left: -2em;
+  font-size: 0.8em
+}
+
+#join_time{
+  color:red;
+  font-size: 0.8em
 }

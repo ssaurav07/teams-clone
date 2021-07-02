@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const { v4: uuidV4 } = require('uuid');
-const {isLoggedIn} = require('../middleWare');
+const {isLoggedIn} = require('../middleWares/middleWare');
 
 router.get('/room', isLoggedIn , (req, res) => {
     res.redirect(`/${uuidV4()}`)

@@ -1,6 +1,6 @@
 const passport = require('passport');
 var GoogleStrategy = require('passport-google-oauth20').Strategy;
-const User = require('./models/user')
+const User = require('../models/user')
 
 passport.serializeUser(function(user, done) {
     done(null, user.id);
@@ -34,7 +34,7 @@ passport.use(new GoogleStrategy({
                 email: profile.emails[0].value,
                 username: profile.emails[0].value,
                 provider: 'google',
-                //now in the future searching on User.findOne({'facebook.id': profile.id } will match because of this next line
+                //now in the future searching on User.findOne({email: profile.emails[0].value } will match because of this next line
                 google: profile._json
             });
             user.save(function(err) {

@@ -62,6 +62,8 @@ navigator.mediaDevices.getUserMedia({
     socket.emit('know-my-id',{myId: myId,userId: user.userId,myName:userName});
 
     // alert(user.username + " has joined the call!")
+    $(".messages").append(`<li class="newMember"><span id="join_time">${new Date().toLocaleTimeString()}</span> ${user.username} has joined the call!</li>`);
+    scrollToBottom();
     console.log('New User Connected: ' + user.userId + user.username);
 
     const fc = () => connectToNewUser(user.userId, stream)
@@ -74,9 +76,11 @@ navigator.mediaDevices.getUserMedia({
 
   let text = $("input");
   // when press enter send message
-  $('html').keydown(function (e) {
-    if (e.which == 13 && text.val().length !== 0) {
+  $('html').keydown(sendChat);
+  $('#send').click(sendChat);
 
+    function sendChat(e) {
+    if ((e.which == 13 && text.val().length !== 0)) {
       let msg = {
         text : text.val(), 
         name : userName
@@ -85,7 +89,8 @@ navigator.mediaDevices.getUserMedia({
       socket.emit('message',msg);
       text.val('')
     }
-  });
+  };
+
   socket.on("createMessage", message => {
     $(".messages").append(`<li class="message"><b id="name">${message.name}</b><br/>${message.text}</li>`);
     scrollToBottom()
@@ -113,7 +118,6 @@ socket.on('user-disconnected', userId => {
   var leftPart = document.getElementsByClassName(userId)[0];
     console.log(leftPart);
     if(leftPart) leftPart.parentNode.removeChild(leftPart);
-    console.log("child removed");
 })
 
 

@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const post = require('../models/post');
-const {isLoggedIn} = require('../middleWare');
+const {isLoggedIn} = require('../middleWares/middleWare');
 let flag=true;
 
 router.use((req,res,next)=>{

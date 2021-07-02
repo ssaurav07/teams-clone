@@ -14,14 +14,14 @@ const methodOverride      = require('method-override');  //for executing PUT req
 const User                = require('./models/user');
 const post                = require('./models/post');
 const MongoStore          = require('connect-mongo');
-const {isLoggedIn}        = require('./middleWare');
+const {isLoggedIn}        = require('./middleWares/middleWare');
 const postRoutes          = require('./routes/postRoutes');
 const userRoutes          = require('./routes/userRoutes');
 const roomRoutes          = require('./routes/roomRoutes');
 const port                = process.env.PORT || 3000;
 // const db_URL              = 'mongodb://localhost:27017/msUserDb';
 const db_URL              = process.env.DB_URL;
-require('./googleAuthenticate'); 
+require('./0auth/googleAuth');
 
 let flag=false;
 let username="";

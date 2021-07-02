@@ -5,9 +5,10 @@
 <script>
   const ROOM_ID = "<%= roomId %>"
   const currentUser = "<%= currentUser.name %>"
+
 </script>
 
-<link rel="stylesheet" href="room.css" type="text/css">
+<link rel="stylesheet" href="/stylesheet/room.css" type="text/css">
 
 </head>
 
@@ -15,8 +16,8 @@
   <div id="screen">
     <%- include('partials/leftIcons') %>
 
-    <div id="video-grid"></div>
-
+    <div id="video-grid" class="row row-cols-1 row-cols-sm-2 row-cols-md-3"></div>
+  
      <!-- Chat Section -->
 
     <div id="chat_box" class="main__right" style="display:none">
@@ -31,7 +32,8 @@
       </div>
       <hr>
       <div class="main__message_container">
-          <input id="chat_message" type="text" placeholder="Type">
+          <input id="chat_message" type="text" placeholder="Type" onfocus="showSend()">
+          <a id="send"><i class="fas fa-paper-plane"></i></a>
       </div>
     </div>
 
@@ -66,7 +68,7 @@
     <button type="button" onclick=invite()><i class="fas fa-share-alt"></i></button>
     <button id="pipButtonElement"><i class="far fa-images"></i></button>
     <!-- <video id="vid" controls></video> -->
-  <!-- <video id="vid2" controls></video> -->
+    <!-- <video id="vid2" controls></video> -->
   
     <div class="btn-group" role="group">
       <button id="btnGroupDrop1" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -101,5 +103,15 @@ color=%23202124&amp;color=%230047a8&amp;color=%23174ea6&amp;
 color=%230047a8" style="border:solid 1px #777" width="300" height="300" frameborder="0" scrolling="no">
 </iframe>
 
+<script>
+  function showSend(){
+    $('#send').show();
+  }
+  function hideSend(){
+    $('#send').hide();
+  }
+</script>
+
 </body>
 </html>
+
