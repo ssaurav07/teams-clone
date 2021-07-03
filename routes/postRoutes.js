@@ -1,5 +1,18 @@
 const express = require('express');
 const router = express.Router();
+const multer = require('multer');
+
+const storage = multer.diskStorage({
+    destination : function(req, file , cb){
+        cb(null,'./uploads/');
+    },
+    filename : function(req, file, cb){
+        cb(null , Date.now()+ file.originalname);
+    }
+
+})
+const upload = multer({storage: storage});
+
 const post = require('../models/post');
 const {isLoggedIn} = require('../middleWares/middleWare');
 let flag=true;
@@ -20,8 +33,11 @@ router.get('/feed', isLoggedIn ,(req, res)=>{
       });    
   })
   
-  router.post('/feed', isLoggedIn ,(req, res)=>{
+  router.post('/feed', isLoggedIn , upload.single('posts[image]') ,(req, res)=>{
+      
     req.body.posts.description = req.sanitize(req.body.posts.description);
+    req.body.posts.image = req.file.path;
+    
     post.create(req.body.posts , (err,response)=>{
           if(err){
               console.log(err);
@@ -46,6 +62,8 @@ router.get('/feed', isLoggedIn ,(req, res)=>{
           }
       });
   });
+
+  let imgString="";
   
   router.get("/post/edit/:id", isLoggedIn , (req,res)=>{
       post.findById(req.params.id , (err,post)=>{
@@ -53,13 +71,19 @@ router.get('/feed', isLoggedIn ,(req, res)=>{
               console.log(err);
           }
           else{
+              console.log(post.image);
+              imgString = post.image;
               res.render("edit" , {post : post});
           }
       });
   });
   
-  router.put("/post/:id", isLoggedIn , (req,res)=>{
+  router.put("/post/:id", isLoggedIn , upload.single('posts[image]') , (req,res)=>{
     req.body.posts.description = req.sanitize(req.body.posts.description);
+    
+    if(req.file) req.body.posts.image = req.file.path;
+    else req.body.posts.image = imgString;
+
       post.findByIdAndUpdate(req.params.id , req.body.posts ,(err , post)=>{
           if(err){
               res.redirect("/post");

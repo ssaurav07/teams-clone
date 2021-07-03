@@ -8,15 +8,14 @@
     <%- include('partials/navbar') %>
     
     <div class="form-container">
-        <h2>Edit <%= post.title %></h2>
-        <form action="/post/<%= post._id %>?_method=PUT" method="POST">
+        <h2>Edit : <%= post.title %></h2>
+        <form action="/post/<%= post._id %>?_method=PUT" method="POST" enctype="multipart/form-data">
             <div class="mb-3">
                 <label class="form-label">Title</label>
                 <input type="text" class="form-control" name="posts[title]" id="title" value="<%= post.title %>">
             </div>
             <div class="mb-3">
-                <label class="form-label">Image</label>
-                <input type="text" class="form-control" name="posts[image]" id="title" value="<%= post.image %>">
+                <input type="file" class="form-control" name="posts[image]" id="postImage">
             </div>
             <div class="form-floating">
                 <textarea class="form-control" name="posts[description]" id="description" ><%= post.description %></textarea>

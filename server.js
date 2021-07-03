@@ -27,6 +27,7 @@ let flag=false;
 let username="";
 
 app.use(express.static('public'));
+app.use('/uploads' , express.static('uploads'));
 
 mongoose.connect(db_URL,{useNewUrlParser: true, useUnifiedTopology: true})
     .then(() =>{

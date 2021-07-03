@@ -23,6 +23,7 @@
     "git": "^0.1.5",
     "method-override": "^3.0.0",
     "mongoose": "^5.12.15",
+    "multer": "^1.4.2",
     "passport": "^0.4.1",
     "passport-google-oauth20": "^2.0.0",
     "passport-local": "^1.0.0",

@@ -36,10 +36,9 @@
 
 <body>
     <%- include('partials/navbar') %>
-
     <div class="container post-container">
         <div class="img-div">
-            <img src="<%= post.image %>" class="post-img">
+            <img src="\<%= post.image %>" class="post-img">
         </div>
         <h1 style="margin-top:1em;text-align:center"> <%= post.title %> </h1><br>
         <h6 style="text-align:center;opacity: 0.5;"><%= post.date.toDateString() %> </h6><br>

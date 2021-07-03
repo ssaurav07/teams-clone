@@ -12,7 +12,6 @@ let myStream;
 var currPeer;
 var perm;
 var myId;
-var participants = [];
 
 
 
@@ -47,12 +46,10 @@ navigator.mediaDevices.getUserMedia({
 
   socket.on('know-my-id',(herObj)=>{
     if(herObj.userId == myId){
-      participants.push(herObj.myId);
       $(".participants").append(`<li class="message"><b id="name" class=${herObj.myId}>${herObj.myName}</b></li>`);
       console.log(herObj.myId,herObj.myName);
-    }
-   
-  })
+  }   
+})
   
   // --------------------- ON User Connection -------------------------------------------
 

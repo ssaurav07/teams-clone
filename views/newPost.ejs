@@ -10,19 +10,19 @@
     
     <div class="form-container">
         <h2>New Post</h2>
-        <form action="/feed" method="post">
+        <form action="/feed" method="post" enctype="multipart/form-data">
             <div class="mb-3">
                 <label class="form-label">Title</label>
                 <input type="text" class="form-control" name="posts[title]" id="title" placeholder="Enter the title of the post">
             </div>
             <div class="mb-3">
-                <label class="form-label">Image</label>
-                <input type="text" class="form-control" name="posts[image]" id="title" placeholder="Link for the image">
-            </div>
+                <input type="file" class="form-control" name="posts[image]" id="postImage" aria-label="Upload">
+              </div>
             <div class="form-floating">
                 <textarea class="form-control" name="posts[description]" placeholder="Leave a comment here" id="description"></textarea>
                 <label for="floatingTextarea2">Description</label>
             </div>
+            <input type="text" class="form-control" name="posts[author]" id="author" style="display:none" value='<%=currentUser.name%>'>
             <button type="submit" class="btn btn-outline-primary">Post</button>
         </form>
     </div>
