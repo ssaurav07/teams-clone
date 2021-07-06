@@ -1,20 +1,25 @@
-<%- include('partials/header') %>
+<%- include('../partials/header') %>
 
-<title>Meet || MS Teams</title>
+  <title>Meet || MS Teams</title>
 
-<script>
-  const ROOM_ID = "<%= roomId %>"
-  const currentUser = "<%= currentUser.name %>"
+  <link rel="stylesheet" href="/stylesheet/room/room.css" type="text/css">
 
-</script>
+  <script defer src="/scripts/meetingRoom/room.js"></script>
+  <script defer src="/scripts/meetingRoom/recordMeeting.js"></script>
+  <script defer src="/scripts/meetingRoom/roomControls.js"></script>
 
-<link rel="stylesheet" href="/stylesheet/room.css" type="text/css">
+  <script>
+    const ROOM_ID = "<%= roomId %>"
+    const currentUser = "<%= currentUser.name %>"
+  </script>
 
 </head>
 
 <body>
+
   <div id="screen">
-    <%- include('partials/leftIcons') %>
+
+    <%- include('../partials/leftIcons') %>
 
     <div id="video-grid" class="row row-cols-1 row-cols-sm-2 row-cols-md-3"></div>
   
@@ -81,10 +86,6 @@
     </div>
   </div>
 
-<script defer src="script.js"></script>
-<script defer src="recordMeeting.js"></script>
-<script defer src="roomControls.js"></script>
-
 
 <!-- GOOGLE CALENDAR -->
 
@@ -103,14 +104,14 @@ color=%23202124&amp;color=%230047a8&amp;color=%23174ea6&amp;
 color=%230047a8" style="border:solid 1px #777" width="300" height="300" frameborder="0" scrolling="no">
 </iframe>
 
-<script>
-  function showSend(){
-    $('#send').show();
-  }
-  function hideSend(){
-    $('#send').hide();
-  }
-</script>
+  <script>
+    function showSend(){
+      $('#send').show();
+    }
+    function hideSend(){
+      $('#send').hide();
+    }
+  </script>
 
 </body>
 </html>

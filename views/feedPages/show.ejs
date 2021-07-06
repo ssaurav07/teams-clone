@@ -1,44 +1,19 @@
-<%- include('partials/header') %>
+<%- include('../partials/header') %>
 
-<title>Show Post || MS Teams</title>
-
-<style>
-    .post-container{
-    width:80%;
-    margin: 3em auto;
-    border: 2px solid black;
-    padding:2em;
-}
-
-.img-div{
-    margin-top:2em;
-    height:30em;
-}
-
-.post-img{
-    width:100%;  
-    height:100%;
-    border-radius: 10px;
-    margin:0 auto;
-    object-fit: contain;
-}
-
-@media screen and (max-width:620px) {
-    .post-container{
-        width:100%;
-        padding:0.5em;
-    }
-}
-
-</style>
+    <title>Show Post || MS Teams</title>
+    <link rel="stylesheet" href="/stylesheet/feed/showPost.css" type="text/css">
 
 </head>
 
 <body>
-    <%- include('partials/navbar') %>
+    <%- include('../partials/navbar') %>
     <div class="container post-container">
         <div class="img-div">
-            <img src="\<%= post.image %>" class="post-img">
+            <% if(post.image=="https://akm-img-a-in.tosshub.com/indiatoday/images/story/202104/photo-1531564701487-f238224b7c_1200x768.jpeg?q_6io2tiCIj7McK_gRABr11yUCEqtSAC&size=1200:675") {%>
+                <img src="<%= post.image %>" class="post-img">
+            <% } else { %>
+                <img src="\<%= post.image %>" class="post-img">
+            <% } %>
         </div>
         <h1 style="margin-top:1em;text-align:center"> <%= post.title %> </h1><br>
         <h6 style="text-align:center;opacity: 0.5;"><%= post.date.toDateString() %> </h6><br>
@@ -46,6 +21,7 @@
             <%- post.description %>
         </p>
 
+        <% if(post.ownerId == userid){ %>
         <div class="d-flex" style="flex-direction: row; margin-top:2em">
             <a href="/post/edit/<%= post._id %>"><button class="btn btn-outline-primary">
                 Edit
@@ -57,7 +33,8 @@
                 </button>
             </form>
         </div>
+        <% } %>
     </div>
 
 
-<%- include('partials/footer') %>
+<%- include('../partials/footer') %>

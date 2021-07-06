@@ -11,17 +11,33 @@ const LocalStrategy       = require('passport-local');
 const session             = require('express-session');
 const flash               = require('connect-flash');
 const methodOverride      = require('method-override');  //for executing PUT requests
+const MongoStore          = require('connect-mongo');
+const {isLoggedIn}        = require('./middleWares/isLoggedIn');
+
+// ---------------------Importing Database models-------------------------------------- //
+
 const User                = require('./models/user');
 const post                = require('./models/post');
-const MongoStore          = require('connect-mongo');
-const {isLoggedIn}        = require('./middleWares/middleWare');
-const postRoutes          = require('./routes/postRoutes');
+const meetConvo           = require('./models/meetConvo');
+const personalConvo       = require('./models/personalConvo');
+const messages            = require('./models/message');
+
+// ---------------------Importing Website Routes-------------------------------------- //
+
 const userRoutes          = require('./routes/userRoutes');
+const authRoutes          = require('./routes/authRoutes');
+const postRoutes          = require('./routes/postRoutes');
+const conversationRoutes  = require('./routes/conversationRoutes');
+const meetConvoRoutes     = require('./routes/meetConvoRoutes');
+const messageRoutes       = require('./routes/messageRoutes');
 const roomRoutes          = require('./routes/roomRoutes');
+
+// ---------------------website host & keys-------------------------------------- //
+
 const port                = process.env.PORT || 3000;
-// const db_URL              = 'mongodb://localhost:27017/msUserDb';
-const db_URL              = process.env.DB_URL;
-require('./0auth/googleAuth');
+const db_URL              = 'mongodb://localhost:27017/msUserDb';
+// const db_URL              = process.env.DB_URL;
+// require('./0auth/googleAuth');
 
 let flag=false;
 let username="";
@@ -61,7 +77,12 @@ app.use(passport.session());
 app.use((req,res,next)=>{
   res.locals.flag=flag;
   res.locals.currentUser="";
-	if(req.isAuthenticated()){ res.locals.currentUser = req.user; username=req.user.name;}
+  res.locals.userid="";
+	if(req.isAuthenticated()){
+      res.locals.currentUser = req.user;
+      username=req.user.name;
+      res.locals.userid=req.user._id;
+    }
 	res.locals.error=req.flash("error");
 	res.locals.success=req.flash("success");
 	next();
@@ -72,34 +93,26 @@ passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
 
-// Routes 
-
-// Home Page Route
 app.get('/', (req, res) => {
   if(req.isAuthenticated()){
     res.redirect('/explore');
     return;
   }
-  res.render('home')
+  res.render('homePage/home')
 })
 
 app.get('/explore', isLoggedIn , (req, res) => {
   flag=false;
-  res.render('explore')
+  res.render('userHomePage/explore')
 })
 
-app.get('/auth/google',
-  passport.authenticate('google', { scope: ['email' , 'profile'] }));
 
-app.get('/auth/google/callback', 
-  passport.authenticate('google', { failureRedirect: '/login' }),
-  function(req, res) {
-    // Successful authentication, redirect home.
-    res.redirect('/');
-});
-
+app.use(authRoutes);
 app.use(userRoutes);
 app.use(postRoutes);
+app.use(conversationRoutes);
+app.use(meetConvoRoutes);
+app.use(messageRoutes);
 app.use(roomRoutes);
 
  
@@ -113,12 +126,8 @@ io.on('connection', socket => {
 
     socket.on('message', (message) => {
       io.to(roomId).emit('createMessage', message)
-  }); 
-
-    // socket.on('joined',(username) => {
-    //   io.to(roomId).emit('addParticipant',username);
-    // })
-
+    }); 
+  
     socket.on('know-my-id', (herObj)=>{
       socket.broadcast.to(roomId).emit('know-my-id', herObj);
     })
@@ -127,6 +136,7 @@ io.on('connection', socket => {
       socket.broadcast.to(roomId).emit('user-disconnected', userId)
     })
   })
+
 }) 
 
 server.listen(port);

@@ -1,16 +1,22 @@
-<%- include('partials/header') %>
+<%- include('../partials/header') %> <!-- including GLOBAL header -->
 
-<title>
-    Explore || MS TEAMS
-</title>
+    <title> Explore || MS TEAMS </title>
 
-<link rel="stylesheet" type="text/css" href="stylesheet/explore.css">
+    <link rel="stylesheet" type="text/css" href="stylesheet/userHome/explore.css">
+    <script>
+        let userId = "<%= userid %>"
+    </script>
 
 </head>
+
 <body>
-    <%- include('partials/navbar') %>
-    <%- include('partials/flash_success') %>
-    <%- include('partials/flash_error') %>
+    
+    <!-- ---------------------Global Components--------------------------- -->
+
+    <%- include('../partials/navbar') %>    
+    <%- include('../partials/flash_success') %>    <!-- for flashing success messages -->
+    <%- include('../partials/flash_error') %>      <!-- for flashing error messages -->
+
     <div class="homeScreen">
         <div class="accessOptions">
             <p>
@@ -26,13 +32,17 @@
                 <button type="button" class="btn btn-outline" onClick="location.href='/room'">
                     <i class="fas fa-video"></i> New meeting </button>
                 <input type="required" id="link" placeholder="Enter the meeting link" onfocus="showJoin()"">
-                <button type="button" id="join" class="btn btn-outline" onClick="location.href=document.getElementById('link').value">Join</button>
+                <button type="button" id="join" class="btn btn-outline" onClick="location.href=document.getElementById('link').value">Join</button><br>
+                <form action="/meet-conversations" method="post">
+                    <input type="hidden" value='<%=userid %>' name="creatorId">
+                    <button type="submit" class="btn btn-outline">Create Chat</button>
+                </form>
             </span>
 
         </div>
 
         <div class="homeImage">
-            <img src="/assets/img/msGif.gif" class="img-fluid">
+            <img src="/images/msGif.gif" class="img-fluid">
         </div>
     </div>
     <br><br>
@@ -46,10 +56,15 @@
     </div>
 
     <script>
+
+    // --------------------- For toggling Join buttons --------------------------- //
+
+        //show join button
         function showJoin() {
             $("#join").show();
         }
 
+        //hide join button
         function removeJoin() {
             $("#join").hide();
         }
@@ -57,4 +72,4 @@
         
     </script>
 
-<%- include('partials/footer') %>
+<%- include('../partials/footer') %>

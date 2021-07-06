@@ -1,0 +1,50 @@
+<%- include('../partials/header') %>
+
+  <title>Chats || MS Teams</title>
+
+  <link rel="stylesheet" href="/stylesheet/chat/joinMeetChats.css" type="text/css">
+
+  <script defer src="/scripts/chat/chat.js"></script>
+  <script>
+    let userId = "<%= userid %>";
+    let target = location.href;
+    console.log(target)
+  </script>
+
+</head>
+
+<body>
+    <%- include('../partials/navbar') %>
+    <div class="join-box">
+        <h2>Join Conversation</h2>
+        <form id="join" method="post">
+          <div class="user-box">
+            <label>Room Name</label><br><br>
+            <div><%= convo.roomName %></div>
+          </div>
+          <div class="user-box">
+            <label>Number of Participants</label><br><br>
+            <div><%= convo.participantCount %></div>
+          </div>
+
+            <input type="hidden" name="userId" value="<%= userid %>">
+        
+          <button type="submit">
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                Submit
+          </button>
+        </form>
+      </div>
+
+    <script>
+        $("form").submit(function(){
+            axios.post(`/${location.href}`)
+        })
+    </script>
+
+
+</body>
+</html>

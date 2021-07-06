@@ -34,6 +34,13 @@
       z-index: 0;
       overflow: hidden;
   }
+  #ok{
+    z-index:99;
+  }
+  #fail{
+    z-index:99;
+    position: absolute;
+  }
   .flex-flex {
       display: flex;
   }

@@ -1,24 +1,26 @@
-<%- include('partials/header') %>
+<%- include('../partials/header') %>
 
-<title>Edit Post || MS Teams</title>
-<link rel="stylesheet" href="/stylesheet/newPost.css" type="text/css">
+    <title>Edit Post || MS Teams</title>
+
+    <link rel="stylesheet" href="/stylesheet/feed/newPost.css" type="text/css">
+
 </head>
 
 <body>
-    <%- include('partials/navbar') %>
+    <%- include('../partials/navbar') %>
     
     <div class="form-container">
         <h2>Edit : <%= post.title %></h2>
         <form action="/post/<%= post._id %>?_method=PUT" method="POST" enctype="multipart/form-data">
             <div class="mb-3">
                 <label class="form-label">Title</label>
-                <input type="text" class="form-control" name="posts[title]" id="title" value="<%= post.title %>">
+                <input type="text" class="form-control" name="posts[title]" id="title" value="<%= post.title %>" required>
             </div>
             <div class="mb-3">
                 <input type="file" class="form-control" name="posts[image]" id="postImage">
             </div>
             <div class="form-floating">
-                <textarea class="form-control" name="posts[description]" id="description" ><%= post.description %></textarea>
+                <textarea class="form-control" name="posts[description]" id="description" required><%= post.description %></textarea>
                 <label for="floatingTextarea2">Description</label>
             </div>
             <button type="submit" class="btn btn-outline-primary">Update</button>
@@ -26,4 +28,4 @@
     </div>
     
 
-<%- include('partials/footer') %>
+<%- include('../partials/footer') %>

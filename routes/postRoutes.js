@@ -14,7 +14,7 @@ const storage = multer.diskStorage({
 const upload = multer({storage: storage});
 
 const post = require('../models/post');
-const {isLoggedIn} = require('../middleWares/middleWare');
+const {isLoggedIn} = require('../middleWares/isLoggedIn');
 let flag=true;
 
 router.use((req,res,next)=>{
@@ -22,21 +22,25 @@ router.use((req,res,next)=>{
     next();
   })
 
+// -------------------------Show feeds------------------------------------- //
+
 router.get('/feed', isLoggedIn ,(req, res)=>{
       post.find({},(err,posts)=>{
         if(err){
           console.log(err);
         }
         else{
-          res.render("feed", {posts : posts});
+          res.render("feedPages/feed", {posts : posts});
         }
       });    
   })
   
-  router.post('/feed', isLoggedIn , upload.single('posts[image]') ,(req, res)=>{
+// -------------------------Create new POST--------------------------------------- //
+
+router.post('/feed', isLoggedIn , upload.single('posts[image]') ,(req, res)=>{
       
     req.body.posts.description = req.sanitize(req.body.posts.description);
-    req.body.posts.image = req.file.path;
+    if(req.file) req.body.posts.image = req.file.path;
     
     post.create(req.body.posts , (err,response)=>{
           if(err){
@@ -45,23 +49,29 @@ router.get('/feed', isLoggedIn ,(req, res)=>{
           else{
               res.redirect("/feed");
           }
-      })
-  })
+    })
+})
+
+// -------------------------Render new post page--------------------------------------- //
   
   router.get('/feed/new', isLoggedIn ,(req, res)=>{
-    res.render('newPost');
+    res.render('feedPages/newPost');
   })
   
+// -------------------------Show particular post--------------------------------------- //
+
   router.get("/post/show/:id" , isLoggedIn , (req,res)=>{
       post.findById(req.params.id , (err , show)=>{
           if(err){
               console.log(err)
           }
           else{
-          res.render("show" , {post : show });
+          res.render("feedPages/show" , {post : show });
           }
       });
   });
+
+// -------------------------Edit particular post--------------------------------------- //
 
   let imgString="";
   
@@ -73,10 +83,12 @@ router.get('/feed', isLoggedIn ,(req, res)=>{
           else{
               console.log(post.image);
               imgString = post.image;
-              res.render("edit" , {post : post});
+              res.render("feedPages/edit" , {post : post});
           }
       });
   });
+
+// -------------------------Update particular post--------------------------------------- //
   
   router.put("/post/:id", isLoggedIn , upload.single('posts[image]') , (req,res)=>{
     req.body.posts.description = req.sanitize(req.body.posts.description);
@@ -93,6 +105,8 @@ router.get('/feed', isLoggedIn ,(req, res)=>{
           }
       })	
   });
+
+// -------------------------Delete particular post--------------------------------------- //
   
   router.delete("/post/:id" , isLoggedIn, (req,res)=>{
       post.findByIdAndRemove(req.params.id , (err,post)=>{

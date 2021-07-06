@@ -1,12 +1,13 @@
-<%- include('partials/header') %>
+<%- include('../partials/header') %>
 
-<title>SignUp || MS TEAMS</title>
-<link rel="stylesheet" href="/stylesheet/signup.css" type="text/css">
-
+  <title>SignUp || MS TEAMS</title>
+  <link rel="stylesheet" href="/stylesheet/auth/signup.css" type="text/css">
 
 </head>
+
 <body>
-    <%- include('partials/navbar') %>
+    <%- include('../partials/navbar') %>
+    
     <div class="login-root">
         <div class="box-root flex-flex flex-direction--column" style="min-height: 100vh;flex-grow: 1;">
           <div class="loginbackground box-background--white padding-top--64">
@@ -48,7 +49,7 @@
             <div class="formbg-outer">
               <div class="formbg">
                 <div class="formbg-inner padding-horizontal--48">
-                  <%- include('partials/flash_error') %>
+                  <%- include('../partials/flash_error') %>
                   <span class="padding-bottom--15">Signup for a new account</span>
                   <form id="stripe-login" action="/register" method="POST">
                     <div class="field padding-bottom--24">

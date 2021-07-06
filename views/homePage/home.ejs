@@ -1,0 +1,94 @@
+<%- include('../partials/header') %>
+
+    <title> Home || MS TEAMS </title>
+    <link rel="stylesheet" type="text/css" href="/stylesheet/homePage/home.css">
+
+</head>
+
+<body>
+
+    <!-- ---------------------Global Components--------------------------- -->
+
+    <%- include('../partials/navbar') %>    
+    <%- include('../partials/flash_success') %>    <!-- for flashing success messages -->
+    <%- include('../partials/flash_error') %>      <!-- for flashing error messages -->
+    
+    <div>
+        <div class="homeScreen">
+            <div class="accessOptions">
+                <p>
+                    <span class="heading">MICROSOFT TEAMS </span> <br>
+    
+                    <span class="description" style="color: black">
+                        Meet , Chat , Call and <br>
+                        Collaborate in just one place
+                    </span>            
+                </p>
+    
+                <span class="buttons">
+                    <button type="button" class="btn btn-outline" onClick="location.href='/register'">Signup for free</button><br>
+                    <button type="button" class="btn btn-outline" onClick="location.href='/login'">Signin</button>
+                </span>
+    
+            </div>
+    
+            <div class="homeImage">
+                <img src="/images/homeImage.jpg" class="img-fluid">
+            </div>
+        </div> <br><br>
+
+        <div class="home-bottom">
+            <span class="heading">Microsoft Teams is for everyone </span> <br><br>
+            <span class="description">
+                Whether it’s chat, calls, or video, anyone can engage at any time, bringing everyone closer.<br>
+                Your docs, photos, videos, chat history, and meeting notes are always there, so it’s easier to work together.<br>
+                Set up your team’s space with all the apps you need so you can stay in just one place instead of jumping around.
+            </span>
+        </div>
+
+        <div class="homeScreen">
+            <div class="accessOptions" style="margin-top:2em">
+                <p>
+                    <span class="heading"> Chat and Collaborate </span> <br>
+    
+                    <span class="description" style="color: black">
+                        Now chat with your clients <br>
+                        and team members at one place
+                    </span>            
+                </p>
+    
+                <span class="buttons">
+                    <button type="button" class="btn btn-outline" onClick="location.href='/conversations'">Start Chatting</button><br>
+                </span>
+    
+            </div>
+    
+            <div class="homeImage" style="margin-top:5em">
+                <img src="/images/chatPage.png" class="img-fluid">
+            </div>
+        </div>
+        <hr>
+        <div class="homeScreen">
+            <div class="accessOptions" style="margin-top:2em">
+                <p>
+                    <span class="heading"> Stay connected!<br>Stay Updated!</span> <br>
+    
+                    <span class="description" style="color: black">
+                        See what is happening around you <br>
+                        and be super ready for upcoming challenges
+                    </span>            
+                </p>
+    
+                <span class="buttons">
+                    <button type="button" class="btn btn-outline" onClick="location.href='/feed'">Start posting</button><br>
+                </span>
+    
+            </div>
+    
+            <div class="homeImage" style="margin-top:5em">
+                <img src="/images/feedPage.png" class="img-fluid">
+            </div>
+        </div>
+
+    </div>
+<%- include('../partials/footer') %>

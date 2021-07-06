@@ -8,6 +8,13 @@
     display: flex;
     flex-direction: row;
 }
+.read{
+    border:1.5px solid #4b53bc;
+}
+.read:hover{
+    color: white;
+    background-color: #4b53bc;
+}
 
 .image{
     width:30%;
