@@ -16,7 +16,7 @@ router.post("/meet-conversations", async (req, res) => {
   
       const newConversation = new Conversation({
         roomId : `${uuidV4()}`,
-        name : req.params.roomName,
+        name : req.body.roomName,
         members : [req.body.creatorId]
       });
     

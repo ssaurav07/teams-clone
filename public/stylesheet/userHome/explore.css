@@ -21,13 +21,25 @@ p{
     padding: 3em;
 }
 
-.buttons{
-    padding: 5em;
+.meet-options{
+    width:80%;
+    margin: 0 auto;
+}
+
+.meet-buttons-container{
     display:flex;
-    flex-direction:row;
-    justify-content:space-around;
-    width: 100%;
-    font-size:1vw;
+    padding:1em;
+    justify-content: space-around;
+}
+
+.meet-input-container{
+    display:none;
+    padding:1em;
+    justify-content: center;
+}
+
+input{
+    width:70%;
 }
 
 .btn{
@@ -38,19 +50,6 @@ p{
 .btn:hover{ 
     color:white;
     box-shadow: 0 0 0.8333em;
-}
-
-.buttons input{
-    width: 50%;
-    padding:1.5em;
-}
-
-.buttons input::placeholder{
-    font-size:1.3vw;
-}
-
-.buttons button i{
-    padding:0.7em 0.7em 0.7em 0.3em
 }
 
 #join{
@@ -87,24 +86,6 @@ p{
         width: 100%;
         text-align: center;
     }
-    .buttons{
-        margin:0 auto;
-        flex-direction: column;
-        width: 50%;
-    }
-    .buttons button{
-        padding:0;
-        font-size: 2.5vw;
-    }
-    .buttons input{
-        margin: 2em auto;
-        width:100%;
-        padding:1.8em;
-    }
-
-    .buttons input::placeholder{
-        font-size:2.5vw;
-    }
 
     #join{
         padding:0.3em;
@@ -118,5 +99,29 @@ p{
 
     .description{
         font-size: 3vw;
+    }
+    
+}
+
+@media screen and (max-width:574px){
+    .meet-options{
+        width:100%
+    }
+}
+
+@media screen and (max-width:460px){
+    .meet-buttons-container{
+        display:flex;
+        flex-direction:column
+    }
+}
+
+@media screen and (max-width:310px){
+    input{
+        width:100%
+    }
+    
+    input::placeholder{
+        font-size: 5vw;
     }
 }

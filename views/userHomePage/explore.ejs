@@ -3,6 +3,7 @@
     <title> Explore || MS TEAMS </title>
 
     <link rel="stylesheet" type="text/css" href="stylesheet/userHome/explore.css">
+    <script defer src="/scripts/userHomePage/explore.js"></script>
     <script>
         let userId = "<%= userid %>"
     </script>
@@ -28,16 +29,41 @@
                 </span>            
             </p>
 
-            <span class="buttons">
-                <button type="button" class="btn btn-outline" onClick="location.href='/room'">
-                    <i class="fas fa-video"></i> New meeting </button>
-                <input type="required" id="link" placeholder="Enter the meeting link" onfocus="showJoin()"">
-                <button type="button" id="join" class="btn btn-outline" onClick="location.href=document.getElementById('link').value">Join</button><br>
-                <form action="/meet-conversations" method="post">
-                    <input type="hidden" value='<%=userid %>' name="creatorId">
-                    <button type="submit" class="btn btn-outline">Create Chat</button>
-                </form>
-            </span>
+            <div class="meet-options">
+                <div class="meet-buttons-container">
+                    <button type="button" class="btn btn-outline" onClick="location.href='/room'">
+                        <i class="fas fa-video"></i> New meeting </button> 
+                    <button type="button" class="btn btn-outline" onClick="showCreateConvoInput()">
+                        <i class="far fa-edit"></i> New meet conversation </button>
+                     
+                </div>
+
+                <div id="newConvoInput" class="meet-input-container" onfocus="showCreateConvo()">
+                    <form action="/meet-conversations" method="post">
+                        <input type="hidden" value='<%=userid %>' name="creatorId">
+                        <input id="convoName" name="roomName" placeholder="Enter the meeting name" >
+                        <button type="submit" id="createConvo" class="btn btn-outline">Create</button>
+                    </form>
+                </div>
+
+                <div class="meet-buttons-container">
+                    <button type="button" class="btn btn-outline" onClick="showJoinMeetInput()">
+                        <i class="fas fa-chalkboard-teacher"></i> Join meeting </button> 
+                    <button type="button" class="btn btn-outline" onClick="showJoinConvoInput()">
+                        <i class="fas fa-users"></i> Join meet conversation </button>
+                </div>
+
+                <div id="joinConvoInput" class="meet-input-container" onfocus="showJoinConvo()">
+                    <input type="required" id="linkConvo" placeholder="Enter the conversation link" >
+                    <button type="button" id="joinConvo" class="btn btn-outline" onClick="location.href=document.getElementById('linkConvo').value">Join</button>
+                </div>
+
+                <div id="joinMeetInput" class="meet-input-container" onfocus="showJoinMeet()">
+                    <input type="required" id="linkMeet" placeholder="Enter the meeting link">
+                    <button type="button" id="joinMeet" class="btn btn-outline" onClick="location.href=document.getElementById('linkMeet').value">Join</button>
+                </div>
+
+            </div>
 
         </div>
 
@@ -54,22 +80,5 @@
             Set up your team’s space with all the apps you need so you can stay in just one place instead of jumping around.
         </span>
     </div>
-
-    <script>
-
-    // --------------------- For toggling Join buttons --------------------------- //
-
-        //show join button
-        function showJoin() {
-            $("#join").show();
-        }
-
-        //hide join button
-        function removeJoin() {
-            $("#join").hide();
-        }
-
-        
-    </script>
 
 <%- include('../partials/footer') %>
