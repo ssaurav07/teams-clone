@@ -17,20 +17,18 @@ const {isLoggedIn}        = require('./middleWares/isLoggedIn');
 // ---------------------Importing Database models-------------------------------------- //
 
 const User                = require('./models/user');
-const post                = require('./models/post');
-const meetConvo           = require('./models/meetConvo');
-const personalConvo       = require('./models/personalConvo');
-const messages            = require('./models/message');
 
 // ---------------------Importing Website Routes-------------------------------------- //
 
-const userRoutes          = require('./routes/userRoutes');
-const authRoutes          = require('./routes/authRoutes');
-const postRoutes          = require('./routes/postRoutes');
-const conversationRoutes  = require('./routes/conversationRoutes');
-const meetConvoRoutes     = require('./routes/meetConvoRoutes');
-const messageRoutes       = require('./routes/messageRoutes');
-const roomRoutes          = require('./routes/roomRoutes');
+const homePageRoute               = require('./routes/homePageRoute')
+const userRoutes                  = require('./routes/userRoutes');
+const authRoutes                  = require('./routes/authRoutes');
+const userHomeRoute               = require('./routes/userHomeRoute')
+const postRoutes                  = require('./routes/postRoutes');
+const personalConversationRoutes  = require('./routes/personalConversationRoutes');
+const meetConversationRoutes      = require('./routes/meetConversationRoutes');
+const messageRoutes               = require('./routes/messageRoutes');
+const roomRoutes                  = require('./routes/roomRoutes');
 
 // ---------------------website host & keys-------------------------------------- //
 
@@ -92,29 +90,19 @@ passport.use(new LocalStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
+// ---------------------------Using imported Routes------------------------------------- //
 
-app.get('/', (req, res) => {
-  if(req.isAuthenticated()){
-    res.redirect('/explore');
-    return;
-  }
-  res.render('homePage/home')
-})
-
-app.get('/explore', isLoggedIn , (req, res) => {
-  res.render('userHomePage/explore')
-})
-
-
+app.use(homePageRoute);
 app.use(authRoutes);
 app.use(userRoutes);
+app.use(userHomeRoute);
 app.use(postRoutes);
-app.use(conversationRoutes);
-app.use(meetConvoRoutes);
+app.use(personalConversationRoutes);
+app.use(meetConversationRoutes);
 app.use(messageRoutes);
 app.use(roomRoutes);
 
- 
+// ---------------------------Socket Connection----------------------------------------- //
 
 io.on('connection', socket => {
 

@@ -29,7 +29,7 @@ axios.get('/meet-conversations/'+userId).then((res,err)=>{
     })
 })
 
-let active_id ="";
+let activeConversationId ="";
 $('#people').on('click', '.chat_ib', function(e) {
     
     if(document.documentElement.clientWidth<=604){
@@ -43,8 +43,8 @@ $('#people').on('click', '.chat_ib', function(e) {
 
     let convoId = e.currentTarget.id;
 
-    if(active_id!=="") document.getElementById(active_id).parentNode.parentNode.classList.remove("active_chat");
-    active_id = convoId;
+    if(activeConversationId!=="") document.getElementById(activeConversationId).parentNode.parentNode.classList.remove("active_chat");
+    activeConversationId = convoId;
 
     let roomName = document.getElementById(convoId).parentNode.id;
     
@@ -53,7 +53,7 @@ $('#people').on('click', '.chat_ib', function(e) {
     axios.get(`/messages/${convoId}`).then((res,err)=>{
         // $("#loading-spinner").css("display","none");
 
-        $(`#${active_id}`).parent().parent().addClass("active_chat");
+        $(`#${activeConversationId}`).parent().parent().addClass("active_chat");
         let data = res.data;
         
         $("#chats").html("");
@@ -107,7 +107,7 @@ $('#people').on('click', '.chat_ib', function(e) {
 
     function sendChat(e) {
     if ((e.which == 13 && text.val().length !== 0)) {
-      axios.post(`/messages/${active_id}/${userId}/${text.val()}`).then((res,err)=>{
+      axios.post(`/messages/${activeConversationId}/${userId}/${text.val()}`).then((res,err)=>{
         let msg = {
             text : text.val()
           }
@@ -140,5 +140,8 @@ const scrollToBottom = () => {
 function showPeople(){
     $(".mesgs").css("display", "none");
     $(".inbox_people").css("display","block");
-    
+}
+
+function joinCurrentMeet(){
+    location.href=`/room/${activeConversationId}`
 }

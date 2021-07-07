@@ -31,17 +31,27 @@
 
             <div class="meet-options">
                 <div class="meet-buttons-container">
-                    <button type="button" class="btn btn-outline" onClick="location.href='/room'">
+                    <button type="button" class="btn btn-outline" onClick="showCreateMeetInput()">
                         <i class="fas fa-video"></i> New meeting </button> 
                     <button type="button" class="btn btn-outline" onClick="showCreateConvoInput()">
-                        <i class="far fa-edit"></i> New meet conversation </button>
+                        <i class="far fa-edit"></i> New Team conversation </button>
                      
+                </div>
+
+                <div id="newMeetInput" class="meet-input-container" onfocus="showCreateMeet()">
+                    <form action="/meet-conversations" method="post">
+                        <input type="hidden" value='<%=userid %>' name="creatorId">
+                        <input type="hidden" value='true' name="isMeet">
+                        <input id="meetName" name="roomName" placeholder="Enter the Meeting name" >
+                        <button type="submit" id="createMeet" class="btn btn-outline">Create</button>
+                    </form>
                 </div>
 
                 <div id="newConvoInput" class="meet-input-container" onfocus="showCreateConvo()">
                     <form action="/meet-conversations" method="post">
                         <input type="hidden" value='<%=userid %>' name="creatorId">
-                        <input id="convoName" name="roomName" placeholder="Enter the meeting name" >
+                        <input type="hidden" value='false' name="isMeet">
+                        <input id="convoName" name="roomName" placeholder="Enter the Group name" >
                         <button type="submit" id="createConvo" class="btn btn-outline">Create</button>
                     </form>
                 </div>
@@ -50,7 +60,7 @@
                     <button type="button" class="btn btn-outline" onClick="showJoinMeetInput()">
                         <i class="fas fa-chalkboard-teacher"></i> Join meeting </button> 
                     <button type="button" class="btn btn-outline" onClick="showJoinConvoInput()">
-                        <i class="fas fa-users"></i> Join meet conversation </button>
+                        <i class="fas fa-users"></i> Join Team conversation </button>
                 </div>
 
                 <div id="joinConvoInput" class="meet-input-container" onfocus="showJoinConvo()">

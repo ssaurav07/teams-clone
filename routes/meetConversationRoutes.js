@@ -1,19 +1,20 @@
 const express = require('express');
 const router = express.Router();
 const { v4: uuidV4 } = require('uuid');
-const Conversation = require("../models/meetConvo");
+const Conversation = require("../models/meetConversation");
+const {isLoggedIn} = require('../middleWares/isLoggedIn');
 
 // ----------------------------Show meet conversations------------------------------------ //
 
-router.get('/meet-conversations',(req, res) => {
+router.get('/meet-conversations', isLoggedIn , (req, res) => {
     res.render('chatPages/meetChats');
 })
 
 
-// ----------------------------Create new meet conversation------------------------------- //
+// ------------------Create new Teams conversation and meet(if demanded)------------------ //
 
-router.post("/meet-conversations", async (req, res) => {
-  
+router.post("/meet-conversations", isLoggedIn , async (req, res) => {
+
       const newConversation = new Conversation({
         roomId : `${uuidV4()}`,
         name : req.body.roomName,
@@ -22,7 +23,14 @@ router.post("/meet-conversations", async (req, res) => {
     
       try {
         const savedConversation = await newConversation.save();
-        res.redirect("/meet-conversations");
+
+        if(req.body.isMeet==="true"){
+          res.redirect(`/room/${newConversation.roomId}`);
+        }
+        else{
+          res.redirect("/meet-conversations");
+        }
+
       } catch (err) {
         res.status(500).json(err);
       }
@@ -31,7 +39,7 @@ router.post("/meet-conversations", async (req, res) => {
 
 // ----------------------------Join Conversation----------------------------------------- //
 
-router.get('/join-meet-conversations/:conversationId' , async (req, res) => {
+router.get('/join-meet-conversations/:conversationId' , isLoggedIn , async (req, res) => {
 
   const conversation = await Conversation.find({
     roomId : req.params.conversationId
@@ -47,11 +55,11 @@ router.get('/join-meet-conversations/:conversationId' , async (req, res) => {
       participantCount : conversation[0].members.length
     }
     console.log(convo)
-    res.render('chatPages/joinMeetConvo', {convo:convo});
+    res.render('chatPages/joinMeetChat', {convo:convo});
   }
 })
 
-router.post('/join-meet-conversations/:conversationId' , async (req, res ,done) => {
+router.post('/join-meet-conversations/:conversationId' , isLoggedIn , async (req, res ,done) => {
   try {
     const conversation = await Conversation.find({
       roomId: req.params.conversationId
@@ -93,7 +101,7 @@ router.post('/join-meet-conversations/:conversationId' , async (req, res ,done) 
 
 // ----------------------------Fetch user meet conversations------------------------------------ //
 
-router.get("/meet-conversations/:userId", async (req, res) => {
+router.get("/meet-conversations/:userId", isLoggedIn , async (req, res) => {
   try {
     const conversation = await Conversation.find({
       members: { $in: [req.params.userId] },

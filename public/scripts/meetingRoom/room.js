@@ -14,7 +14,6 @@ var perm;
 var myId;
 
 
-
 $(".participants").append(`<li class="message"><b>${userName} (You)</b></li>`); // Adds your name to participant box
 
 
@@ -121,7 +120,7 @@ socket.on('user-disconnected', userId => {
 // --------------------- ON Joining Room -------------------------------------------
 
 myPeer.on('open', id => {
-  socket.emit('join-room', ROOM_ID, id)
+  socket.emit('join-room', roomId, id)
   myId = id;
 })
 

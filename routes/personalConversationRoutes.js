@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
-const Conversation = require("../models/personalConvo");
+const Conversation = require("../models/personalConversation");
+const {isLoggedIn}        = require('../middleWares/isLoggedIn');
 let inFeedRoute=false;
 
 router.use((req,res,next)=>{
@@ -10,14 +11,14 @@ router.use((req,res,next)=>{
 
 // -------------------------Show conversations--------------------------------------- //
 
-router.get('/conversations', (req, res) => {
+router.get('/conversations', isLoggedIn ,(req, res) => {
     res.render('chatPages/chats');
 })
 
 
 // -------------------------Create new conversation--------------------------------------- //
 
-router.post("/", async (req, res) => {
+router.post("/conversations", isLoggedIn , async (req, res) => {
   const newConversation = new Conversation({
     members: [req.body.senderId, req.body.receiverId],
   });
@@ -32,7 +33,7 @@ router.post("/", async (req, res) => {
 
 // -------------------------Fetch conversations of a user--------------------------------------- //
 
-router.get("/conversations/:userId", async (req, res) => {
+router.get("/conversations/:userId", isLoggedIn , async (req, res) => {
   try {
     const conversation = await Conversation.find({
       members: { $in: [req.params.userId] },
@@ -45,7 +46,7 @@ router.get("/conversations/:userId", async (req, res) => {
 
 // -------------------------Fetch conversations including two userIds--------------------------- //
 
-router.get("/find/:firstUserId/:secondUserId", async (req, res) => {
+router.get("/find/:firstUserId/:secondUserId", isLoggedIn , async (req, res) => {
   try {
     const conversation = await Conversation.findOne({
       members: { $all: [req.params.firstUserId, req.params.secondUserId] },
