@@ -39,7 +39,7 @@ const port                = process.env.PORT || 3000;
 const db_URL              = process.env.DB_URL;
 require('./0auth/googleAuth');
 
-let flag=false;
+let inFeedRoute=false;
 let username="";
 
 app.use(express.static('public'));
@@ -75,7 +75,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 app.use((req,res,next)=>{
-  res.locals.flag=flag;
+  res.locals.inFeedRoute=inFeedRoute;
   res.locals.currentUser="";
   res.locals.userid="";
 	if(req.isAuthenticated()){
@@ -102,7 +102,6 @@ app.get('/', (req, res) => {
 })
 
 app.get('/explore', isLoggedIn , (req, res) => {
-  flag=false;
   res.render('userHomePage/explore')
 })
 

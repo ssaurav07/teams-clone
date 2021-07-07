@@ -1,7 +1,12 @@
 const express = require('express');
 const router = express.Router();
 const Conversation = require("../models/personalConvo");
+let inFeedRoute=false;
 
+router.use((req,res,next)=>{
+    res.locals.inFeedRoute=inFeedRoute;
+    next();
+  })
 
 // -------------------------Show conversations--------------------------------------- //
 

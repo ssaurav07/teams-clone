@@ -16,12 +16,13 @@
             </li>
           <% } %>
 
-          <% if(currentUser !== "" && flag==true){ %>
+          <% if(currentUser !== "" && inFeedRoute==true){ %>
             <li class="nav-item">
               <a class="nav-link active" aria-current="page" href="/feed/new">New Post</a>
             </li>
           <% } %>
 
+          <% if(currentUser == ""){ %>
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
               Products
@@ -32,7 +33,22 @@
               <li><hr class="dropdown-divider"></li>
               <li><a class="dropdown-item" href="#">Something else here</a></li>
             </ul>
-          </li>          
+          </li>  
+          <% } else{ %>  
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="/explore">Meet & Call</a>
+            </li>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" 
+                      role="button" data-bs-toggle="dropdown" aria-expanded="false" style="color: rgba(0,0,0,.9)">
+                Chat
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <li><a class="dropdown-item" href="/conversations"><i class="fas fa-people-arrows"></i> Personal Chats</a></li>
+                <li><a class="dropdown-item" href="/meet-conversations"><i class="fas fa-users"></i> Meeting Chats</a></li>
+              </ul>
+            </li>
+          <% } %> 
         </ul>
 
         <div class="navbar-nav ml-auto">

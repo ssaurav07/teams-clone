@@ -15,10 +15,10 @@ const upload = multer({storage: storage});
 
 const post = require('../models/post');
 const {isLoggedIn} = require('../middleWares/isLoggedIn');
-let flag=true;
+let inFeedRoute=true;
 
 router.use((req,res,next)=>{
-    res.locals.flag=flag;
+    res.locals.inFeedRoute=inFeedRoute;
     next();
   })
 

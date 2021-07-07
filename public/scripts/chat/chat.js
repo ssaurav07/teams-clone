@@ -45,6 +45,10 @@ $('#people').on('click', '.chat_ib', function(e) {
         $(".mesgs").css("display", "block");
         $(".inbox_people").css("display","none");
     }
+    else{
+        $(".initial-bg").css("display", "none");
+        $(".mesgs").css("display", "block");
+    }
 
 
     // $("#loading-spinner").css("display","flex");

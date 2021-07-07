@@ -36,9 +36,11 @@ $('#people').on('click', '.chat_ib', function(e) {
         $(".mesgs").css("display", "block");
         $(".inbox_people").css("display","none");
     }
+    else{
+        $(".initial-bg").css("display", "none");
+        $(".mesgs").css("display", "block");
+    }
 
-
-    // $("#loading-spinner").css("display","flex");
     let convoId = e.currentTarget.id;
 
     if(active_id!=="") document.getElementById(active_id).parentNode.parentNode.classList.remove("active_chat");
