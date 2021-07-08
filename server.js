@@ -19,9 +19,9 @@ const {isLoggedIn}        = require('./middleWares/isLoggedIn');
 // ---------------------Importing Database models-------------------------------------- //
 
 const User                = require('./models/user');
-const Message = require("./models/message");
-const Conversation = require("./models/meetConversation");
-
+const Message             = require("./models/message");
+const Conversation        = require("./models/meetConversation");
+const SessionManager      = require('./modules/UserSessionModule');
 // ---------------------Importing Website Routes-------------------------------------- //
 
 const homePageRoute               = require('./routes/homePageRoute')
@@ -33,8 +33,6 @@ const personalConversationRoutes  = require('./routes/personalConversationRoutes
 const meetConversationRoutes      = require('./routes/meetConversationRoutes');
 const messageRoutes               = require('./routes/messageRoutes');
 const roomRoutes                  = require('./routes/roomRoutes');
-const SessionManager                       = require('./modules/UserSessionModule');
-
 
 
 // ---------------------website host & keys-------------------------------------- //

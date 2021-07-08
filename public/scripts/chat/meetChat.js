@@ -180,7 +180,7 @@ function joinCurrentMeet(){
 }
 
 function inviteToConversation(){
-    let link = `http://localhost:3000/join-meet-conversations/${activeConversationId}`;
+    let link = `http://engageclone.herokuapp.com/join-meet-conversations/${activeConversationId}`;
     const el = document.createElement('textarea');
     el.value = link;
     document.body.appendChild(el);
