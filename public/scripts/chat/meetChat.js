@@ -159,7 +159,7 @@ $('#people').on('click', '.chat_ib', function(e) {
             $("#chats").append(outgoingMessage);
             scrollToBottom();
             //   socket.emit('user-chat',msg);
-              text.val('')
+              text.val('');
         })
     }
   };
