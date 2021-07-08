@@ -14,24 +14,39 @@ socket.on('newMessage', (data)=>{
         let msg = {
             text : data.message
           }
-          let incomingMessage = document.createElement('div');
-                        incomingMessage.className = 'incoming_msg';
-                    let incomingMessageImage = document.createElement('div');
-                        incomingMessageImage.className = 'incoming_msg_img';
-                        incomingMessageImage.innerHTML ='<img src="https://ptetutorials.com/images/user-profile.png" alt="User">';
-                    let receivedMessage = document.createElement('div');
-                        receivedMessage.className = 'received_msg';
-                    let receivedWithdateMessage = document.createElement('div');
-                        receivedWithdateMessage.className = 'received_withd_msg'
-                        receivedWithdateMessage.innerHTML = `<b>${data.userId}</b><br><p>${msg.text}</p> <span class="time_date_in"> 11:01 AM    |    June 10</span> </div>`;
+          
+        if(data.userId != userId){
+            let incomingMessage = document.createElement('div');
+                incomingMessage.className = 'incoming_msg';
+            let incomingMessageImage = document.createElement('div');
+                incomingMessageImage.className = 'incoming_msg_img';
+                incomingMessageImage.innerHTML ='<img src="https://ptetutorials.com/images/user-profile.png" alt="User">';
+            let receivedMessage = document.createElement('div');
+                receivedMessage.className = 'received_msg';
+            let receivedWithdateMessage = document.createElement('div');
+                receivedWithdateMessage.className = 'received_withd_msg'
+                receivedWithdateMessage.innerHTML = `<b>${data.userId}</b><br><p>${msg.text}</p> <span class="time_date_in"> 11:01 AM    |    June 10</span> </div>`;
+            
+                receivedMessage.appendChild(receivedWithdateMessage);
+                incomingMessage.appendChild(incomingMessageImage);
+                incomingMessage.appendChild(receivedMessage);
+            $("#chats").append(incomingMessage);
                     
-                        receivedMessage.appendChild(receivedWithdateMessage);
-                        incomingMessage.appendChild(incomingMessageImage);
-                        incomingMessage.appendChild(receivedMessage);
-                    $("#chats").append(incomingMessage);
-                    
+        }
+        else{
+            let outgoingMessage = document.createElement('div');
+                outgoingMessage.className = 'outgoing_msg';
+            let sentMessage = document.createElement('div');
+                sentMessage.className = 'sent_msg';
+
+                sentMessage.innerHTML = `<b>${data.userId}</b><br><p>${msg.text}</p> <span class="time_date_in"> 11:01 AM    |    June 10</span> </div>`;
+
+                outgoingMessage.appendChild(sentMessage);
+            $("#chats").append(outgoingMessage);
+        }
+
         scrollToBottom();
-          text.val('')
+        text.val('')
     }
 })
 
@@ -144,8 +159,15 @@ $('#people').on('click', '.chat_ib', function(e) {
 
     function sendChat(e) {
     if ((e.which == 13 && text.val().length !== 0)) {
-
-        socket.emit("add-message-to-server", {activeConversationId,userId, message : text.val() }, ()=>{
+        
+        let msg = {
+            text : text.val(), 
+            name : "userName",
+            roomId : activeConversationId
+          }
+        
+        socket.emit('message',msg);
+        socket.emit("add-message-to-server", {activeConversationId,userId, message : text.val(),fromMeet:false}, ()=>{
             let msg = {
                 text : text.val()
               }

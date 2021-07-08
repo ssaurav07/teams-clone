@@ -82,7 +82,7 @@ navigator.mediaDevices.getUserMedia({
         name : userName
       }
 
-      socket.emit("add-message-to-server", {activeConversationId: roomId, userId: dbUserID, message : text.val() }, ()=>{
+      socket.emit("add-message-to-server", {activeConversationId: roomId, userId: dbUserID, message : text.val(),fromMeet :true }, ()=>{
         
       })
 

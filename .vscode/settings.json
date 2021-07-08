@@ -1,0 +1,4 @@
+{
+    "appService.defaultWebAppToDeploy": "/subscriptions/57184c13-d3de-4bb2-a1f8-cdbd03083605/resourceGroups/NodeJs-Express-Resource/providers/Microsoft.Web/sites/teamsClone",
+    "appService.deploySubpath": "."
+}

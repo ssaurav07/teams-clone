@@ -22,6 +22,7 @@ const User                = require('./models/user');
 const Message             = require("./models/message");
 const Conversation        = require("./models/meetConversation");
 const SessionManager      = require('./modules/UserSessionModule');
+
 // ---------------------Importing Website Routes-------------------------------------- //
 
 const homePageRoute               = require('./routes/homePageRoute')
@@ -137,16 +138,13 @@ io.on('connection', socket => {
     })
   })
 
+  socket.on('message', (message) => {
+    io.to(message.roomId).emit('createMessage', message)
+  });
+
   socket.on('login', (data)=>{
-    console.log(data.username,socket.id )
-    // if(!sessionManager.getUser(data.username)){
-    //   sessionManager.setUser(data.username,socket.id);
-    //   // console.log("user map created for user"+data.username)
-    // }
     sessionManager.setUser(data.username,socket.id);
 
-    
-  //  io.to(socketId).emit(/* ... */);
   })
 
   socket.on('reconnect', (data)=>{
@@ -155,13 +153,9 @@ io.on('connection', socket => {
   
   socket.on('disconnect', () => {
     sessionManager.deleteUser(socket.id)
-    
-    //socket.broadcast.to(roomId).emit('user-disconnected', userId)
   })
 
   socket.on('user-reconnected', function() {
-    //sessionId = username
-    //reconnect(username, socket)
     console.log("reconneted")
   });
 
@@ -173,15 +167,12 @@ io.on('connection', socket => {
       text :data.message
     });
   
-    // console.log(newMessage);
-  
     try {
       const savedMessage = await newMessage.save();
       sendMessageToParticipants(data)
       cb();
     } catch (err) {
-      console.log(err);
-      //res.status(500).json(err);
+      res.status(500).json(err);
     }
   })
 
@@ -194,26 +185,25 @@ async function sendMessageToParticipants(data){
   })
 
   let members = conversation.members;
-  //console.log(conversation);
 
   members = members.filter(function(member){
-    return member != data.userId;
+    if(!data.fromMeet) return member != data.userId;
+    else return member;
   })
 
     members.forEach(member => {
       
      
       let user = sessionManager.getUser(member)
-      //console.log(user, "give this man a shield");
+      
       if(user){
-        console.log("sending to socket id ", user.socketId)
+        
         io.to(user.socketId).emit('newMessage',data);
-        console.log("message sent")
       }
       else
         console.log("message not sent")
     });
-  // console.log(members); 
+    
   
 }
 
