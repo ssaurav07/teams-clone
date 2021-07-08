@@ -1,6 +1,8 @@
 const express = require('express');
 const router = express.Router();
 
+// ------------------------ Renders user Home Page --------------------------------- //
+
 router.get('/', (req, res) => {
     if(req.isAuthenticated()){
       res.redirect('/explore');
@@ -9,4 +11,4 @@ router.get('/', (req, res) => {
     res.render('homePage/home')
   })
 
-  module.exports = router;
+module.exports = router;

@@ -37,7 +37,7 @@ router.post("/meet-conversations", isLoggedIn , async (req, res) => {
 });
 
 
-// ----------------------------Join Conversation----------------------------------------- //
+// ----------------------------Render Join Conversation Page ----------------------------------------- //
 
 router.get('/join-meet-conversations/:conversationId' , isLoggedIn , async (req, res) => {
 
@@ -58,6 +58,8 @@ router.get('/join-meet-conversations/:conversationId' , isLoggedIn , async (req,
     res.render('chatPages/joinMeetChat', {convo:convo});
   }
 })
+
+// ----------------------------------- Adds to the conversation-------------------------------------- //
 
 router.post('/join-meet-conversations/:conversationId' , isLoggedIn , async (req, res ,done) => {
   try {

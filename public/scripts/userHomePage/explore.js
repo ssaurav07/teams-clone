@@ -1,22 +1,17 @@
-function showJoinMeet() {
+function showJoinMeetButton() {
     $("#joinMeet").css("display","flex");
 }
 
-function showJoinConvo() {
+function showJoinConvoButton() {
     $("#joinConvo").css("display","flex");
 }
 
-function showCreateConvo() {
+function showCreateConvoButton() {
     $("#createConvo").css("display","flex");
 }
 
-function showCreateMeet() {
+function showCreateMeetButton() {
     $("#createMeet").css("display","flex");
-}
-
-//hide join button
-function removeJoin() {
-    $("#join").css("display","flex");
 }
 
 function showJoinConvoInput(){

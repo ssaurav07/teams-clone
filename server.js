@@ -111,16 +111,15 @@ app.use(meetConversationRoutes);
 app.use(messageRoutes);
 app.use(roomRoutes);
 
+
 // ---------------------------Socket Connection----------------------------------------- //
-
-
 
 io.on('connection', socket => {
 
-
-  console.log("user connected", socket.id)
-
+  // -------------------------Socket events for Meeting Room----------------------------- //
+  
   socket.on('join-room', (roomId, userId) => {
+
     socket.join(roomId)
     let user = {userId: userId , username: username}
     socket.broadcast.to(roomId).emit('user-connected', user);
@@ -137,6 +136,8 @@ io.on('connection', socket => {
       socket.broadcast.to(roomId).emit('user-disconnected', userId)
     })
   })
+
+  // -------------------------Other global socket events----------------------------- //
 
   socket.on('message', (message) => {
     io.to(message.roomId).emit('createMessage', message)
@@ -178,6 +179,7 @@ io.on('connection', socket => {
 
 }) 
 
+// -----------------------send message to conversation participants--------------------------- //
 
 async function sendMessageToParticipants(data){
   let conversation = await Conversation.findOne({

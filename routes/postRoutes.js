@@ -2,6 +2,8 @@ const express = require('express');
 const router = express.Router();
 const multer = require('multer');
 
+// -------------------------For storing Images to the Uploads folder--------------------------------------- //
+
 const storage = multer.diskStorage({
     destination : function(req, file , cb){
         cb(null,'./uploads/');
@@ -9,18 +11,17 @@ const storage = multer.diskStorage({
     filename : function(req, file, cb){
         cb(null , Date.now()+ file.originalname);
     }
-
 })
-const upload = multer({storage: storage});
 
+const upload = multer({storage: storage});
 const post = require('../models/post');
 const {isLoggedIn} = require('../middleWares/isLoggedIn');
 let inFeedRoute=true;
 
 router.use((req,res,next)=>{
-    res.locals.inFeedRoute=inFeedRoute;
-    next();
-  })
+  res.locals.inFeedRoute=inFeedRoute;
+  next();
+})
 
 // -------------------------Show feeds------------------------------------- //
 

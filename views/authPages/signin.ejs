@@ -50,7 +50,7 @@
             <div class="formbg-outer">
               <div class="formbg">
                 <div class="formbg-inner padding-horizontal--48">
-                  <%- include('../partials/flash_error') %>
+                  <%- include('../partials/flashError') %>
                   <span class="padding-bottom--15">Sign in to your account</span>
                   <form id="stripe-login" action="/login" method="POST">
                     <div class="field padding-bottom--24">
@@ -60,9 +60,6 @@
                     <div class="field padding-bottom--24">
                       <div class="grid--50-50">
                         <label for="password">Password</label>
-                        <div class="reset-pass">
-                          <a href="#">Forgot your password?</a>
-                        </div>
                       </div>
                       <input type="password" name="password" placeholder="********" required>
                     </div>

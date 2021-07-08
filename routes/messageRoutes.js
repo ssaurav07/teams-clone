@@ -12,7 +12,6 @@ router.post("/messages/:conversationId/:senderId/:text", async (req, res) => {
     text : req.params.text
   });
 
-  //console.log(newMessage);
 
   try {
     const savedMessage = await newMessage.save();

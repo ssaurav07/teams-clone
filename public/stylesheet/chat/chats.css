@@ -151,6 +151,7 @@ img{
   width: 60%;
   background-image: url('https://cdn.vox-cdn.com/thumbor/ntxg24tSmh3RAS-ZQMhKuudGaeU=/0x0:2640x1760/1200x800/filters:focal(1109x669:1531x1091)/cdn.vox-cdn.com/uploads/chorus_image/image/66965855/microsoftteams.0.jpg');
   background-size: contain;
+  background-repeat: no-repeat;
   height: 71vh
 }
 

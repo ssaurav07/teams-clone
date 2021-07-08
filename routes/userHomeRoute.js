@@ -6,4 +6,4 @@ router.get('/explore', isLoggedIn , (req, res) => {
     res.render('userHomePage/explore')
     })
 
-  module.exports = router;
+module.exports = router;

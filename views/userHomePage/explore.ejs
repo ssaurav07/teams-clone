@@ -15,8 +15,8 @@
     <!-- ---------------------Global Components--------------------------- -->
 
     <%- include('../partials/navbar') %>    
-    <%- include('../partials/flash_success') %>    <!-- for flashing success messages -->
-    <%- include('../partials/flash_error') %>      <!-- for flashing error messages -->
+    <%- include('../partials/flashSuccess') %>    <!-- for flashing success messages -->
+    <%- include('../partials/flashError') %>      <!-- for flashing error messages -->
 
     <div class="homeScreen">
         <div class="accessOptions">
@@ -38,7 +38,7 @@
                      
                 </div>
 
-                <div id="newMeetInput" class="meet-input-container" onfocus="showCreateMeet()">
+                <div id="newMeetInput" class="meet-input-container" onfocus="showCreateMeetButton()">
                     <form action="/meet-conversations" method="post">
                         <input type="hidden" value='<%=userid %>' name="creatorId">
                         <input type="hidden" value='true' name="isMeet">
@@ -47,7 +47,7 @@
                     </form>
                 </div>
 
-                <div id="newConvoInput" class="meet-input-container" onfocus="showCreateConvo()">
+                <div id="newConvoInput" class="meet-input-container" onfocus="showCreateConvoButton()">
                     <form action="/meet-conversations" method="post">
                         <input type="hidden" value='<%=userid %>' name="creatorId">
                         <input type="hidden" value='false' name="isMeet">
@@ -63,12 +63,12 @@
                         <i class="fas fa-users"></i> Join Team conversation </button>
                 </div>
 
-                <div id="joinConvoInput" class="meet-input-container" onfocus="showJoinConvo()">
+                <div id="joinConvoInput" class="meet-input-container" onfocus="showJoinConvoButton()">
                     <input type="required" id="linkConvo" placeholder="Enter the conversation link" >
                     <button type="button" id="joinConvo" class="btn btn-outline" onClick="location.href=document.getElementById('linkConvo').value">Join</button>
                 </div>
 
-                <div id="joinMeetInput" class="meet-input-container" onfocus="showJoinMeet()">
+                <div id="joinMeetInput" class="meet-input-container" onfocus="showJoinMeetButton()">
                     <input type="required" id="linkMeet" placeholder="Enter the meeting link">
                     <button type="button" id="joinMeet" class="btn btn-outline" onClick="location.href=document.getElementById('linkMeet').value">Join</button>
                 </div>

@@ -86,6 +86,7 @@ $('#people').on('click', '.chat_ib', function(e) {
     if(document.documentElement.clientWidth<=604){
         $(".mesgs").css("display", "block");
         $(".inbox_people").css("display","none");
+        $(".navbar").css("display", "none");
     }
     else{
         $(".initial-bg").css("display", "none");
@@ -195,6 +196,7 @@ const scrollToBottom = () => {
 function showPeople(){
     $(".mesgs").css("display", "none");
     $(".inbox_people").css("display","block");
+    $(".navbar").css("display", "block");
 }
 
 function joinCurrentMeet(){

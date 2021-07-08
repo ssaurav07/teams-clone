@@ -1,15 +1,4 @@
 
-const muteAudio = document.getElementById('mute-mic');
-const muteVideo = document.getElementById('mute-vid');
-const shareScreen = document.getElementById('share-screen');
-
-
-// --------------------- ON Click Functions -------------------------------------------
-
-muteAudio.onclick = function() { muteMic() }
-muteVideo.onclick = function() { muteCam() }
-shareScreen.onclick = function() { screenShare() }
-
 
 // --------------------- Mute Your Mic -------------------------------------------
 

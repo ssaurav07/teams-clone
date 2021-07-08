@@ -49,7 +49,7 @@
             <div class="formbg-outer">
               <div class="formbg">
                 <div class="formbg-inner padding-horizontal--48">
-                  <%- include('../partials/flash_error') %>
+                  <%- include('../partials/flashError') %>
                   <span class="padding-bottom--15">Signup for a new account</span>
                   <form id="stripe-login" action="/register" method="POST">
                     <div class="field padding-bottom--24">
@@ -70,11 +70,7 @@
                       </div>
                       <input type="password" name="password" placeholder="********" required>
                     </div>
-                    <div class="field field-checkbox padding-bottom--24 flex-flex align-center">
-                      <label for="checkbox">
-                        <input type="checkbox" name="checkbox"> Show Password
-                      </label>
-                    </div>
+                    
                     <div class="field padding-bottom--24">
                       <input type="submit" name="submit" value="Continue">
                     </div>

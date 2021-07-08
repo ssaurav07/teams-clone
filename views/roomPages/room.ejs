@@ -64,13 +64,13 @@
   </div>
   
   <div id="vidActions" class="btn-group" role="group" aria-label="Button group with nested dropdown">
-    <button type="button" id="mute-mic" ><i class="fas fa-microphone"></i></button>
-    <button type="button" id="mute-vid" ><i class="fas fa-video"></i></button>
+    <button type="button" id="mute-mic" onclick="muteMic()"><i class="fas fa-microphone"></i></button>
+    <button type="button" id="mute-vid" onclick="muteCam()"><i class="fas fa-video"></i></button>
     <button type="button" id="show-chat" onclick="toggleChat()"><i class="far fa-comment-dots"></i></button>
     <button type="button" id="show-participants" onclick="toggleParticipants()"><i class="fas fa-users"></i></button>  
     <!-- <button type="button" id="btnStart"><i class="fas fa-play"></i></button>
     <button type="button" id="btnStop" ><i class="fas fa-stop"></i></button> -->
-    <button type="button" id="share-screen" ><i class="fas fa-desktop"></i></button>
+    <button type="button" id="share-screen" onclick="screenShare()"><i class="fas fa-desktop"></i></button>
     <button type="button" onclick=invite()><i class="fas fa-share-alt"></i></button>
     <button id="pipButtonElement"><i class="far fa-images"></i></button>
     <!-- <video id="vid" controls></video> -->
@@ -87,8 +87,6 @@
     </div>
   </div>
 
-
-<!-- GOOGLE CALENDAR -->
 
   <script>
     function showSend(){

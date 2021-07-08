@@ -2,22 +2,26 @@ const passport = require('passport');
 var GoogleStrategy = require('passport-google-oauth20').Strategy;
 const User = require('../models/user')
 
-passport.serializeUser(function(user, done) {
-    done(null, user.id);
-  });
-  
-  passport.deserializeUser(function(id, done) {
-    User.findById(id, function(err, user) {
-      done(err, user);
-    });
-  });
 
+// In order to support login sessions, Passport will serialize and deserialize user instances
+// to and from the session
+
+passport.serializeUser(function(user, done) {
+  done(null, user.id);
+});
   
+passport.deserializeUser(function(id, done) {
+  User.findById(id, function(err, user) {
+    done(err, user);
+  });
+});
+
+
+// ----------------- Callback function to redirect user to home page after authentication ------------- //
 
 passport.use(new GoogleStrategy({
     clientID: process.env.CLIENT_ID ,
     clientSecret: process.env.CLIENT_SECRET,
-    // callbackURL: "http://localhost:3000/auth/google/callback"
     callbackURL : "/auth/google/callback"
   },
   function(accessToken, refreshToken, profile, done) {
