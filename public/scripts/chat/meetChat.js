@@ -1,11 +1,48 @@
-console.log("hello meet Chats",axios);
+const socket = io('/')
+let activeConversationId ="";
+
+socket.on('connect', ()=>{
+    console.log("connected", socket.id);
+    socket.emit('login', {username: userId});
+})
+
+socket.on('reconnect', function () { console.log('you have been reconnected')});
+
+socket.on('newMessage', (data)=>{
+    console.log(data)
+    if(data.activeConversationId == activeConversationId){
+        let msg = {
+            text : data.message
+          }
+          let incomingMessage = document.createElement('div');
+                        incomingMessage.className = 'incoming_msg';
+                    let incomingMessageImage = document.createElement('div');
+                        incomingMessageImage.className = 'incoming_msg_img';
+                        incomingMessageImage.innerHTML ='<img src="https://ptetutorials.com/images/user-profile.png" alt="User">';
+                    let receivedMessage = document.createElement('div');
+                        receivedMessage.className = 'received_msg';
+                    let receivedWithdateMessage = document.createElement('div');
+                        receivedWithdateMessage.className = 'received_withd_msg'
+                        receivedWithdateMessage.innerHTML = `<b>${data.userId}</b><br><p>${msg.text}</p> <span class="time_date_in"> 11:01 AM    |    June 10</span> </div>`;
+                    
+                        receivedMessage.appendChild(receivedWithdateMessage);
+                        incomingMessage.appendChild(incomingMessageImage);
+                        incomingMessage.appendChild(receivedMessage);
+                    $("#chats").append(incomingMessage);
+                    
+        scrollToBottom();
+          text.val('')
+    }
+})
+
+
 
 axios.get('/meet-conversations/'+userId).then((res,err)=>{
-    console.log(res.data);
+    // console.log(res.data);
 
     const data = res.data;
     data.forEach((item)=>{        
-        console.log(item);
+        // console.log(item);
 
         let chatDiv = document.createElement('div');
             chatDiv.className = 'chat_list';
@@ -29,7 +66,6 @@ axios.get('/meet-conversations/'+userId).then((res,err)=>{
     })
 })
 
-let activeConversationId ="";
 $('#people').on('click', '.chat_ib', function(e) {
     
     if(document.documentElement.clientWidth<=604){
@@ -52,18 +88,19 @@ $('#people').on('click', '.chat_ib', function(e) {
 
     axios.get(`/messages/${convoId}`).then((res,err)=>{
         // $("#loading-spinner").css("display","none");
-
+        console.log(res.data)
         $(`#${activeConversationId}`).parent().parent().addClass("active_chat");
-        let data = res.data;
+        let data = res.data.messages;
+        let names = res.data.names;
+        console.log(names)
         
         $("#chats").html("");
     
         data.forEach((item)=>{
-            console.log("meee" , item);
+            // console.log("meee" , item);
 
-            axios.get(`/user/${item.sender}`).then((res,err)=>{
                 if(item.sender === userId){
-                    console.log("meee" , item);
+                    // console.log("meee" , item);
                     let outgoingMessage = document.createElement('div');
                         outgoingMessage.className = 'outgoing_msg';
                     let sentMessage = document.createElement('div');
@@ -75,7 +112,7 @@ $('#people').on('click', '.chat_ib', function(e) {
                     $("#chats").append(outgoingMessage);
                 }
                 else{
-                    console.log("theyyy",item);
+                    // console.log("theyyy",item);
                     let incomingMessage = document.createElement('div');
                         incomingMessage.className = 'incoming_msg';
                     let incomingMessageImage = document.createElement('div');
@@ -85,17 +122,17 @@ $('#people').on('click', '.chat_ib', function(e) {
                         receivedMessage.className = 'received_msg';
                     let receivedWithdateMessage = document.createElement('div');
                         receivedWithdateMessage.className = 'received_withd_msg'
-                        receivedWithdateMessage.innerHTML = `<b>${res.data.name}</b><br><p>${item.text}</p> <span class="time_date_in"> 11:01 AM    |    June 10</span> </div>`;
+                        receivedWithdateMessage.innerHTML = `<b>${names[item.sender]}</b><br><p>${item.text}</p> <span class="time_date_in"> 11:01 AM    |    June 10</span> </div>`;
                     
                         receivedMessage.appendChild(receivedWithdateMessage);
                         incomingMessage.appendChild(incomingMessageImage);
                         incomingMessage.appendChild(receivedMessage);
                     $("#chats").append(incomingMessage);
                 }
-            })
             
            
         })
+        scrollToBottom();
     })
   });
 
@@ -107,29 +144,25 @@ $('#people').on('click', '.chat_ib', function(e) {
 
     function sendChat(e) {
     if ((e.which == 13 && text.val().length !== 0)) {
-      axios.post(`/messages/${activeConversationId}/${userId}/${text.val()}`).then((res,err)=>{
-        let msg = {
-            text : text.val()
-          }
-            let outgoingMessage = document.createElement('div');
-                outgoingMessage.className = 'outgoing_msg';
-            let sentMessage = document.createElement('div');
-                sentMessage.className = 'sent_msg';
-    
-            sentMessage.innerHTML = `<b>You</b><br><p>${msg.text}</p> <span class="time_date_out"> 11:01 AM    |    June 9</span> </div>`;
-            outgoingMessage.appendChild(sentMessage);
-        $("#chats").append(outgoingMessage);
-        scrollToBottom();
-        //   socket.emit('user-chat',msg);
-          text.val('')
-      })
+
+        socket.emit("add-message-to-server", {activeConversationId,userId, message : text.val() }, ()=>{
+            let msg = {
+                text : text.val()
+              }
+                let outgoingMessage = document.createElement('div');
+                    outgoingMessage.className = 'outgoing_msg';
+                let sentMessage = document.createElement('div');
+                    sentMessage.className = 'sent_msg';
+        
+                sentMessage.innerHTML = `<b>You</b><br><p>${msg.text}</p> <span class="time_date_out"> 11:01 AM    |    June 9</span> </div>`;
+                outgoingMessage.appendChild(sentMessage);
+            $("#chats").append(outgoingMessage);
+            scrollToBottom();
+            //   socket.emit('user-chat',msg);
+              text.val('')
+        })
     }
   };
-
-//   socket.on("createMessage", message => {
-//     $(".messages").append(`<li class="message"><b id="name">${message.name}</b><br/>${message.text}</li>`);
-//     scrollToBottom()
-//   })
 
 const scrollToBottom = () => {
     var d = $('#chats');
@@ -144,4 +177,16 @@ function showPeople(){
 
 function joinCurrentMeet(){
     location.href=`/room/${activeConversationId}`
+}
+
+function inviteToConversation(){
+    let link = `http://localhost:3000/join-meet-conversations/${activeConversationId}`;
+    const el = document.createElement('textarea');
+    el.value = link;
+    document.body.appendChild(el);
+    el.select();
+    document.execCommand('copy');
+    document.body.removeChild(el);
+  
+    alert("Invitation link copied to clipboard!" , link)
 }

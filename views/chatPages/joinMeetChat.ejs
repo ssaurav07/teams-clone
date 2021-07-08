@@ -15,25 +15,25 @@
 <body>
     <%- include('../partials/navbar') %>
     <div class="join-box">
-        <h2>Join Conversation</h2>
+        <h2 style="font-weight: bold;">Join Conversation</h2>
         <form id="join" method="post">
           <div class="user-box">
-            <label>Room Name</label><br><br>
-            <div><%= convo.roomName %></div>
+            <label style="font-weight: bold;">Room Name : </label>
+            <div style="text-align:center"> <%= convo.roomName %></div>
           </div>
           <div class="user-box">
-            <label>Number of Participants</label><br><br>
-            <div><%= convo.participantCount %></div>
+            <label style="font-weight: bold;">Number of Participants : </label>
+            <div style="text-align:center"> <%= convo.participantCount %></div>
           </div>
 
             <input type="hidden" name="userId" value="<%= userid %>">
         
-          <button type="submit">
+          <button type="submit" style="margin:0 auto;display:flex">
                 <span></span>
                 <span></span>
                 <span></span>
                 <span></span>
-                Submit
+                Join
           </button>
         </form>
       </div>

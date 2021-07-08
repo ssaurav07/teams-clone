@@ -14,9 +14,13 @@ const methodOverride      = require('method-override');  //for executing PUT req
 const MongoStore          = require('connect-mongo');
 const {isLoggedIn}        = require('./middleWares/isLoggedIn');
 
+
+
 // ---------------------Importing Database models-------------------------------------- //
 
 const User                = require('./models/user');
+const Message = require("./models/message");
+const Conversation = require("./models/meetConversation");
 
 // ---------------------Importing Website Routes-------------------------------------- //
 
@@ -29,6 +33,9 @@ const personalConversationRoutes  = require('./routes/personalConversationRoutes
 const meetConversationRoutes      = require('./routes/meetConversationRoutes');
 const messageRoutes               = require('./routes/messageRoutes');
 const roomRoutes                  = require('./routes/roomRoutes');
+const SessionManager                       = require('./modules/UserSessionModule');
+
+
 
 // ---------------------website host & keys-------------------------------------- //
 
@@ -39,6 +46,8 @@ require('./0auth/googleAuth');
 
 let inFeedRoute=false;
 let username="";
+var sessionManager = new SessionManager()
+
 
 app.use(express.static('public'));
 app.use('/uploads' , express.static('uploads'));
@@ -86,6 +95,7 @@ app.use((req,res,next)=>{
 	next();
 })
 
+
 passport.use(new LocalStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
@@ -104,7 +114,12 @@ app.use(roomRoutes);
 
 // ---------------------------Socket Connection----------------------------------------- //
 
+
+
 io.on('connection', socket => {
+
+
+  console.log("user connected", socket.id)
 
   socket.on('join-room', (roomId, userId) => {
     socket.join(roomId)
@@ -119,11 +134,89 @@ io.on('connection', socket => {
       socket.broadcast.to(roomId).emit('know-my-id', herObj);
     })
 
-    socket.on('disconnect', () => {
+    socket.on('disconnect', () => {    
       socket.broadcast.to(roomId).emit('user-disconnected', userId)
     })
   })
 
+  socket.on('login', (data)=>{
+    console.log(data.username,socket.id )
+    // if(!sessionManager.getUser(data.username)){
+    //   sessionManager.setUser(data.username,socket.id);
+    //   // console.log("user map created for user"+data.username)
+    // }
+    sessionManager.setUser(data.username,socket.id);
+
+    
+  //  io.to(socketId).emit(/* ... */);
+  })
+
+  socket.on('reconnect', (data)=>{
+    console.log("reconnected")
+  })
+  
+  socket.on('disconnect', () => {
+    sessionManager.deleteUser(socket.id)
+    
+    //socket.broadcast.to(roomId).emit('user-disconnected', userId)
+  })
+
+  socket.on('user-reconnected', function() {
+    //sessionId = username
+    //reconnect(username, socket)
+    console.log("reconneted")
+  });
+
+
+  socket.on('add-message-to-server', async (data,cb) =>{
+    const newMessage = new Message({
+      conversationId: data.activeConversationId,
+      sender : data.userId,
+      text :data.message
+    });
+  
+    // console.log(newMessage);
+  
+    try {
+      const savedMessage = await newMessage.save();
+      sendMessageToParticipants(data)
+      cb();
+    } catch (err) {
+      console.log(err);
+      //res.status(500).json(err);
+    }
+  })
+
 }) 
+
+
+async function sendMessageToParticipants(data){
+  let conversation = await Conversation.findOne({
+    roomId : data.activeConversationId
+  })
+
+  let members = conversation.members;
+  //console.log(conversation);
+
+  members = members.filter(function(member){
+    return member != data.userId;
+  })
+
+    members.forEach(member => {
+      
+     
+      let user = sessionManager.getUser(member)
+      //console.log(user, "give this man a shield");
+      if(user){
+        console.log("sending to socket id ", user.socketId)
+        io.to(user.socketId).emit('newMessage',data);
+        console.log("message sent")
+      }
+      else
+        console.log("message not sent")
+    });
+  // console.log(members); 
+  
+}
 
 server.listen(port);

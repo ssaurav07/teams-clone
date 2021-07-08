@@ -68,7 +68,7 @@ router.get('/logout', (req, res)=>{
 
 router.get("/user/:userId", async (req, res) => {
   const user = await User.findById(req.params.userId);
-  console.log(user)
+  
   if(user) res.send({name: user.name});
   else res.send({name: "User"});
 });

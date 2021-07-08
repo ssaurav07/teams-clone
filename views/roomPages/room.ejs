@@ -11,6 +11,7 @@
   <script>
     const roomId = "<%= roomId %>"
     const currentUser = "<%= currentUser.name %>"
+    const dbUserID = "<%= currentUser._id %>"
   </script>
 
 </head>
@@ -88,21 +89,6 @@
 
 
 <!-- GOOGLE CALENDAR -->
-
-<iframe style="display: none" id="calendar" src="https://calendar.google.com/calendar/embed?height=300&amp;wkst=1&amp;
-bgcolor=%23ffffff&amp;ctz=Asia%2FKolkata&amp;src=c3VtYW5tZXBsMDJAZ21haWwuY29t&amp;
-src=a2c0cDNvMTcya29icDY5bjYwajUxODZoODRAZ3JvdXAuY2FsZW5kYXIuZ29vZ2xlLmNvbQ&amp;
-src=Y2xhc3Nyb29tMTE0NTk4NDc4MjM3Njg1MDE3MjgzQGdyb3VwLmNhbGVuZGFyLmdvb2dsZS5jb20&amp;
-src=cDByNXZ1dmo1azBoc2hrNzdmNjU1djF0azZub2o2NGxAaW1wb3J0LmNhbGVuZGFyLmdvb2dsZS5jb20&amp;
-src=Y2xhc3Nyb29tMTE2NTUxOTEwNzIwNzI4NDMxNzc2QGdyb3VwLmNhbGVuZGFyLmdvb2dsZS5jb20&amp;
-src=Y2xhc3Nyb29tMTA5MzAzMjA0MDY5Mzc1NjE4NzczQGdyb3VwLmNhbGVuZGFyLmdvb2dsZS5jb20&amp;
-src=Y2xhc3Nyb29tMTE3NjQzMjg3NzM5OTE1MDIzMzM0QGdyb3VwLmNhbGVuZGFyLmdvb2dsZS5jb20&amp;
-src=Y2xhc3Nyb29tMTA4MDA4MDM2ODc0MzA4MTY4ODQ1QGdyb3VwLmNhbGVuZGFyLmdvb2dsZS5jb20&amp;
-src=Y2xhc3Nyb29tMTE3NzI3NDI5NDY0ODQyNzMzMDQ0QGdyb3VwLmNhbGVuZGFyLmdvb2dsZS5jb20&amp;
-color=%23039BE5&amp;color=%23D50000&amp;color=%23137333&amp;color=%23795548&amp;color=%23137333&amp;
-color=%23202124&amp;color=%230047a8&amp;color=%23174ea6&amp;
-color=%230047a8" style="border:solid 1px #777" width="300" height="300" frameborder="0" scrolling="no">
-</iframe>
 
   <script>
     function showSend(){
