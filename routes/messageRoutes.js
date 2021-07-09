@@ -36,16 +36,17 @@ router.get("/messages/:conversationId", async (req, res) => {
     })
     
     let members = conversation.members;
-
-    members.forEach(async (member) => {
+    console.log("hi 1");
+    for(member of members){
       const user = await User.findOne({
         _id : member
       })
       names[member] = user.name;
-      
-    })
-    
+      console.log(names[member],"hi 2");
+    }
+    console.log("hi 3");
     res.status(200).json({messages :messages, names: names});
+    console.log("hi 4");
 
   } catch (err) {
     res.status(500).json(err);

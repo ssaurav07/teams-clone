@@ -1,151 +1,249 @@
-console.log("hello",axios);
-axios.get('/conversations/'+userId).then((res,err)=>{
-    console.log(res.data);
+const socket = io('/')
+let activeConversationId = "";  //Currently selected conversation
+
+// ---------------------------Socket event listeners------------------------------------- //
+
+socket.on('connect', () => {
+    console.log("connected", socket.id);
+    socket.emit('login', { username: userId });
+})
+
+socket.on('reconnect', function () { console.log('you have been reconnected') });
+
+socket.on('newMessage', async (data) => {
+    console.log(data)
+    if (data.activeConversationId == activeConversationId) {
+        let msg = {
+            text: data.message
+        }
+
+        if (data.userId != userId) {
+
+            let user = await axios.post(`/user/${data.userId}`)
+
+            let incomingMessage = document.createElement('div');
+            incomingMessage.className = 'incoming_msg';
+            let incomingMessageImage = document.createElement('div');
+            incomingMessageImage.className = 'incoming_msg_img';
+            incomingMessageImage.innerHTML = '<img src="https://ptetutorials.com/images/user-profile.png" alt="User">';
+            let receivedMessage = document.createElement('div');
+            receivedMessage.className = 'received_msg';
+            let receivedWithdateMessage = document.createElement('div');
+            receivedWithdateMessage.className = 'received_withd_msg'
+            receivedWithdateMessage.innerHTML = `<b>${user.data.name}</b><br><p>${msg.text}</p> <span class="time_date_in"> 11:01 AM    |    June 10</span> </div>`;
+
+            receivedMessage.appendChild(receivedWithdateMessage);
+            incomingMessage.appendChild(incomingMessageImage);
+            incomingMessage.appendChild(receivedMessage);
+            $("#chats").append(incomingMessage);
+
+        }
+        else {
+            let outgoingMessage = document.createElement('div');
+            outgoingMessage.className = 'outgoing_msg';
+            let sentMessage = document.createElement('div');
+            sentMessage.className = 'sent_msg';
+
+            sentMessage.innerHTML = `<b>You</b><br><p>${msg.text}</p> <span class="time_date_in"> 11:01 AM    |    June 10</span> </div>`;
+
+            outgoingMessage.appendChild(sentMessage);
+            $("#chats").append(outgoingMessage);
+        }
+
+        scrollToBottom();
+        text.val('')
+    }
+})
+
+// --------------------------Fetch all conversations of the user-------------------------------------- //
+
+axios.get('/personal-conversations/' + userId).then((res, err) => {
 
     const data = res.data;
-    data.forEach((item)=>{
-        let friendId = "";
-        if(item.members[0]===userId){
+    data.forEach(async (item) => {
+
+        // ------------Find friend id from members array------------------------- //
+
+        let friendId;
+
+        if (item.members[0] == userId) {
             friendId = item.members[1];
         }
-        else{
+        else {
             friendId = item.members[0];
         }
-                       
 
-        axios.get(`/user/${friendId}`).then((res,err)=>{
-            let chatDiv = document.createElement('div');
-                chatDiv.className = 'chat_list';
-            let chatPeople = document.createElement('div');
-                chatPeople.className = 'chat_people';
-                chatPeople.id=friendId;
-            let chatImage = document.createElement('div');
-                chatImage.className = 'chat_img';
-                chatImage.innerHTML ='<img src="https://ptetutorials.com/images/user-profile.png" alt="User">';
-            let chatIb = document.createElement('div');
-                chatIb.className = 'chat_ib';
-                chatIb.id = item._id;
-            let today = new Date().toLocaleDateString();
-                chatIb.innerHTML = `<h5> ${res.data.name} <span class="chat_date"> ${today} </span></h5>
-                                    <p> This is Just a demo message for now! I hope we acheive success very soon!</p>`
-                chatPeople.appendChild(chatImage);
-                chatPeople.appendChild(chatIb);
-                chatDiv.appendChild(chatPeople);
-                $("#people").append(chatDiv);
-        })
+        // --------------------Fetch username of friend ------------------------- //
 
-        
+        let user = await axios.post(`/user/${friendId}`)
+
+        // ------------------ show all the conversations ------------------------- //
+
+        let chatDiv = document.createElement('div');
+        chatDiv.className = 'chat_list';
+        let chatPeople = document.createElement('div');
+        chatPeople.className = 'chat_people';
+        chatPeople.id = `${user.data.name}`
+        let chatImage = document.createElement('div');
+        chatImage.className = 'chat_img';
+        chatImage.innerHTML = '<img src="https://ptetutorials.com/images/user-profile.png" alt="User">';
+        let chatIb = document.createElement('div');
+        chatIb.className = 'chat_ib';
+        chatIb.id = item.roomId;
+        let today = new Date().toLocaleDateString();
+        chatIb.innerHTML = `<h5> ${user.data.name} <span class="chat_date"> ${today} </span></h5>
+                                <p> This is Just a demo message for now! I hope we acheive success very soon!</p>`
+        chatPeople.appendChild(chatImage);
+        chatPeople.appendChild(chatIb);
+        chatDiv.appendChild(chatPeople);
+        $("#people").append(chatDiv);
+
     })
 })
 
-let active_id ="";
-$('#people').on('click', '.chat_ib', function(e) {
-    
-    if(document.documentElement.clientWidth<=604){
+
+// --------------------Show messages of Clicked conversation-------------------- //
+
+$('#people').on('click', '.chat_ib', function (e) {
+
+    // --------------For small screen responsiveness-------------- //
+    if (document.documentElement.clientWidth <= 604) {
         $(".mesgs").css("display", "block");
-        $(".inbox_people").css("display","none");
+        $(".inbox_people").css("display", "none");
+        $(".navbar").css("display", "none");
     }
-    else{
+    else {
         $(".initial-bg").css("display", "none");
         $(".mesgs").css("display", "block");
     }
 
-
-    // $("#loading-spinner").css("display","flex");
     let convoId = e.currentTarget.id;
 
-    if(active_id!=="") document.getElementById(active_id).parentNode.parentNode.classList.remove("active_chat");
-    active_id = convoId;
+    if (activeConversationId !== "") document.getElementById(activeConversationId).parentNode.parentNode.classList.remove("active_chat");
+    activeConversationId = convoId;
 
-    let selFriendId = document.getElementById(convoId).parentNode.id;
-    
-        axios.get(`/user/${selFriendId}`).then((res,err)=>{
-            $("#friendName").text(`${res.data.name}`)
-        })
+    let friendName = document.getElementById(convoId).parentNode.id;
 
-    axios.get(`/messages/${convoId}`).then((res,err)=>{
-        // $("#loading-spinner").css("display","none");
+    $("#friendName").text(`${friendName}`)
 
-        $(`#${active_id}`).parent().parent().addClass("active_chat");
-        let data = res.data;
-        
+    // --------------Fetch all messages of a conversation Id -------------- //
+
+    axios.get(`/messages/${convoId}`).then((res, err) => {
+
+        $(`#${activeConversationId}`).parent().parent().addClass("active_chat");
+        let data = res.data.messages;
+        let names = res.data.names;
+
+
         $("#chats").html("");
 
-        data.forEach((item)=>{
+        data.forEach((item) => {
 
-            if(item.sender === userId){
+            if (item.sender === userId) {
+
                 let outgoingMessage = document.createElement('div');
-                    outgoingMessage.className = 'outgoing_msg';
+                outgoingMessage.className = 'outgoing_msg';
                 let sentMessage = document.createElement('div');
-                    sentMessage.className = 'sent_msg';
+                sentMessage.className = 'sent_msg';
 
-                    sentMessage.innerHTML = `<p>${item.text}</p> <span class="time_date_out"> 11:01 AM    |    June 9</span> </div>`;
+                sentMessage.innerHTML = `<b>You</b><br><p>${item.text}</p> <span class="time_date_out"> 11:01 AM    |    June 9</span> </div>`;
 
-                    outgoingMessage.appendChild(sentMessage);
+                outgoingMessage.appendChild(sentMessage);
+
                 $("#chats").append(outgoingMessage);
             }
-            else{
+            else {
+
                 let incomingMessage = document.createElement('div');
-                    incomingMessage.className = 'incoming_msg';
+                incomingMessage.className = 'incoming_msg';
                 let incomingMessageImage = document.createElement('div');
-                    incomingMessageImage.className = 'incoming_msg_img';
-                    incomingMessageImage.innerHTML ='<img src="https://ptetutorials.com/images/user-profile.png" alt="User">';
+                incomingMessageImage.className = 'incoming_msg_img';
+                incomingMessageImage.innerHTML = '<img src="https://ptetutorials.com/images/user-profile.png" alt="User">';
                 let receivedMessage = document.createElement('div');
-                    receivedMessage.className = 'received_msg';
+                receivedMessage.className = 'received_msg';
                 let receivedWithdateMessage = document.createElement('div');
-                    receivedWithdateMessage.className = 'received_withd_msg'
-                    receivedWithdateMessage.innerHTML = `<p>${item.text}</p> <span class="time_date_in"> 11:01 AM    |    June 10</span> </div>`;
-                
-                    receivedMessage.appendChild(receivedWithdateMessage);
-                    incomingMessage.appendChild(incomingMessageImage);
-                    incomingMessage.appendChild(receivedMessage);
+                receivedWithdateMessage.className = 'received_withd_msg'
+                receivedWithdateMessage.innerHTML = `<b>${names[item.sender]}</b><br><p>${item.text}</p> <span class="time_date_in"> 11:01 AM    |    June 10</span> </div>`;
+
+                receivedMessage.appendChild(receivedWithdateMessage);
+                incomingMessage.appendChild(incomingMessageImage);
+                incomingMessage.appendChild(receivedMessage);
+
                 $("#chats").append(incomingMessage);
             }
-           
+            scrollToBottom();   // scroll down after appending message
         })
     })
-  });
+});
 
 
-  let text = $(".write_msg");
-  // when press enter send message
-  $('html').keydown(sendChat);
-//   $('#send').click(sendChat);
+let text = $(".write_msg");
 
-    function sendChat(e) {
+$('html').keydown(sendChat);    // when pressed enter , send message
+
+function sendChat(e) {
     if ((e.which == 13 && text.val().length !== 0)) {
-      let msg = {
-        text : text.val(), 
-        // name : userName
-      }
-    let outgoingMessage = document.createElement('div');
-        outgoingMessage.className = 'outgoing_msg';
-    let sentMessage = document.createElement('div');
-        sentMessage.className = 'sent_msg';
 
-        sentMessage.innerHTML = `<p>${msg.text}</p> <span class="time_date_out"> 11:01 AM    |    June 9</span> </div>`;
-        outgoingMessage.appendChild(sentMessage);
-        
-    $("#chats").append(outgoingMessage);
-    scrollToBottom();
-    //   socket.emit('user-chat',msg);
-      text.val('')
+        let msg = {
+            text: text.val(),
+            name: `${userId}`,
+            roomId: activeConversationId
+        }
+
+        socket.emit('message', msg);   // Emit this message to video room's realtime chat
+
+        // ------------ Emit this message to teams conversation groups------------------ //
+        socket.emit("add-message-to-server", { activeConversationId, userId, message: text.val(), fromMeet: false }, () => {
+            let msg = {
+                text: text.val()
+            }
+            let outgoingMessage = document.createElement('div');
+            outgoingMessage.className = 'outgoing_msg';
+            let sentMessage = document.createElement('div');
+            sentMessage.className = 'sent_msg';
+
+            sentMessage.innerHTML = `<b>You</b><br><p>${msg.text}</p> <span class="time_date_out"> 11:01 AM    |    June 9</span> </div>`;
+            outgoingMessage.appendChild(sentMessage);
+
+            $("#chats").append(outgoingMessage);
+            scrollToBottom();
+
+            text.val('');
+        })
     }
-  };
+};
 
-//   socket.on("createMessage", message => {
-//     $(".messages").append(`<li class="message"><b id="name">${message.name}</b><br/>${message.text}</li>`);
-//     scrollToBottom()
-//   })
+// ----------Scroll to bottom of chat window after new messages------------------- //
 
 const scrollToBottom = () => {
     var d = $('#chats');
     d.scrollTop(d.prop("scrollHeight"));
-  }
+}
 
+// ---------- switch between conversations and message window (FOR MOBILES) ------------- //
 
-function showPeople(){
+function showPeople() {
     $(".mesgs").css("display", "none");
-    $(".inbox_people").css("display","block");
-    
+    $(".inbox_people").css("display", "block");
+
+}
+
+// -------Join a personal group Conversation or Create a new one to one Conversation ---- //
+
+function joinNewPersonalChatModel() {
+    let friendsId = $("#friendId").val();
+
+    axios.get(`/join-personal-conversations/${friendsId}/${userId}`).then((res, err) => {
+        if (res.data.status) {
+            console.log("personalConversationRoutes created");
+        }
+        else {
+            console.log(res);
+        }
+    })
+}
+
+function showNewConvoBox() {
+    $('#newConvoBox').show();
+    $('#createBtn').hide();
 }

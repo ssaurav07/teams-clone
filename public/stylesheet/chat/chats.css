@@ -223,6 +223,7 @@ img{
   padding: 0.5em;
   
 }
+#newConvoBox{ display: none;}
 
 @media only screen and (max-width:604px) {
   .inbox_people{

@@ -11,92 +11,96 @@
   <script>
     const roomId = "<%= roomId %>"
     const currentUser = "<%= currentUser.name %>"
-    const dbUserID = "<%= currentUser._id %>"
+    const dbUserId = "<%= currentUser._id %>"
   </script>
 
-</head>
+  </head>
 
-<body>
+  <body>
 
-  <div id="screen">
+    <div id="screen">
 
-    <%- include('../partials/leftIcons') %>
+      <%- include('../partials/leftIcons') %>
 
-    <div id="video-grid" class="row row-cols-1 row-cols-sm-2 row-cols-md-3"></div>
-  
-     <!-- Chat Section -->
+        <div id="video-grid" class="row row-cols-1 row-cols-sm-2 row-cols-md-3"></div>
 
-    <div id="chat_box" class="main__right" style="display:none">
-      <div class="main__header">
-          <h6>Chat <a style="float:right;margin-right: 1em;" onclick="toggleChat()"><i class="fas fa-times"></i></a></h6>
-      </div>
-      <div class="main__chat_window">
-          <ul class="messages">
+        <!-- Chat Section -->
 
-          </ul>
+        <div id="chat_box" class="main__right" style="display:none">
+          <div class="main__header">
+            <h6>Chat <a style="float:right;margin-right: 1em;" onclick="toggleChat()"><i class="fas fa-times"></i></a>
+            </h6>
+          </div>
+          <div class="main__chat_window">
+            <ul class="messages">
 
-      </div>
-      <hr>
-      <div class="main__message_container">
-          <input id="chat_message" type="text" placeholder="Type" onfocus="showSend()">
-          <a id="send"><i class="fas fa-paper-plane"></i></a>
-      </div>
-    </div>
+            </ul>
+
+          </div>
+          <hr>
+          <div class="main__message_container">
+            <input id="chat_message" type="text" placeholder="Type" onfocus="showSend()">
+            <a id="send"><i class="fas fa-paper-plane"></i></a>
+          </div>
+        </div>
 
 
-    <!-- Participant Section -->
+        <!-- Participant Section -->
         <div id="participant_box" class="main__right" style="display:none">
-      <div class="main__header">
-          <h6>Participants <a style="float:right;margin-right: 1em;" onclick="toggleParticipants()"><i class="fas fa-times"></i></a></h6>
-      </div>
-      <div class="participant_window">
-          <ul class="participants">
-          </ul>
+          <div class="main__header">
+            <h6>Participants <a style="float:right;margin-right: 1em;" onclick="toggleParticipants()"><i
+                  class="fas fa-times"></i></a></h6>
+          </div>
+          <div class="participant_window">
+            <ul class="participants">
+            </ul>
 
-      </div>
-      <hr>
-      <div class="participant_container" onclick="invite()">
-        <i class="fas fa-2x fa-share-alt"></i>
-          <input id="invitePeople" type="text" placeholder="Invite participants" disabled>
-      </div>
+          </div>
+          <hr>
+          <div class="participant_container" onclick="invite()">
+            <i class="fas fa-2x fa-share-alt"></i>
+            <input id="invitePeople" type="text" placeholder="Invite participants" disabled>
+          </div>
+        </div>
+
     </div>
 
-  </div>
-  
-  <div id="vidActions" class="btn-group" role="group" aria-label="Button group with nested dropdown">
-    <button type="button" id="mute-mic" onclick="muteMic()"><i class="fas fa-microphone"></i></button>
-    <button type="button" id="mute-vid" onclick="muteCam()"><i class="fas fa-video"></i></button>
-    <button type="button" id="show-chat" onclick="toggleChat()"><i class="far fa-comment-dots"></i></button>
-    <button type="button" id="show-participants" onclick="toggleParticipants()"><i class="fas fa-users"></i></button>  
-    <!-- <button type="button" id="btnStart"><i class="fas fa-play"></i></button>
+    <div id="vidActions" class="btn-group" role="group" aria-label="Button group with nested dropdown">
+      <button type="button" id="mute-mic" onclick="muteMic()"><i class="fas fa-microphone"></i></button>
+      <button type="button" id="mute-vid" onclick="muteCam()"><i class="fas fa-video"></i></button>
+      <button type="button" id="show-chat" onclick="toggleChat()"><i class="far fa-comment-dots"></i></button>
+      <button type="button" id="show-participants" onclick="toggleParticipants()"><i class="fas fa-users"></i></button>
+      <!-- <button type="button" id="btnStart"><i class="fas fa-play"></i></button>
     <button type="button" id="btnStop" ><i class="fas fa-stop"></i></button> -->
-    <button type="button" id="share-screen" onclick="screenShare()"><i class="fas fa-desktop"></i></button>
-    <button type="button" onclick=invite()><i class="fas fa-share-alt"></i></button>
-    <button id="pipButtonElement"><i class="far fa-images"></i></button>
-    <!-- <video id="vid" controls></video> -->
-    <!-- <video id="vid2" controls></video> -->
-  
-    <div class="btn-group" role="group">
-      <button id="btnGroupDrop1" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-        <i class="fas fa-ellipsis-v"></i>
-      </button>
-      <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-        <a class="dropdown-item" href="#">Dropdown link</a>
-        <a class="dropdown-item" href="#">Dropdown link</a>
+      <button type="button" id="share-screen" onclick="screenFlag?stopScreenShare():screenShare()"><i
+          class="fas fa-desktop"></i></button>
+      <button type="button" onclick=invite()><i class="fas fa-share-alt"></i></button>
+      <button id="pipButtonElement"><i class="far fa-images"></i></button>
+      <!-- <video id="vid" controls></video> -->
+      <!-- <video id="vid2" controls></video> -->
+
+      <div class="btn-group" role="group">
+        <button id="btnGroupDrop1" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+          onclick="location.href='/meet-conversations'">
+          <i class="fas fa-phone-slash" style="color:red;"></i>
+        </button>
+        <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+          <a class="dropdown-item" href="#">Dropdown link</a>
+          <a class="dropdown-item" href="#">Dropdown link</a>
+        </div>
       </div>
     </div>
-  </div>
 
 
-  <script>
-    function showSend(){
-      $('#send').show();
-    }
-    function hideSend(){
-      $('#send').hide();
-    }
-  </script>
+    <script>
+      function showSend() {
+        $('#send').show();
+      }
+      function hideSend() {
+        $('#send').hide();
+      }
+    </script>
 
-</body>
-</html>
+  </body>
 
+  </html>

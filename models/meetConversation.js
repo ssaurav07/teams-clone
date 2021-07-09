@@ -3,16 +3,20 @@ const Schema = mongoose.Schema;
 
 const meetConversationSchema = new Schema(
   {
-    roomId : {
-        type: String
+    roomId: {
+      type: String
     },
-    name : {
-        type : String,
-        default: `Teams Meeting ${Date.now()}`
+    name: {
+      type: String,
+      default: `Teams Meeting ${Date.now()}`
     },
     members: {
       type: Array,
     },
+    isPersonal: {
+      type: Boolean,
+      default: false
+    }
   },
   { timestamps: true }
 );
