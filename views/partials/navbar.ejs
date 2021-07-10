@@ -1,66 +1,76 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top" style=" z-index:99 ;position: -webkit-sticky;position: sticky;top: 0;">
+<nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top"
+  style=" z-index:99 ;position: -webkit-sticky;position: sticky;top: 0;">
   <div class="container-fluid">
-      <div class="navbar-brand" style="display:flex;"><img src="/images/msLogo.png" class="img-fluid" height="10px" width="30px"><span style="color:black;margin-left:10px;">MICROSOFT</span></div>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+    <div class="navbar-brand" style="display:flex;"><img src="/images/msLogo.png" class="img-fluid" height="10px"
+        width="30px"><span style="color:black;margin-left:10px;">MICROSOFT</span></div>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="/">Home</a>
+        </li>
+
+        <% if(currentUser !=="" ){ %>
           <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="/">Home</a>
+            <a class="nav-link active" aria-current="page" href="/feed">Feed</a>
           </li>
-          
-          <% if(currentUser !== ""){ %>
-            <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="/feed">Feed</a>
-            </li>
           <% } %>
 
-          <% if(currentUser !== "" && inFeedRoute==true){ %>
-            <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="/feed/new">New Post</a>
-            </li>
-          <% } %>
+            <% if(currentUser !=="" && inFeedRoute==true){ %>
+              <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="/feed/new">New Post</a>
+              </li>
+              <% } %>
 
-          <% if(currentUser == ""){ %>
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-              Products
-            </a>
-            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <li><a class="dropdown-item" href="#">Meeting & Calling</a></li>
-              <li><a class="dropdown-item" href="#">Chat & Collaboration</a></li>
-              <li><hr class="dropdown-divider"></li>
-              <li><a class="dropdown-item" href="#">Something else here</a></li>
-            </ul>
-          </li>  
-          <% } else{ %>  
-            <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="/explore">Meet & Call</a>
-            </li>
-            <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" 
-                      role="button" data-bs-toggle="dropdown" aria-expanded="false" style="color: rgba(0,0,0,.9)">
-                Chat
-              </a>
-              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <li><a class="dropdown-item" href="/conversations"><i class="fas fa-people-arrows"></i> Personal Chats</a></li>
-                <li><a class="dropdown-item" href="/meet-conversations"><i class="fas fa-users"></i> Meeting Chats</a></li>
-              </ul>
-            </li>
-          <% } %> 
-        </ul>
+                <% if(currentUser=="" ){ %>
+                  <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                      data-bs-toggle="dropdown" aria-expanded="false">
+                      Products
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                      <li><a class="dropdown-item" href="/explore">Meeting & Calling</a></li>
+                      <li><a class="dropdown-item" href="/meet-conversations">Chat & Collaboration</a></li>
+                      <li>
+                        <hr class="dropdown-divider">
+                      </li>
+                      <li><a class="dropdown-item" href="#">Something else here</a></li>
+                    </ul>
+                  </li>
+                  <% } else{ %>
+                    <li class="nav-item">
+                      <a class="nav-link active" aria-current="page" href="/explore">Meet & Call</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                      <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                        data-bs-toggle="dropdown" aria-expanded="false" style="color: rgba(0,0,0,.9)">
+                        Chat
+                      </a>
+                      <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <li><a class="dropdown-item" href="/conversations"><i class="fas fa-people-arrows"></i> Personal
+                            Chats</a></li>
+                        <li><a class="dropdown-item" href="/meet-conversations"><i class="fas fa-users"></i> Meeting
+                            Chats</a></li>
+                      </ul>
+                    </li>
+                    <% } %>
+      </ul>
 
-        <div class="navbar-nav ml-auto">
-          <% if(currentUser === ""){ %>
-            <a class="nav-link" href="/login" style="color:black">Sign In</a>
-            <a class="nav-link" href="/register" style="color:black"><i class="fas fa-user-plus"></i> Sign Up</a>
+      <div class="navbar-nav ml-auto">
+        <% if(currentUser==="" ){ %>
+          <a class="nav-link" href="/login" style="color:black">Sign In</a>
+          <a class="nav-link" href="/register" style="color:black"><i class="fas fa-user-plus"></i> Sign Up</a>
           <% } else { %>
-            <div class="nav-link" style="color:#4b53bc"><%=currentUser.username%></div>
+            <div class="nav-link" style="color:#4b53bc">
+              <%=currentUser.username%>
+            </div>
             <a class="nav-link" href="/logout" style="color:black"><i class="fas fa-sign-out-alt"></i> Logout</a>
-          <% } %>
-        </div>
-        
+            <% } %>
       </div>
+
     </div>
-  </nav>
+  </div>
+</nav>

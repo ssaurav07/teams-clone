@@ -8,8 +8,8 @@ const User = require("../models/user");
 router.post("/messages/:conversationId/:senderId/:text", async (req, res) => {
   const newMessage = new Message({
     conversationId: req.params.conversationId,
-    sender : req.params.senderId,
-    text : req.params.text
+    sender: req.params.senderId,
+    text: req.params.text
   });
 
 
@@ -28,25 +28,23 @@ router.get("/messages/:conversationId", async (req, res) => {
     const messages = await Message.find({
       conversationId: req.params.conversationId,
     });
-    
+
     let names = {}
 
     let conversation = await Conversation.findOne({
-      roomId : req.params.conversationId
+      roomId: req.params.conversationId
     })
-    
+
     let members = conversation.members;
-    console.log("hi 1");
-    for(member of members){
+
+    for (member of members) {
       const user = await User.findOne({
-        _id : member
+        _id: member
       })
       names[member] = user.name;
-      console.log(names[member],"hi 2");
     }
-    console.log("hi 3");
-    res.status(200).json({messages :messages, names: names});
-    console.log("hi 4");
+
+    res.status(200).json({ messages: messages, names: names });
 
   } catch (err) {
     res.status(500).json(err);

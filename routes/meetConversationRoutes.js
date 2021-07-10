@@ -137,12 +137,13 @@ router.get('/join-personal-conversations/:friendId/:userId', isLoggedIn, async (
 });
 
 
-// ----------------------------Fetch user meet conversations------------------------------------ //
+// ----------------------------Fetch user's meet conversations------------------------------------ //
 
 router.get("/meet-conversations/:userId", isLoggedIn, async (req, res) => {
   try {
     const conversation = await Conversation.find({
-      members: { $in: [req.params.userId] }
+      members: { $in: [req.params.userId] },
+      isPersonal: { $ne: true }
     });
 
     res.status(200).json(conversation);
@@ -151,7 +152,7 @@ router.get("/meet-conversations/:userId", isLoggedIn, async (req, res) => {
   }
 });
 
-// ----------------------------Fetch user meet conversations------------------------------------ //
+// ----------------------------Fetch user's Personal conversations------------------------------------ //
 
 router.get("/personal-conversations/:userId", isLoggedIn, async (req, res) => {
   try {
