@@ -32,8 +32,15 @@ router.post('/register', async (req, res, next) => {
     });
   }
   catch (err) {
+    console.log(err);
+    if(err.message.indexOf("11000") != -1){
+      req.flash('error', "Email id already exists!");
+      res.redirect('/register');
+    }
+    else{
     req.flash('error', err.message);
     res.redirect('/register');
+    }
   }
 })
 
@@ -54,7 +61,9 @@ router.get('/login', (req, res) => {
 router.post('/login', passport.authenticate('local', { failureFlash: true, failureRedirect: '/login' }), (req, res) => {
   req.flash('success', "Logged in successfully!");
   let redirectUrl = req.session.returnTo || '/explore';
-  res.redirect(redirectUrl)
+  delete req.session.returnTo;
+  res.redirect(redirectUrl);
+
 })
 
 // -------------------------Logout a user--------------------------------------- //

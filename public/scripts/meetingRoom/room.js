@@ -93,11 +93,12 @@ navigator.mediaDevices.getUserMedia({
         name: dbUserId
       }
 
-      socket.emit('message', msg);
 
       socket.emit("add-message-to-server", { activeConversationId: roomId, userId: dbUserId, message: text.val(), fromMeet: true }, () => {
 
       })
+
+      socket.emit('message', msg);
 
       text.val('')
     }

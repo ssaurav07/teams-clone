@@ -55,7 +55,7 @@ router.get('/join-meet-conversations/:conversationId', isLoggedIn, async (req, r
       roomName: conversation[0].name,
       participantCount: conversation[0].members.length
     }
-    console.log(convo)
+    
     res.render('chatPages/joinMeetChat', { convo: convo });
   }
 })
@@ -75,7 +75,7 @@ router.post('/join-meet-conversations/:conversationId', isLoggedIn, async (req, 
 
       const foundConvo = await Conversation.find({
         roomId: req.params.conversationId,
-        members: { $in: [req.body.userId] },
+        members: { $in: [req.user._id] }
       })
 
 
@@ -129,7 +129,7 @@ router.get('/join-personal-conversations/:friendId/:userId', isLoggedIn, async (
     });
 
     const savedConversation = await newConversation.save();
-    res.send({ status: true, message: newConversation._id })
+    res.send({ status: true, message: newConversation.roomId })
   } catch (err) {
     console.log('Error', err)
     res.status(500).json(err);

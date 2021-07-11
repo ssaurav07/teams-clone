@@ -7,7 +7,7 @@ function muteMic() {
   let ih = document.getElementById("mute-mic");
   if (ih.innerHTML === '<i class="fas fa-microphone-slash"></i>') {
     ih.innerHTML = '<i class="fas fa-microphone"></i>';
-    $("#mute-mic").css("color", "#67f20a")
+    $("#mute-mic").css("color", "black")
   }
   else {
     ih.innerHTML = '<i class="fas fa-microphone-slash"></i>';
@@ -23,7 +23,7 @@ function muteCam() {
   myStream.getVideoTracks().forEach(track => track.enabled = !track.enabled);
   let ih = document.getElementById("mute-vid");
   if (ih.innerHTML === '<i class="fas fa-video-slash"></i>') {
-    $("#mute-vid").css("color", "#67f20a")
+    $("#mute-vid").css("color", "black")
     ih.innerHTML = '<i class="fas fa-video"></i>'
   }
   else {
@@ -49,7 +49,10 @@ function screenShare() {
     screenShareStream = stream;
     let videoTrack = stream.getVideoTracks()[0];
 
-    stream.onended = () => { stopScreenShare(); }
+    videoTrack.onended = () => { 
+      console.log('stopped from chrome api')
+      stopScreenShare(); 
+    }
 
     for (let [key, rtcObj] of Object.entries(peers)) {
       let sender = rtcObj.peerConnection.getSenders().find(function (s) {
@@ -57,12 +60,13 @@ function screenShare() {
       })
       sender.replaceTrack(videoTrack);
     }
+    $("#share-screen").css("color", "#67f20a")
     screenFlag = true;
   }).catch((err) => {
     console.log("unable to display media" + err);
   })
 
-  $("#share-screen").css("color", "#67f20a")
+
 }
 
 // --------------------- stop sharing Screen -------------------------------------------

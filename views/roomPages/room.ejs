@@ -64,34 +64,29 @@
 
     </div>
 
-    <div id="vidActions" class="btn-group" role="group" aria-label="Button group with nested dropdown">
-      <button type="button" id="mute-mic" onclick="muteMic()" style="color:#67f20a"><i
-          class="fas fa-microphone"></i></button>
-      <button type="button" id="mute-vid" onclick="muteCam()" style="color:#67f20a"><i
-          class="fas fa-video"></i></button>
-      <button type="button" id="show-chat" onclick="toggleChat()"><i class="far fa-comment-dots"></i></button>
-      <button type="button" id="show-participants" onclick="toggleParticipants()" style="color:#4b53bc"><i
-          class="fas fa-users"></i></button>
+    <div id="vidActions" class="align-items-center" role="group" aria-label="Button group with nested dropdown">
+      <button class="btn mx-1 btn-light rounded-circle" style="height: 41px; width: 41px" type="button" id="mute-mic" onclick="muteMic()" ><i
+          class="bi bi-mic-fill"></i></button>
+      <button type="button" class="btn  mx-1 btn-light rounded-circle" style="height: 41px; width: 41px" id="mute-vid" onclick="muteCam()" style="color:#67f20a"><i
+          class="bi bi-camera-video-fill"></i></button>
+      <button type="button" class="btn  mx-1 btn-light rounded-circle" style="height: 41px; width: 41px" id="show-chat" onclick="toggleChat()"><i class="bi bi-chat-left"></i></button>
       <!-- <button type="button" id="btnStart"><i class="fas fa-play"></i></button>
       <button type="button" id="btnStop"><i class="fas fa-stop"></i></button> -->
-      <button type="button" id="share-screen" onclick="screenFlag?stopScreenShare():screenShare()"><i
-          class="fas fa-upload"></i>
-        <button type="button" onclick=invite()><i class="fas fa-share-alt"></i></button>
-        <button id="pipButtonElement"><i class="far fa-images"></i></button>
-
-        <button type="button" onclick=handRaise()><i class="far fa-hand-paper"></i></button>
+      <button type="button" class="btn  mx-1 btn-light rounded-circle" style="height: 41px; width: 41px" id="share-screen" onclick="screenFlag?stopScreenShare():screenShare()"><i
+          class="fas fa-upload"></i>      
         <!-- <video id="vid" controls style="height:10vh;width:10%"></video> -->
         <!-- <video id="vid2" controls style="height:10vh;width:10%;display: none;"></video> -->
+        <button class="btn btn-light rounded-circle" style="height: 41px; width: 41px" type="button" onclick="location.href='/meet-conversations'"><i class="fas fa-phone-slash" style="color:red;"></i></button>
+       <button id="menu-toggle" onclick="$('#other-options').toggle()" class="shadow-none btn text-white position-absolute m-1 " style="right: 0" ><i class="bi bi-three-dots-vertical"></i></button>
 
-        <div class="btn-group" role="group">
-          <button id="btnGroupDrop1" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
-            onclick="location.href='/meet-conversations'">
-            <i class="fas fa-phone-slash" style="color:red;"></i>
-          </button>
-          <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-            <a class="dropdown-item" href="#">Dropdown link</a>
-            <a class="dropdown-item" href="#">Dropdown link</a>
-          </div>
+       
+        <div id="other-options" class="position-absolute shadow bg-white p-1 rounded" style="display: none;bottom:5rem; right: 1rem;">
+         
+          <button type="button"  class="btn  mx-1 btn-light rounded-circle" style="height: 41px; width: 41px" id="show-participants" onclick="toggleParticipants()" style="color:#4b53bc"><i
+            class="bi bi-people-fill"></i></button><br>
+          <button type="button" class="btn  mx-1 btn-light rounded-circle" style="height: 41px; width: 41px" onclick=invite()><i class="fas fa-share-alt"></i></button><br>
+          <button class="btn  mx-1 btn-light rounded-circle" style="height: 41px; width: 41px" id="pipButtonElement"><i class="far fa-images"></i></button><br>
+          <button class="btn  mx-1 btn-light rounded-circle" style="height: 41px; width: 41px" type="button" onclick=handRaise()><i class="far fa-hand-paper"></i></button>
         </div>
     </div>
 

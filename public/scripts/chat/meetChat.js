@@ -160,40 +160,42 @@ $('#people').on('click', '.chat_ib', function (e) {
 
 
 let text = $(".write_msg");
-$('html').keydown(sendChat);    // when pressed enter , send message
+$('.write_msg').keydown((e)=>{
+    if ((e.which == 13 && text.val().length !== 0)) { // when pressed enter , send message
+        sendMessage()
+     }
+});   
 
-function sendChat(e) {
-    if ((e.which == 13 && text.val().length !== 0)) {
 
+function sendMessage(){
+    let msg = {
+        text:  text.val(),
+        name: `${userId}`,
+        roomId: activeConversationId
+    }
+
+    socket.emit('message', msg); // Emit this message to video room's realtime chat
+
+    // ------------ Emit this message to teams conversation groups------------------ //        
+    socket.emit("add-message-to-server", { activeConversationId, userId, message: text.val(), fromMeet: false }, () => {
         let msg = {
-            text: text.val(),
-            name: `${userId}`,
-            roomId: activeConversationId
+            text: text.val()
         }
 
-        socket.emit('message', msg); // Emit this message to video room's realtime chat
+        let outgoingMessage = document.createElement('div');
+        outgoingMessage.className = 'outgoing_msg';
+        let sentMessage = document.createElement('div');
+        sentMessage.className = 'sent_msg';
 
-        // ------------ Emit this message to teams conversation groups------------------ //        
-        socket.emit("add-message-to-server", { activeConversationId, userId, message: text.val(), fromMeet: false }, () => {
-            let msg = {
-                text: text.val()
-            }
+        sentMessage.innerHTML = `<b>You</b><br><p>${msg.text}</p> <span class="time_date_out">${dayjs().format('hh:mm A | MMM D')}</span> </div>`;
+        outgoingMessage.appendChild(sentMessage);
 
-            let outgoingMessage = document.createElement('div');
-            outgoingMessage.className = 'outgoing_msg';
-            let sentMessage = document.createElement('div');
-            sentMessage.className = 'sent_msg';
+        $("#chats").append(outgoingMessage);
+        scrollToBottom();
 
-            sentMessage.innerHTML = `<b>You</b><br><p>${msg.text}</p> <span class="time_date_out">${dayjs().format('hh:mm A | MMM D')}</span> </div>`;
-            outgoingMessage.appendChild(sentMessage);
-
-            $("#chats").append(outgoingMessage);
-            scrollToBottom();
-
-            text.val('');
-        })
-    }
-};
+        text.val('');
+    })
+}
 
 // ----------Scroll to bottom of chat window after new messages------------------- //
 

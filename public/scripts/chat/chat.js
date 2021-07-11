@@ -233,9 +233,30 @@ function showPeople() {
 function joinNewPersonalChatModel() {
     let friendsId = $("#friendId").val();
 
-    axios.get(`/join-personal-conversations/${friendsId}/${userId}`).then((res, err) => {
+    axios.get(`/join-personal-conversations/${friendsId}/${userId}`).then(async (res, err) => {
         if (res.data.status) {
-            console.log("personalConversationRoutes created");
+            let user = await axios.post(`/user/${friendsId}`)
+
+        // ------------------ show all the conversations ------------------------- //
+
+        let chatDiv = document.createElement('div');
+        chatDiv.className = 'chat_list';
+        let chatPeople = document.createElement('div');
+        chatPeople.className = 'chat_people';
+        chatPeople.id = `${user.data.name}`
+        let chatImage = document.createElement('div');
+        chatImage.className = 'chat_img';
+        chatImage.innerHTML = '<img class="rounded-circle" src="https://pixinvent.com/modern-admin-clean-bootstrap-4-dashboard-html-template/app-assets/images/portrait/small/avatar-s-8.png" alt="User">';
+        let chatIb = document.createElement('div');
+        chatIb.className = 'chat_ib';
+        chatIb.id = res.data.message;
+        let today = new Date().toLocaleDateString();
+        chatIb.innerHTML = `<h5> ${user.data.name} <span class="chat_date"> ${today} </span></h5>
+                                <p> This is Just a demo message for now!</p>`
+        chatPeople.appendChild(chatImage);
+        chatPeople.appendChild(chatIb);
+        chatDiv.appendChild(chatPeople);
+        $("#people").append(chatDiv);
         }
         else {
             console.log(res);

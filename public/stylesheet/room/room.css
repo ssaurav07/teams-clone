@@ -1,3 +1,11 @@
+html,body{
+  margin: 0;
+  padding: 0;
+  height:100vh;
+  overflow: hidden;
+  width: 100vw;
+}
+
 body{
     background-color:rgb(53, 51, 51);
   }
@@ -47,14 +55,16 @@ body{
   #vidActions{
     display:flex;    
     width: 100%;
-    background-color: black;
+    background-color: transparent;
     height:10vh;
     flex-direction: row;
     justify-content: center;
     margin:0 auto;
+    position: relative;
+    z-index: 999;
   }
 
-  #vidActions button{
+  #vidActions buttson{
     background-color:black;
       font-size:1.3em;
       border: none;
