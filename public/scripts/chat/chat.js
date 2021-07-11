@@ -25,12 +25,12 @@ socket.on('newMessage', async (data) => {
             incomingMessage.className = 'incoming_msg';
             let incomingMessageImage = document.createElement('div');
             incomingMessageImage.className = 'incoming_msg_img';
-            incomingMessageImage.innerHTML = '<img src="https://ptetutorials.com/images/user-profile.png" alt="User">';
+            incomingMessageImage.innerHTML = '<img class="rounded-circle" src="https://pixinvent.com/modern-admin-clean-bootstrap-4-dashboard-html-template/app-assets/images/portrait/small/avatar-s-11.png" alt="User">';
             let receivedMessage = document.createElement('div');
             receivedMessage.className = 'received_msg';
             let receivedWithdateMessage = document.createElement('div');
             receivedWithdateMessage.className = 'received_withd_msg'
-            receivedWithdateMessage.innerHTML = `<b>${user.data.name}</b><br><p>${msg.text}</p> <span class="time_date_in"> 11:01 AM    |    June 10</span> </div>`;
+            receivedWithdateMessage.innerHTML = `<b>${user.data.name}</b><br><p>${msg.text}</p> <span class="time_date_in">${dayjs(msg.sentAt).format('hh:mm A | MMM D')}</span> </div>`;
 
             receivedMessage.appendChild(receivedWithdateMessage);
             incomingMessage.appendChild(incomingMessageImage);
@@ -44,7 +44,7 @@ socket.on('newMessage', async (data) => {
             let sentMessage = document.createElement('div');
             sentMessage.className = 'sent_msg';
 
-            sentMessage.innerHTML = `<b>You</b><br><p>${msg.text}</p> <span class="time_date_in"> 11:01 AM    |    June 10</span> </div>`;
+            sentMessage.innerHTML = `<b>You</b><br><p>${msg.text}</p> <span class="time_date_in">${dayjs(Date.now()).format('hh:mm A | MMM D')}</span>`;
 
             outgoingMessage.appendChild(sentMessage);
             $("#chats").append(outgoingMessage);
@@ -86,13 +86,13 @@ axios.get('/personal-conversations/' + userId).then((res, err) => {
         chatPeople.id = `${user.data.name}`
         let chatImage = document.createElement('div');
         chatImage.className = 'chat_img';
-        chatImage.innerHTML = '<img src="https://ptetutorials.com/images/user-profile.png" alt="User">';
+        chatImage.innerHTML = '<img class="rounded-circle" src="https://pixinvent.com/modern-admin-clean-bootstrap-4-dashboard-html-template/app-assets/images/portrait/small/avatar-s-8.png" alt="User">';
         let chatIb = document.createElement('div');
         chatIb.className = 'chat_ib';
         chatIb.id = item.roomId;
         let today = new Date().toLocaleDateString();
         chatIb.innerHTML = `<h5> ${user.data.name} <span class="chat_date"> ${today} </span></h5>
-                                <p> This is Just a demo message for now! I hope we acheive success very soon!</p>`
+                                <p> This is Just a demo message for now!</p>`
         chatPeople.appendChild(chatImage);
         chatPeople.appendChild(chatIb);
         chatDiv.appendChild(chatPeople);
@@ -146,7 +146,7 @@ $('#people').on('click', '.chat_ib', function (e) {
                 let sentMessage = document.createElement('div');
                 sentMessage.className = 'sent_msg';
 
-                sentMessage.innerHTML = `<b>You</b><br><p>${item.text}</p> <span class="time_date_out"> 11:01 AM    |    June 9</span> </div>`;
+                sentMessage.innerHTML = `<b>You</b><br><p>${item.text}</p> <span class="time_date_out">${dayjs(item.sentAt).format('hh:mm A | MMM D')}</span> </div>`;
 
                 outgoingMessage.appendChild(sentMessage);
 
@@ -158,7 +158,7 @@ $('#people').on('click', '.chat_ib', function (e) {
                 incomingMessage.className = 'incoming_msg';
                 let incomingMessageImage = document.createElement('div');
                 incomingMessageImage.className = 'incoming_msg_img';
-                incomingMessageImage.innerHTML = '<img src="https://ptetutorials.com/images/user-profile.png" alt="User">';
+                incomingMessageImage.innerHTML = '<img class="rounded-circle" src="https://pixinvent.com/modern-admin-clean-bootstrap-4-dashboard-html-template/app-assets/images/portrait/small/avatar-s-26.png" alt="User">';
                 let receivedMessage = document.createElement('div');
                 receivedMessage.className = 'received_msg';
                 let receivedWithdateMessage = document.createElement('div');
@@ -241,6 +241,10 @@ function joinNewPersonalChatModel() {
             console.log(res);
         }
     })
+}
+
+function joinVideoCall() {
+    location.href = `/room/${activeConversationId}`
 }
 
 function showNewConvoBox() {

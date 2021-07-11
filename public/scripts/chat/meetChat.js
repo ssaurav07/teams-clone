@@ -29,7 +29,7 @@ socket.on('newMessage', async (data) => {
             receivedMessage.className = 'received_msg';
             let receivedWithdateMessage = document.createElement('div');
             receivedWithdateMessage.className = 'received_withd_msg'
-            receivedWithdateMessage.innerHTML = `<b>${user.data.name}</b><br><p>${msg.text}</p> <span class="time_date_in">${dayjs(item.sentAt).format('hh:mm A | MMM D')}</span> </div>`;
+            receivedWithdateMessage.innerHTML = `<b>${user.data.name}</b><br><p>${msg.text}</p> <span class="time_date_in">${dayjs(msg.sentAt).format('hh:mm A | MMM D')}</span> </div>`;
 
             receivedMessage.appendChild(receivedWithdateMessage);
             incomingMessage.appendChild(incomingMessageImage);
@@ -43,7 +43,7 @@ socket.on('newMessage', async (data) => {
             let sentMessage = document.createElement('div');
             sentMessage.className = 'sent_msg';
 
-            sentMessage.innerHTML = `<b>You</b><br><p>${msg.text}</p> <span class="time_date_in">Just now</span>`;
+            sentMessage.innerHTML = `<b>You</b><br><p>${msg.text}</p> <span class="time_date_in">${dayjs(Date.now()).format('hh:mm A | MMM D')}</span>`;
 
             outgoingMessage.appendChild(sentMessage);
             $("#chats").append(outgoingMessage);
@@ -76,7 +76,7 @@ axios.get('/meet-conversations/' + userId).then((res, err) => {
         chatIb.id = item.roomId;
         let today = new Date().toLocaleDateString();
         chatIb.innerHTML = `<h5> ${item.name} <span class="chat_date"> ${today} </span></h5>
-                                <p> This is Just a demo message for now! I hope we acheive success very soon!</p>`
+                                <p> This is Just a demo message for now!</p>`
         chatPeople.appendChild(chatImage);
         chatPeople.appendChild(chatIb);
         chatDiv.appendChild(chatPeople);
@@ -229,3 +229,7 @@ function inviteToConversation() {
 
     alert("Invitation link copied to clipboard!", link)
 }
+
+$("form").submit(function () {
+    axios.post(`/${location.href}`)
+})

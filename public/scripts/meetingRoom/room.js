@@ -15,7 +15,7 @@ let screenFlag = false;
 let screenShareStream;
 
 
-$(".participants").append(`<li class="message"><b>${userName} (You)</b></li>`); // Adds your name to participant box
+$(".participants").append(`<li class="message"><b>${userName} (You)</b></li>`); // Adds your name to participant list
 
 
 // --------------------- Create your video  -------------------------------------------
@@ -46,13 +46,19 @@ navigator.mediaDevices.getUserMedia({
     peers[call.peer] = call;
   })
 
-  // --------------------- Get Ids of people already in meet -------------------------------------------
+  // --------------------- Get Ids of people already in meet ------------------------------------
 
   socket.on('know-my-id', (herObj) => {
     if (herObj.userId == myId) {
       $(".participants").append(`<li class="message"><b id="name" class=${herObj.myId}>${herObj.myName}</b></li>`);
       console.log(herObj.myId, herObj.myName);
     }
+  })
+
+  // --------------------- Alerts everyone if someone raises the hand-----------------------------
+
+  socket.on('hand-raise', user => {
+    alert(`${user.name} has raised the hand!`)
   })
 
   // --------------------- ON User Connection -------------------------------------------
@@ -87,11 +93,12 @@ navigator.mediaDevices.getUserMedia({
         name: dbUserId
       }
 
+      socket.emit('message', msg);
+
       socket.emit("add-message-to-server", { activeConversationId: roomId, userId: dbUserId, message: text.val(), fromMeet: true }, () => {
 
       })
 
-      socket.emit('message', msg);
       text.val('')
     }
   };
@@ -176,5 +183,6 @@ function addVideoStream(video, stream, id) {
     video.play()
   })
   if (id) video.id = id;
+  video.className = "item";
   videoGrid.appendChild(video);
 }

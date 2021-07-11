@@ -7,7 +7,7 @@ function muteMic() {
   let ih = document.getElementById("mute-mic");
   if (ih.innerHTML === '<i class="fas fa-microphone-slash"></i>') {
     ih.innerHTML = '<i class="fas fa-microphone"></i>';
-    $("#mute-mic").css("color", "white")
+    $("#mute-mic").css("color", "#67f20a")
   }
   else {
     ih.innerHTML = '<i class="fas fa-microphone-slash"></i>';
@@ -23,7 +23,7 @@ function muteCam() {
   myStream.getVideoTracks().forEach(track => track.enabled = !track.enabled);
   let ih = document.getElementById("mute-vid");
   if (ih.innerHTML === '<i class="fas fa-video-slash"></i>') {
-    $("#mute-vid").css("color", "white")
+    $("#mute-vid").css("color", "#67f20a")
     ih.innerHTML = '<i class="fas fa-video"></i>'
   }
   else {
@@ -61,6 +61,8 @@ function screenShare() {
   }).catch((err) => {
     console.log("unable to display media" + err);
   })
+
+  $("#share-screen").css("color", "#67f20a")
 }
 
 // --------------------- stop sharing Screen -------------------------------------------
@@ -77,6 +79,9 @@ function stopScreenShare() {
   screenShareStream.getTracks().forEach(function (track) {
     track.stop();
   });
+
+  $("#share-screen").css("color", "white")
+
 }
 
 
@@ -152,4 +157,10 @@ function invite() {
   document.body.removeChild(el);
 
   alert("Invitation link copied to clipboard!", link)
+}
+
+// --------------------- Hand Raise -------------------------------------------
+
+function handRaise() {
+  socket.emit('hand-raise', { name: currentUser });
 }

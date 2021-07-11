@@ -1,0 +1,67 @@
+<%- include('../partials/header') %>
+
+  <title>User Chats || MS Teams</title>
+
+  <link rel="stylesheet" href="/stylesheet/chat/chats.css" type="text/css">
+
+  <script defer src="/scripts/chat/chat.js"></script>
+  <script>
+    let userId = "<%= userid %>"
+  </script>
+
+  </head>
+
+  <body>
+    <%- include('../partials/navbar') %>
+
+      <div class="container">
+        <div class="messaging">
+          <div class="inbox_msg">
+            <div class="inbox_people">
+              <div class="headind_srch">
+                <div class="recent_heading">
+                  <h4>Recent</h4>
+                </div>
+                <div id="newConvoBox">
+                  <input id="friendId" type="text" placeholder="Enter your friends Id">
+                  <button type="button" class="btn btn-primary" onclick="joinNewPersonalChatModel()">
+                    Create </button>
+                </div>
+                <div id="createBtn" class="srch_bar">
+                  <div class="stylish-input-group">
+                    <i class="far fa-edit" onclick="showNewConvoBox()"></i>
+                  </div>
+                </div>
+              </div>
+              <div id="people" class="inbox_chat">
+
+              </div>
+            </div>
+            <div class="initial-bg">
+
+            </div>
+            <div class="mesgs">
+              <div id="messageHead">
+                <i id="back" class="fas fa-arrow-circle-left" onclick="showPeople()"></i>
+                <div><img class="friend_img rounded-circle" src="https://pixinvent.com/modern-admin-clean-bootstrap-4-dashboard-html-template/app-assets/images/portrait/small/avatar-s-11.png" alt="User"></div>
+                <div id="friendName"></div>
+                <div onclick="joinVideoCall()"><i class="fas fa-video" style="margin-right:1em;padding:0.5em"></i></div>
+              </div>
+              <div id="chats" class="msg_history">
+                
+              </div>
+              <div class="type_msg">
+                <div class="input_msg_write">
+                  <input type="text" class="write_msg pe-5 px-2 shadow-none border-none form-control d-inline-block"
+                        placeholder="Type a message" />
+                      <button class="msg_send_btn" type="button"><i class="fa fa-paper-plane"></i></button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+  </body>
+
+  </html>

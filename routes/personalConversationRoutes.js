@@ -12,7 +12,7 @@ router.use((req,res,next)=>{
 // -------------------------Show conversations--------------------------------------- //
 
 router.get('/conversations', isLoggedIn ,(req, res) => {
-    res.render('chatPages/chats');
+    res.render('chatPages/personalChats');
 })
 
 
@@ -42,19 +42,6 @@ router.get("/conversations/:userId", isLoggedIn , async (req, res) => {
     } catch (err) {
       res.status(500).json(err);
     }
-});
-
-// -------------------------Fetch conversations including two userIds--------------------------- //
-
-router.get("/find/:firstUserId/:secondUserId", isLoggedIn , async (req, res) => {
-  try {
-    const conversation = await Conversation.findOne({
-      members: { $all: [req.params.firstUserId, req.params.secondUserId] },
-    });
-    res.status(200).json(conversation)
-  } catch (err) {
-    res.status(500).json(err);
-  }
 });
 
 

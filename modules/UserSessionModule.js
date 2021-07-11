@@ -1,33 +1,31 @@
 
 var userSessions = new Map();
 
-var User = function(name, socketid){
+var User = function (name, socketid) {
     this.name = name;
     this.socketId = socketid;
-   
+
 }
 
-var SessionManager = function(){
+var SessionManager = function () {
     this.sessions = new Map();
 }
 
-SessionManager.prototype.hello = function(){ 
-    console.log("hello session");
+SessionManager.prototype.hello = function () {
 }
 
-SessionManager.prototype.setUser = function(userId, socketId){
- 
-        let user = new User(userId, socketId);
-        this.sessions.set(userId, user);
-       // console.log(this.sessions)
-      
-    
+SessionManager.prototype.setUser = function (userId, socketId) {
+
+    let user = new User(userId, socketId);
+    this.sessions.set(userId, user);
+
+
     return false;
 }
 
-SessionManager.prototype.deleteUser = function(socketId){
-    let userId = getByValue(this.sessions,socketId)
-    if(userId){
+SessionManager.prototype.deleteUser = function (socketId) {
+    let userId = getByValue(this.sessions, socketId)
+    if (userId) {
         this.sessions.delete(userId);
         return true;
     }
@@ -36,14 +34,14 @@ SessionManager.prototype.deleteUser = function(socketId){
 
 function getByValue(map, searchValue) {
     for (let [key, value] of map.entries()) {
-      if (value === searchValue)
-        return key;
+        if (value === searchValue)
+            return key;
     }
-  }
-  
+}
 
-SessionManager.prototype.getUser = function(userId){
-    if(this.sessions.has(userId)){
+
+SessionManager.prototype.getUser = function (userId) {
+    if (this.sessions.has(userId)) {
         let user = this.sessions.get(userId);
         return user;
     }

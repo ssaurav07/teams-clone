@@ -23,7 +23,6 @@
       <%- include('../partials/leftIcons') %>
 
         <div id="video-grid" class="row row-cols-1 row-cols-sm-2 row-cols-md-3"></div>
-
         <!-- Chat Section -->
 
         <div id="chat_box" class="main__right" style="display:none">
@@ -66,29 +65,34 @@
     </div>
 
     <div id="vidActions" class="btn-group" role="group" aria-label="Button group with nested dropdown">
-      <button type="button" id="mute-mic" onclick="muteMic()"><i class="fas fa-microphone"></i></button>
-      <button type="button" id="mute-vid" onclick="muteCam()"><i class="fas fa-video"></i></button>
+      <button type="button" id="mute-mic" onclick="muteMic()" style="color:#67f20a"><i
+          class="fas fa-microphone"></i></button>
+      <button type="button" id="mute-vid" onclick="muteCam()" style="color:#67f20a"><i
+          class="fas fa-video"></i></button>
       <button type="button" id="show-chat" onclick="toggleChat()"><i class="far fa-comment-dots"></i></button>
-      <button type="button" id="show-participants" onclick="toggleParticipants()"><i class="fas fa-users"></i></button>
-      <button type="button" id="btnStart"><i class="fas fa-play"></i></button>
-      <button type="button" id="btnStop"><i class="fas fa-stop"></i></button>
+      <button type="button" id="show-participants" onclick="toggleParticipants()" style="color:#4b53bc"><i
+          class="fas fa-users"></i></button>
+      <!-- <button type="button" id="btnStart"><i class="fas fa-play"></i></button>
+      <button type="button" id="btnStop"><i class="fas fa-stop"></i></button> -->
       <button type="button" id="share-screen" onclick="screenFlag?stopScreenShare():screenShare()"><i
-          class="fas fa-desktop"></i></button>
-      <button type="button" onclick=invite()><i class="fas fa-share-alt"></i></button>
-      <button id="pipButtonElement"><i class="far fa-images"></i></button>
-      <!-- <video id="vid" controls style="height:10vh;width:10%"></video> -->
-      <video id="vid2" controls style="height:10vh;width:10%;display: none;"></video>
+          class="fas fa-upload"></i>
+        <button type="button" onclick=invite()><i class="fas fa-share-alt"></i></button>
+        <button id="pipButtonElement"><i class="far fa-images"></i></button>
 
-      <div class="btn-group" role="group">
-        <button id="btnGroupDrop1" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
-          onclick="location.href='/meet-conversations'">
-          <i class="fas fa-phone-slash" style="color:red;"></i>
-        </button>
-        <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-          <a class="dropdown-item" href="#">Dropdown link</a>
-          <a class="dropdown-item" href="#">Dropdown link</a>
+        <button type="button" onclick=handRaise()><i class="far fa-hand-paper"></i></button>
+        <!-- <video id="vid" controls style="height:10vh;width:10%"></video> -->
+        <!-- <video id="vid2" controls style="height:10vh;width:10%;display: none;"></video> -->
+
+        <div class="btn-group" role="group">
+          <button id="btnGroupDrop1" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+            onclick="location.href='/meet-conversations'">
+            <i class="fas fa-phone-slash" style="color:red;"></i>
+          </button>
+          <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+            <a class="dropdown-item" href="#">Dropdown link</a>
+            <a class="dropdown-item" href="#">Dropdown link</a>
+          </div>
         </div>
-      </div>
     </div>
 
 

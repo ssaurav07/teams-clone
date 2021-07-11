@@ -1,39 +1,40 @@
-const express = require('express');
-const app = express();
-const server = require('http').Server(app);
-const io = require('socket.io')(server);
-const { v4: uuidV4 } = require('uuid');  //for generating random Room IDs
-const bodyParser = require('body-parser');
-const expressSanitizer = require('express-sanitizer');
-const mongoose = require('mongoose');
-const passport = require('passport');
-const LocalStrategy = require('passport-local');
-const session = require('express-session');
-const flash = require('connect-flash');
-const methodOverride = require('method-override');  //for executing PUT requests
-const MongoStore = require('connect-mongo');
-const { isLoggedIn } = require('./middleWares/isLoggedIn');
+const express               = require('express');
+const app                   = express();
+const server                = require('http').Server(app);
+const io                    = require('socket.io')(server);
+const { v4: uuidV4 }        = require('uuid');  //for generating random Room IDs
+const bodyParser            = require('body-parser');
+const expressSanitizer      = require('express-sanitizer');
+const mongoose              = require('mongoose');
+const passport              = require('passport');
+const LocalStrategy         = require('passport-local');
+const session               = require('express-session');
+const flash                 = require('connect-flash');
+const methodOverride        = require('method-override');  //for executing PUT requests
+const MongoStore            = require('connect-mongo');
+const { isLoggedIn }        = require('./middleWares/isLoggedIn');
 
 
 
 // ---------------------Importing Database models-------------------------------------- //
 
-const User = require('./models/user');
-const Message = require("./models/message");
-const Conversation = require("./models/meetConversation");
-const SessionManager = require('./modules/UserSessionModule');
+const User            = require('./models/user');
+const Message         = require("./models/message");
+const Conversation    = require("./models/meetConversation");
+const SessionManager  = require('./modules/UserSessionModule');
 
 // ---------------------Importing Website Routes-------------------------------------- //
 
-const homePageRoute = require('./routes/homePageRoute')
-const userRoutes = require('./routes/userRoutes');
-const authRoutes = require('./routes/authRoutes');
-const userHomeRoute = require('./routes/userHomeRoute')
-const postRoutes = require('./routes/postRoutes');
-const personalConversationRoutes = require('./routes/personalConversationRoutes');
-const meetConversationRoutes = require('./routes/meetConversationRoutes');
-const messageRoutes = require('./routes/messageRoutes');
-const roomRoutes = require('./routes/roomRoutes');
+const homePageRoute               = require('./routes/homePageRoute')
+const userRoutes                  = require('./routes/userRoutes');
+const authRoutes                  = require('./routes/authRoutes');
+const userHomeRoute               = require('./routes/userHomeRoute')
+const postRoutes                  = require('./routes/postRoutes');
+const personalConversationRoutes  = require('./routes/personalConversationRoutes');
+const meetConversationRoutes      = require('./routes/meetConversationRoutes');
+const messageRoutes               = require('./routes/messageRoutes');
+const roomRoutes                  = require('./routes/roomRoutes');
+const undefinedPagesRoute         = require('./routes/undefinedPagesRoute')
 
 
 // ---------------------website host & keys-------------------------------------- //
@@ -53,7 +54,7 @@ app.use('/uploads', express.static('uploads'));
 
 mongoose.connect(db_URL, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => {
-    console.log("Mongo ready to rock")
+    console.log("MongoDB ready!")
   })
   .catch(err => console.error);
 
@@ -110,6 +111,7 @@ app.use(personalConversationRoutes);
 app.use(meetConversationRoutes);
 app.use(messageRoutes);
 app.use(roomRoutes);
+app.use(undefinedPagesRoute);
 
 
 // ---------------------------Socket Connection----------------------------------------- //
@@ -132,8 +134,11 @@ io.on('connection', socket => {
       socket.broadcast.to(roomId).emit('know-my-id', herObj);
     })
 
+    socket.on('hand-raise', (user) => {
+      socket.broadcast.to(roomId).emit('hand-raise', user);
+    })
+
     socket.on('disconnect', () => {
-      console.log("disconnected ");
       socket.broadcast.to(roomId).emit('user-disconnected', userId)
     })
   })
@@ -154,7 +159,6 @@ io.on('connection', socket => {
   })
 
   socket.on('disconnect', () => {
-    console.log("2nd disconnected");
     sessionManager.deleteUser(socket.id)
   })
 

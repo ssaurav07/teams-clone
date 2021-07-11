@@ -4,46 +4,44 @@
 
   <link rel="stylesheet" href="/stylesheet/chat/joinMeetChats.css" type="text/css">
 
-  <script defer src="/scripts/chat/chat.js"></script>
+  <script defer src="/scripts/chat/meetChat.js"></script>
   <script>
     let userId = "<%= userid %>";
-    let target = location.href;
   </script>
 
-</head>
+  </head>
 
-<body>
+  <body>
     <%- include('../partials/navbar') %>
-    <div class="join-box">
+      <div class="join-box">
         <h2 style="font-weight: bold;">Join Conversation</h2>
         <form id="join" method="post">
           <div class="user-box">
-            <label style="font-weight: bold;">Room Name : </label>
-            <div style="text-align:center"> <%= convo.roomName %></div>
+            <label style="font-weight: bold;">Room Name : </label><br><br>
+            <div style="text-align:center">
+              <%= convo.roomName %>
+            </div>
           </div>
           <div class="user-box">
-            <label style="font-weight: bold;">Number of Participants : </label>
-            <div style="text-align:center"> <%= convo.participantCount %></div>
+            <label style="font-weight: bold;">Number of Participants : </label><br><br>
+            <div style="text-align:center">
+              <%= convo.participantCount %>
+            </div>
           </div>
 
-            <input type="hidden" name="userId" value="<%= userid %>">
-        
+          <input type="hidden" name="userId" value="<%= userid %>">
+
           <button type="submit" style="margin:0 auto;display:flex">
-                <span></span>
-                <span></span>
-                <span></span>
-                <span></span>
-                Join
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            Join
           </button>
         </form>
       </div>
 
-    <script>
-        $("form").submit(function(){
-            axios.post(`/${location.href}`)
-        })
-    </script>
 
+  </body>
 
-</body>
-</html>
+  </html>

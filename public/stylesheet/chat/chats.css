@@ -108,6 +108,12 @@ img{
   width: 11%;
 }
 
+.friend_img {
+  float: left;
+  width: 20%;
+  height:40px
+}
+
 .chat_ib {
   float: left;
   padding: 0 0 0 15px;
@@ -245,6 +251,7 @@ img{
 
 #friendName{
   margin:0.3em auto;
+  margin-left: -9em;
   color: black;
 }
 
