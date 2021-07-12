@@ -1,6 +1,6 @@
-const express = require('express');
-const router = express.Router();
-const User = require('../models/user');
+const express   = require('express');
+const router    = express.Router();
+const User      = require('../models/user');
 
 // ------------------Get and send name of the user by her ID--------------------- //
 

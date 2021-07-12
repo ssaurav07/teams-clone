@@ -1,6 +1,6 @@
 
 
-// --------------------- Mute Your Mic -------------------------------------------
+// --------------------- Mute/Unmute Your Mic -------------------------------------------
 
 function muteMic() {
   myStream.getAudioTracks().forEach(track => track.enabled = !track.enabled);
@@ -17,7 +17,7 @@ function muteMic() {
 }
 
 
-// --------------------- Turn off your video -------------------------------------------
+// --------------------- Turn on/off your video -------------------------------------------
 
 function muteCam() {
   myStream.getVideoTracks().forEach(track => track.enabled = !track.enabled);
@@ -69,7 +69,7 @@ function screenShare() {
 
 }
 
-// --------------------- stop sharing Screen -------------------------------------------
+// --------------------- Stop sharing Screen -------------------------------------------
 
 function stopScreenShare() {
   let videoTrack = myStream.getVideoTracks()[0];

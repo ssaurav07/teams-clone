@@ -1,7 +1,7 @@
-const router = require("express").Router();
-const Message = require("../models/message");
-const Conversation = require("../models/meetConversation");
-const User = require("../models/user");
+const router            = require("express").Router();
+const Message           = require("../models/message");
+const Conversation      = require("../models/meetConversation");
+const User              = require("../models/user");
 
 // -------------------------Create new message--------------------------------------- //
 

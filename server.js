@@ -30,7 +30,6 @@ const userRoutes                  = require('./routes/userRoutes');
 const authRoutes                  = require('./routes/authRoutes');
 const userHomeRoute               = require('./routes/userHomeRoute')
 const postRoutes                  = require('./routes/postRoutes');
-const personalConversationRoutes  = require('./routes/personalConversationRoutes');
 const meetConversationRoutes      = require('./routes/meetConversationRoutes');
 const messageRoutes               = require('./routes/messageRoutes');
 const roomRoutes                  = require('./routes/roomRoutes');
@@ -40,7 +39,6 @@ const undefinedPagesRoute         = require('./routes/undefinedPagesRoute')
 // ---------------------website host & keys-------------------------------------- //
 
 const port = process.env.PORT || 3000;
-// const db_URL = 'mongodb://localhost:27017/msUserDb';
 const db_URL = process.env.DB_URL;
 require('./0auth/googleAuth');
 
@@ -51,6 +49,9 @@ var sessionManager = new SessionManager()
 
 app.use(express.static('public'));
 app.use('/uploads', express.static('uploads'));
+
+
+// ------------------------Connection to Mongoose---------------------------------------- //
 
 mongoose.connect(db_URL, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => {
@@ -64,6 +65,8 @@ const peerServer = ExpressPeerServer(server, {
 });
 
 
+// ------------------------ Session creation and storage --------------------------- //
+
 app.use(session({
   store: MongoStore.create({ mongoUrl: db_URL }),
   secret: 'notagoodsecret',
@@ -71,25 +74,27 @@ app.use(session({
   saveUninitialized: false,
 }));
 
-app.use(methodOverride("_method"));
+app.use(methodOverride("_method"));  // to send PUT requests
 app.use(flash());
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(expressSanitizer())
+app.use(expressSanitizer())  // to sanitize inputs
 app.set('view engine', 'ejs');
 app.use('/peerjs', peerServer);
 
 app.use(passport.initialize());
 app.use(passport.session());
 
+// --------------------To make data available across all ejs files /pages ------------------------- //
+
 app.use((req, res, next) => {
   res.locals.inFeedRoute = inFeedRoute;
   res.locals.currentUser = "";
   res.locals.userid = "";
-  if (req.isAuthenticated()) {
-    res.locals.currentUser = req.user;
-    username = req.user.name;
-    res.locals.userid = req.user._id;
-  }
+    if (req.isAuthenticated()) {
+      res.locals.currentUser = req.user;
+      username = req.user.name;
+      res.locals.userid = req.user._id;
+    }
   res.locals.error = req.flash("error");
   res.locals.success = req.flash("success");
   next();
@@ -107,7 +112,6 @@ app.use(authRoutes);
 app.use(userRoutes);
 app.use(userHomeRoute);
 app.use(postRoutes);
-app.use(personalConversationRoutes);
 app.use(meetConversationRoutes);
 app.use(messageRoutes);
 app.use(roomRoutes);
@@ -185,7 +189,7 @@ io.on('connection', socket => {
 
 })
 
-// -----------------------send message to conversation participants--------------------------- //
+// -----------send message from the Socket to conversation participants------------------ //
 
 async function sendMessageToParticipants(data) {
   let conversation = await Conversation.findOne({

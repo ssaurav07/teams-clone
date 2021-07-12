@@ -1,5 +1,5 @@
-const socket = io('/')
-let activeConversationId = "";  //Currently selected conversation
+const socket               = io('/')
+let activeConversationId   = "";  //Currently selected conversation
 
 // ---------------------------Socket event listeners------------------------------------- //
 
@@ -8,7 +8,7 @@ socket.on('connect', () => {
     socket.emit('login', { username: userId });
 })
 
-socket.on('reconnect', function () { console.log('you have been reconnected') });
+// ---------- Appends chats happening in video room to conversation group---------------- //
 
 socket.on('newMessage', async (data) => {
     console.log(data)
@@ -54,6 +54,7 @@ socket.on('newMessage', async (data) => {
         text.val('')
     }
 })
+
 
 // --------------------------Fetch all conversations of the user-------------------------------------- //
 
@@ -126,6 +127,7 @@ $('#people').on('click', '.chat_ib', function (e) {
 
     $("#friendName").text(`${friendName}`)
 
+    
     // --------------Fetch all messages of a conversation Id -------------- //
 
     axios.get(`/messages/${convoId}`).then((res, err) => {
@@ -177,41 +179,45 @@ $('#people').on('click', '.chat_ib', function (e) {
 });
 
 
+// --------------------- For Text Messaging ---------------------------------------- //
+
 let text = $(".write_msg");
+$('.write_msg').keydown((e)=>{
+    if ((e.which == 13 && text.val().length !== 0)) { // when pressed enter , send message
+        sendMessage()
+     }
+});   
 
-$('html').keydown(sendChat);    // when pressed enter , send message
 
-function sendChat(e) {
-    if ((e.which == 13 && text.val().length !== 0)) {
+function sendMessage(){
+    let msg = {
+        text:  text.val(),
+        name: `${userId}`,
+        roomId: activeConversationId
+    }
 
+    socket.emit('message', msg); // Emit this message to video room's realtime chat
+
+    // ------------ Emit this message to personal conversation groups------------------ //        
+    socket.emit("add-message-to-server", { activeConversationId, userId, message: text.val(), fromMeet: false }, () => {
         let msg = {
-            text: text.val(),
-            name: `${userId}`,
-            roomId: activeConversationId
+            text: text.val()
         }
 
-        socket.emit('message', msg);   // Emit this message to video room's realtime chat
+        let outgoingMessage = document.createElement('div');
+        outgoingMessage.className = 'outgoing_msg';
+        let sentMessage = document.createElement('div');
+        sentMessage.className = 'sent_msg';
 
-        // ------------ Emit this message to teams conversation groups------------------ //
-        socket.emit("add-message-to-server", { activeConversationId, userId, message: text.val(), fromMeet: false }, () => {
-            let msg = {
-                text: text.val()
-            }
-            let outgoingMessage = document.createElement('div');
-            outgoingMessage.className = 'outgoing_msg';
-            let sentMessage = document.createElement('div');
-            sentMessage.className = 'sent_msg';
+        sentMessage.innerHTML = `<b>You</b><br><p>${msg.text}</p> <span class="time_date_out">${dayjs().format('hh:mm A | MMM D')}</span> </div>`;
+        outgoingMessage.appendChild(sentMessage);
 
-            sentMessage.innerHTML = `<b>You</b><br><p>${msg.text}</p> <span class="time_date_out"> 11:01 AM    |    June 9</span> </div>`;
-            outgoingMessage.appendChild(sentMessage);
+        $("#chats").append(outgoingMessage);
+        scrollToBottom();
 
-            $("#chats").append(outgoingMessage);
-            scrollToBottom();
-
-            text.val('');
-        })
-    }
-};
+        text.val('');
+    })
+}
 
 // ----------Scroll to bottom of chat window after new messages------------------- //
 

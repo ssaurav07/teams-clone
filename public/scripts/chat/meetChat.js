@@ -7,7 +7,7 @@ socket.on('connect', () => {
     socket.emit('login', { username: userId });
 })
 
-socket.on('reconnect', function () { console.log('you have been reconnected') });
+// ---------- Appends chats happening in video room to conversation group---------------- //
 
 socket.on('newMessage', async (data) => {
     console.log(data)

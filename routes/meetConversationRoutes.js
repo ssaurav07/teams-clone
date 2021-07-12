@@ -1,9 +1,16 @@
-const express = require('express');
-const router = express.Router();
-const { v4: uuidV4 } = require('uuid');
-const Conversation = require("../models/meetConversation");
-const User = require('../models/user');
-const { isLoggedIn } = require('../middleWares/isLoggedIn');
+const express           = require('express');
+const router            = express.Router();
+const { v4: uuidV4 }    = require('uuid');
+const Conversation      = require("../models/meetConversation");
+const User              = require('../models/user');
+const { isLoggedIn }    = require('../middleWares/isLoggedIn');
+let inFeedRoute         =false;
+
+router.use((req,res,next)=>{
+    res.locals.inFeedRoute=inFeedRoute;
+    next();
+  })
+
 
 // ----------------------------Show meet conversations------------------------------------ //
 
@@ -11,6 +18,11 @@ router.get('/meet-conversations', isLoggedIn, (req, res) => {
   res.render('chatPages/meetChats');
 })
 
+// -------------------------Show personal conversations--------------------------------------- //
+
+router.get('/conversations', isLoggedIn ,(req, res) => {
+  res.render('chatPages/personalChats');
+})
 
 // ------------------Create new Teams conversation and meet(if demanded)------------------ //
 
@@ -38,7 +50,7 @@ router.post("/meet-conversations", isLoggedIn, async (req, res) => {
 });
 
 
-// ----------------------------Render Join Conversation Page ----------------------------------------- //
+// ----------------------------Render Join Teams Conversation Page ----------------------------------------- //
 
 router.get('/join-meet-conversations/:conversationId', isLoggedIn, async (req, res) => {
 
@@ -60,7 +72,7 @@ router.get('/join-meet-conversations/:conversationId', isLoggedIn, async (req, r
   }
 })
 
-// ----------------------------------- Adds to the conversation-------------------------------------- //
+// ----------------------------------- Adds to the Teams conversation-------------------------------------- //
 
 router.post('/join-meet-conversations/:conversationId', isLoggedIn, async (req, res, done) => {
   try {

@@ -1,8 +1,8 @@
-const express = require('express');
-const router = express.Router();
-const { v4: uuidV4 } = require('uuid');
-const Conversation = require("../models/meetConversation");
-const {isLoggedIn} = require('../middleWares/isLoggedIn');
+const express           = require('express');
+const router            = express.Router();
+const { v4: uuidV4 }    = require('uuid');
+const Conversation      = require("../models/meetConversation");
+const {isLoggedIn}      = require('../middleWares/isLoggedIn');
 
 // -------------------------Create a meeting room ID--------------------------------------- //
 

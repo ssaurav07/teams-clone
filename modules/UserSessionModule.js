@@ -11,9 +11,6 @@ var SessionManager = function () {
     this.sessions = new Map();
 }
 
-SessionManager.prototype.hello = function () {
-}
-
 SessionManager.prototype.setUser = function (userId, socketId) {
 
     let user = new User(userId, socketId);

@@ -1,6 +1,6 @@
 const express = require('express');
-const router = express.Router();
-const multer = require('multer');
+const router  = express.Router();
+const multer  = require('multer');
 
 // -------------------------For storing Images to the Uploads folder--------------------------------------- //
 

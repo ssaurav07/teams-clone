@@ -1,9 +1,8 @@
 const socket = io('/')
-// const myPeer = new Peer({host:'peerjs-server.herokuapp.com', secure:true, port:443})
+
 const myPeer = new Peer({ secure: true, port: 443 })
 
 const videoGrid = document.getElementById('video-grid'); // Grid containing participant videos
-
 
 // --------------------- Global Variables (current User Infos) -------------------------------------------
 
@@ -68,10 +67,10 @@ navigator.mediaDevices.getUserMedia({
     currId = user.userId;
     socket.emit('know-my-id', { myId: myId, userId: user.userId, myName: userName });
 
-    // alert(user.username + " has joined the call!")
+    
     $(".messages").append(`<li class="newMember"><span id="join_time">${new Date().toLocaleTimeString()}</span> ${user.username} has joined the call!</li>`);
     scrollToBottom();
-    console.log('New User Connected: ' + user.userId + user.username);
+    
 
     const fc = () => connectToNewUser(user.userId, stream)
     timerid = setTimeout(fc, 0)
@@ -79,30 +78,7 @@ navigator.mediaDevices.getUserMedia({
   })
 
 
-  // --------------------- For Text Messaging -------------------------------------------
-
-  let text = $("input");
-  // when press enter send message
-  $('html').keydown(sendChat);
-  $('#send').click(sendChat);
-
-  function sendChat(e) {
-    if ((e.which == 13 && text.val().length !== 0)) {
-      let msg = {
-        text: text.val(),
-        name: dbUserId
-      }
-
-
-      socket.emit("add-message-to-server", { activeConversationId: roomId, userId: dbUserId, message: text.val(), fromMeet: true }, () => {
-
-      })
-
-      socket.emit('message', msg);
-
-      text.val('')
-    }
-  };
+  // --------------------- For Appending Messages to meeting chat----------------------------- //
 
   socket.on("createMessage", async message => {
 
@@ -186,4 +162,31 @@ function addVideoStream(video, stream, id) {
   if (id) video.id = id;
   video.className = "item";
   videoGrid.appendChild(video);
+}
+
+
+// --------------------- For Text Messaging during meeting------------------------------------------- //
+
+let text = $("input");
+
+$('input').keydown((e)=>{
+  if ((e.which == 13 && text.val().length !== 0)) { // when pressed enter , send message
+      sendMessage()
+}
+}); 
+
+function sendMessage(){
+  let msg = {
+      text:  text.val(),
+      name: dbUserId
+  }
+
+  // emits the message to conversations group chat
+  socket.emit("add-message-to-server", { activeConversationId: roomId, userId: dbUserId, message: text.val(), fromMeet: true }, () => {
+
+  })
+
+  socket.emit('message', msg);
+
+  text.val('')
 }
