@@ -21,7 +21,7 @@
 
       <%- include('../partials/leftIcons') %>
 
-        <div id="video-grid" class="row row-cols-1 row-cols-sm-2 row-cols-md-3"></div>
+        <div id="video-grid"></div>
         <!-- Chat Section -->
 
         <div id="chat_box" class="main__right" style="display:none">
@@ -65,34 +65,49 @@
     </div>
 
     <div id="vidActions" class="align-items-center" role="group" aria-label="Button group with nested dropdown">
-      <button class="btn mx-1 btn-light rounded-circle" style="height: 41px; width: 41px" type="button" id="mute-mic" onclick="muteMic()" >
-        <i class="bi bi-mic-fill"></i>
+      <button class="btn mx-1 btn-light rounded-circle" style="height: 41px; width: 41px" type="button" id="mute-mic" onclick="muteMic()" 
+        data-bs-toggle="tooltip" data-bs-placement="top" title="Mute/Unmute Audio">
+          <i class="bi bi-mic-fill"></i>
       </button>
-      <button type="button" class="btn  mx-1 btn-light rounded-circle" style="height: 41px; width: 41px" id="mute-vid" onclick="muteCam()" style="color:#67f20a">
-        <i class="bi bi-camera-video-fill"></i>
+      <button type="button" class="btn  mx-1 btn-light rounded-circle" style="height: 41px; width: 41px" id="mute-vid" onclick="muteCam()" style="color:#67f20a"
+        data-bs-toggle="tooltip" data-bs-placement="top" title="Mute/Unmute Video">
+          <i class="bi bi-camera-video-fill"></i>
       </button>
-      <button type="button" class="btn  mx-1 btn-light rounded-circle" style="height: 41px; width: 41px" id="show-chat" onclick="toggleChat()">
-        <i class="bi bi-chat-left"></i>
+      <button type="button" class="btn  mx-1 btn-light rounded-circle" style="height: 41px; width: 41px" id="show-chat" onclick="toggleChat()"
+        data-bs-toggle="tooltip" data-bs-placement="top" title="Chat">
+          <i class="bi bi-chat-left"></i>
       </button>      
-      <button type="button" class="btn  mx-1 btn-light rounded-circle" style="height: 41px; width: 41px" id="share-screen" onclick="screenFlag?stopScreenShare():screenShare()">
-        <i class="fas fa-upload"></i>      
+      <button type="button" class="btn  mx-1 btn-light rounded-circle" style="height: 41px; width: 41px" id="share-screen" onclick="screenFlag?stopScreenShare():screenShare()"
+        data-bs-toggle="tooltip" data-bs-placement="top" title="Share screen">
+          <i class="fas fa-upload"></i>      
       </button>
-      <button class="btn btn-light rounded-circle" style="height: 41px; width: 41px" type="button" onclick="location.href='/meet-conversations'">
-        <i class="fas fa-phone-slash" style="color:red;"></i>
+      <button class="btn btn-light rounded-circle" style="height: 41px; width: 41px" type="button" onclick="location.href='/meet-conversations'"
+        data-bs-toggle="tooltip" data-bs-placement="top" title="Hang up">
+          <i class="fas fa-phone-slash" style="color:red;"></i>
       </button>
-      <button id="menu-toggle" onclick="$('#other-options').toggle()" class="shadow-none btn text-white position-absolute m-1 " style="right: 0" >
-        <i class="bi bi-three-dots-vertical"></i>
+      <button id="menu-toggle" onclick="toggleOtherOptions()" class="shadow-none btn text-white position-absolute m-1 " style="right: 0"
+        data-bs-toggle="tooltip" data-bs-placement="top" title="More">
+          <i class="bi bi-three-dots-vertical"></i>
       </button>
 
        
         <div id="other-options" class="position-absolute shadow bg-white p-1 rounded" style="display: none;bottom:5rem; right: 1rem;">
          
-          <button type="button"  class="btn  mx-1 btn-light rounded-circle" style="height: 41px; width: 41px" id="show-participants" onclick="toggleParticipants()" style="color:#4b53bc"><i
-            class="bi bi-people-fill"></i>
+          <button type="button"  class="btn  mx-1 btn-light rounded-circle" style="height: 41px; width: 41px" id="show-participants" onclick="toggleParticipants()" style="color:#4b53bc"
+            data-bs-toggle="tooltip" data-bs-placement="left" title="Participants"></i>
+              <i class="bi bi-people-fill"></i>
           </button> <br>
-          <button type="button" class="btn  mx-1 btn-light rounded-circle" style="height: 41px; width: 41px" onclick=invite()><i class="fas fa-share-alt"></i></button><br>
-          <button class="btn  mx-1 btn-light rounded-circle" style="height: 41px; width: 41px" id="pipButtonElement"><i class="far fa-images"></i></button><br>
-          <button class="btn  mx-1 btn-light rounded-circle" style="height: 41px; width: 41px" type="button" onclick=handRaise()><i class="far fa-hand-paper"></i></button>
+          <button type="button" class="btn  mx-1 btn-light rounded-circle" style="height: 41px; width: 41px" onclick=invite() data-bs-toggle="tooltip"
+           data-bs-placement="left" title="Invite others">
+            <i class="fas fa-share-alt"></i></button><br>
+          <button class="btn  mx-1 btn-light rounded-circle" style="height: 41px; width: 41px" id="pipButtonElement"
+            data-bs-toggle="tooltip" data-bs-placement="left" title="Picture In Picture Mode">
+            <i class="far fa-images"></i>
+          </button><br>
+          <button class="btn  mx-1 btn-light rounded-circle" style="height: 41px; width: 41px" type="button" onclick=handRaise()
+            data-bs-toggle="tooltip" data-bs-placement="left" title="Raise hand">
+             <i class="far fa-hand-paper"></i>
+          </button>
         </div>
     </div>
 

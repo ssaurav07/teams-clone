@@ -11,4 +11,13 @@ router.post("/user/:userId", async (req, res) => {
   else res.send({name: "User"});
 });
 
+router.get("/user/:username", async (req, res) => {
+  const user = await User.findOne({
+    username: req.params.username
+  })
+    
+  if(user) res.send({id: user._id , name: user.name});
+  else res.send({id: "00"});
+});
+
 module.exports = router;

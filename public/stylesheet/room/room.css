@@ -26,21 +26,14 @@ body{
     height: auto;
     margin: 0 auto;
     flex-wrap: wrap;
-    /* background-color:pink; */
-    /* object-fit:contain */
+    background-color: #292827;
+    border-radius: 10px;
   }
 
-  /* @media{} */
   video {
     object-fit: contain;
-    /* object-fit: cover; */
-    width: 50%;
     margin : 0 auto;
-    /* flex-grow: 1; */
-    /* flex-basis: 0; */
-    padding:5px;
     border-radius: 20px;
-    /* background-color:yellow; */
   }
 
   .link-icons{
@@ -52,6 +45,10 @@ body{
     opacity: 1;
   }
 
+  .nav-link{
+    color:white;
+  }
+  
   #vidActions{
     display:flex;    
     width: 100%;

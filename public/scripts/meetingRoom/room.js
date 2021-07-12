@@ -104,17 +104,14 @@ const scrollToBottom = () => {
 // --------------------- ON User Disconnection -------------------------------------------
 
 socket.on('user-disconnected', userId => {
-  console.log("hi hey ho")
   if (peers[userId]) {
     peers[userId].close()
   }
   var left = document.getElementById(userId);
-  console.log(left);
   if (left) left.parentNode.removeChild(left);
-  console.log("child removed");
+  
 
   var leftPart = document.getElementsByClassName(userId)[0];
-  console.log(leftPart);
   if (leftPart) leftPart.parentNode.removeChild(leftPart);
 })
 
@@ -162,6 +159,14 @@ function addVideoStream(video, stream, id) {
   if (id) video.id = id;
   video.className = "item";
   videoGrid.appendChild(video);
+
+  if(videoGrid.childElementCount <=2){
+    $('#video-grid').addClass("row row-cols-2 row-cols-sm-2 row-cols-md-2")
+  }
+  else{
+    $('#video-grid').addClass("row row-cols-2 row-cols-sm-2 row-cols-md-3")
+  }
+
 }
 
 

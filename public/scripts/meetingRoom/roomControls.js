@@ -84,7 +84,7 @@ function stopScreenShare() {
     track.stop();
   });
 
-  $("#share-screen").css("color", "white")
+  $("#share-screen").css("color", "black")
 
 }
 
@@ -94,6 +94,7 @@ function stopScreenShare() {
 var pip = document.getElementById("pipButtonElement");
 
 pip.addEventListener('click', async function () {
+  $('#other-options').hide();
   pip.disabled = true;
 
   try {
@@ -114,22 +115,10 @@ pip.addEventListener('click', async function () {
 })
 
 
-
-
-// --------------------- Toggle the Calendar -------------------------------------------
-
-function showCalendar() {
-  if (document.getElementById('calendar').style.display === 'none')
-    $("#calendar").css("display", "block");
-  else
-    $("#calendar").css("display", "none");
-}
-
-
-
 // --------------------- Toggle Chat Box -------------------------------------------
 
 function toggleChat() {
+  $('#other-options').hide();
   $("#participant_box").hide();
   if (document.querySelector('#chat_box').style.display === 'none')
     $("#chat_box").css("display", "flex");
@@ -141,6 +130,7 @@ function toggleChat() {
 // --------------------- Toggle Participants Box-------------------------------------------
 
 function toggleParticipants() {
+  $('#other-options').hide();
   $("#chat_box").hide();
   if (document.querySelector('#participant_box').style.display === 'none')
     $("#participant_box").css("display", "flex");
@@ -152,6 +142,7 @@ function toggleParticipants() {
 // --------------------- Invite Others -------------------------------------------
 
 function invite() {
+  $('#other-options').hide();
   let link = location.href;
   const el = document.createElement('textarea');
   el.value = link;
@@ -166,5 +157,12 @@ function invite() {
 // --------------------- Hand Raise -------------------------------------------
 
 function handRaise() {
+  $('#other-options').hide();
   socket.emit('hand-raise', { name: currentUser });
+}
+
+function toggleOtherOptions() {
+  $('#participant_box').hide();
+  $('#chat_box').hide();
+  $('#other-options').toggle();
 }
