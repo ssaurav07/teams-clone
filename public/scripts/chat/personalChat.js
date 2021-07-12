@@ -93,7 +93,7 @@ axios.get('/personal-conversations/' + userId).then((res, err) => {
         chatIb.id = item.roomId;
         let today = new Date().toLocaleDateString();
         chatIb.innerHTML = `<h5> ${user.data.name} <span class="chat_date"> ${today} </span></h5>
-                                <p> This is Just a demo message for now!</p>`
+                                <p> Click to start chatting with ${user.data.name}</p>`
         chatPeople.appendChild(chatImage);
         chatPeople.appendChild(chatIb);
         chatDiv.appendChild(chatPeople);

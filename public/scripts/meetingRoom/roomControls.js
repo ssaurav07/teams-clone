@@ -60,7 +60,7 @@ function screenShare() {
       })
       sender.replaceTrack(videoTrack);
     }
-    $("#share-screen").css("color", "#67f20a")
+    $("#share-screen").css("color", "green")
     screenFlag = true;
   }).catch((err) => {
     console.log("unable to display media" + err);

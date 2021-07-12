@@ -39,10 +39,11 @@ const undefinedPagesRoute         = require('./routes/undefinedPagesRoute')
 // ---------------------Website Port & Keys-------------------------------------- //
 
 const port = process.env.PORT || 3000;
-const db_URL = process.env.DB_URL;
+// const db_URL = process.env.DB_URL;
+const db_URL = 'mongodb://localhost:27017/msUserDb';
 
 
-require('./0auth/googleAuth');  // For google authentication
+// require('./0auth/googleAuth');  // For google authentication
 let inFeedRoute = false;
 let username = "";
 var sessionManager = new SessionManager()
