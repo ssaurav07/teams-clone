@@ -39,6 +39,20 @@ p{
     box-shadow: 0 0 0.8333em rgba(0, 0, 0, 0.4);
 }
 
+#signup-btn{
+    margin-left: 1em;
+    line-height:1;
+}
+#signin-btn{
+    line-height:1
+}
+#signup-btn:hover{
+    color:white;
+}
+#signin-btn:hover{
+    color:white;
+}
+
 .homeImage{
     width:50%;
 }

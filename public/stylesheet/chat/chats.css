@@ -262,6 +262,14 @@ img{
 }
 #newConvoBox{ display: none;}
 
+#create-btn{
+  background-color: #4b53bc;
+  color:white;
+  border:1px solid white;
+  line-height:1;
+  vertical-align: top !important;
+}
+
 @media only screen and (max-width:604px) {
   .inbox_people{
     width: 100%;

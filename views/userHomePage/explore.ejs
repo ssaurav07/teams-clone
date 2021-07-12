@@ -39,20 +39,20 @@
                 </div>
 
                 <div id="newMeetInput" class="meet-input-container" onfocus="showCreateMeetButton()">
-                    <form action="/meet-conversations" method="post">
+                    <form action="/meet-conversations" method="post" style="width:80%;">
                         <input type="hidden" value='<%=userid %>' name="creatorId">
                         <input type="hidden" value='true' name="isMeet">
                         <input id="meetName" name="roomName" placeholder="Enter the Meeting name" >
-                        <button type="submit" id="createMeet" class="btn btn-outline">Create</button>
+                        <button type="submit" id="createMeet" class="btn btn-outline" style="line-height:1;vertical-align:top">Create</button>
                     </form>
                 </div>
 
                 <div id="newConvoInput" class="meet-input-container" onfocus="showCreateConvoButton()">
-                    <form action="/meet-conversations" method="post">
+                    <form action="/meet-conversations" method="post" style="width:80%">
                         <input type="hidden" value='<%=userid %>' name="creatorId">
                         <input type="hidden" value='false' name="isMeet">
-                        <input id="convoName" name="roomName" placeholder="Enter the Group name" >
-                        <button type="submit" id="createConvo" class="btn btn-outline">Create</button>
+                        <input id="convoName" name="roomName" placeholder="Enter the Group name">
+                        <button type="submit" id="createConvo" class="btn btn-outline" style="line-height:1;vertical-align:top">Create</button>
                     </form>
                 </div>
 
@@ -78,7 +78,7 @@
         </div>
 
         <div class="homeImage">
-            <img src="/images/msGif.gif" class="img-fluid">
+            <img src="/images/userHome.jpg" class="img-fluid">
         </div>
     </div>
     <br><br>

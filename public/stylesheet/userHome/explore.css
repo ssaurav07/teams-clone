@@ -114,6 +114,9 @@ input{
         display:flex;
         flex-direction:column
     }
+    form{
+        width:100%
+    }
 }
 
 @media screen and (max-width:310px){

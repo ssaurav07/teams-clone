@@ -36,13 +36,13 @@ const roomRoutes                  = require('./routes/roomRoutes');
 const undefinedPagesRoute         = require('./routes/undefinedPagesRoute')
 
 
-// ---------------------website host & keys-------------------------------------- //
+// ---------------------Website Port & Keys-------------------------------------- //
 
 const port = process.env.PORT || 3000;
-// const db_URL = 'mongodb://localhost:27017/msUserDb';
 const db_URL = process.env.DB_URL;
-require('./0auth/googleAuth');
 
+
+require('./0auth/googleAuth');  // For google authentication
 let inFeedRoute = false;
 let username = "";
 var sessionManager = new SessionManager()

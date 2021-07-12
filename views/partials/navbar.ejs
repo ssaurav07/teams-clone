@@ -34,10 +34,7 @@
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                       <li><a class="dropdown-item" href="/explore">Meeting & Calling</a></li>
                       <li><a class="dropdown-item" href="/meet-conversations">Chat & Collaboration</a></li>
-                      <li>
-                        <hr class="dropdown-divider">
-                      </li>
-                      <li><a class="dropdown-item" href="#">Something else here</a></li>
+                      <li><a class="dropdown-item" href="/feed">Feed</a></li>
                     </ul>
                   </li>
                   <% } else{ %>
@@ -60,15 +57,17 @@
       </ul>
 
       <div class="navbar-nav ml-auto">
-        <% if(currentUser==="" ){ %>
-          <a class="nav-link" href="/login" style="color:black">Sign In</a>
-          <a class="nav-link" href="/register" style="color:black"><i class="fas fa-user-plus"></i> Sign Up</a>
-          <% } else { %>
-            <div class="nav-link" style="color:#4b53bc">
-              <%=currentUser.username%>
-            </div>
-            <a class="nav-link" href="/logout" style="color:black"><i class="fas fa-sign-out-alt"></i> Logout</a>
-            <% } %>
+        <% if(currentUser==="" ){ %>      
+              
+          <a type="button" id="signin-btn" class="btn" href="/login" >Sign In</a>          
+          <a type="button" id="signup-btn" class="btn" href="/register">Sign Up</a>
+
+        <% } else { %>
+          <div class="nav-link" style="color:#4b53bc">
+            <%=currentUser.username%>
+          </div>
+          <a class="nav-link" href="/logout" style="color:black"><i class="fas fa-sign-out-alt"></i> Logout</a>
+          <% } %>
       </div>
 
     </div>
