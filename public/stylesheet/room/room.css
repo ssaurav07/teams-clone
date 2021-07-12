@@ -20,6 +20,7 @@ body{
   }
 
   #video-grid {
+    align-items: center;
     width:100%;
     display:flex;
     flex-direction: row;
@@ -27,7 +28,6 @@ body{
     margin: 0 auto;
     flex-wrap: wrap;
     background-color: #292827;
-    border-radius: 10px;
   }
 
   video {

@@ -41,7 +41,6 @@ const undefinedPagesRoute         = require('./routes/undefinedPagesRoute')
 const port = process.env.PORT || 3000;
 const db_URL = process.env.DB_URL;
 
-
 require('./0auth/googleAuth');  // For google authentication
 let inFeedRoute = false;
 let username = "";

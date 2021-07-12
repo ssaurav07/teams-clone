@@ -113,6 +113,10 @@ socket.on('user-disconnected', userId => {
 
   var leftPart = document.getElementsByClassName(userId)[0];
   if (leftPart) leftPart.parentNode.removeChild(leftPart);
+
+  let childCount=Math.ceil((videoGrid.childElementCount)/2);
+  console.log(childCount)
+  $("video").height(`calc((100% - 45px)/${childCount})`);
 })
 
 
@@ -160,6 +164,11 @@ function addVideoStream(video, stream, id) {
   video.className = "item";
   videoGrid.appendChild(video);
 
+  
+  let childCount=Math.ceil((videoGrid.childElementCount)/2);
+  console.log(childCount)
+  $("video").height(`calc((100% - 45px)/${childCount})`);
+
   if(videoGrid.childElementCount <=2){
     $('#video-grid').addClass("row row-cols-2 row-cols-sm-2 row-cols-md-2")
   }
@@ -194,4 +203,10 @@ function sendMessage(){
   socket.emit('message', msg);
 
   text.val('')
+}
+
+
+// --------------------- Detect mobile device ------------------------------------------- //
+function detectMob() {
+  return ( ( document.documentElement.clientWidth <= 800 ) && ( document.documentElement.clientHeight <= 600 ) );
 }
