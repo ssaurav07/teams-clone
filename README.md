@@ -179,7 +179,7 @@ In Feed section , people in organization can post about upcoming events  and bro
 
 I have adopted the **Scrum** methodology for the development of the product. I divided the month of the program into five sprints , four of one week each and the last sprint was a half-week long. 
 
-Before every sprint I used to set a target for that week/sprint and then worked on that.
+Before every sprint I used to set a target for that week/sprint and then work on that.
 
 **Sprint 1** : The first sprint started from 9th June , I started planning about how to develop and design my website. I made a basic prototype of what features I was going to include and how. Later I added the mandatory feature to my website.
 <p align="center">
@@ -198,7 +198,7 @@ After Sprint 1 was over I took feedback from my friends and family about what ac
 <img src="https://www.dropbox.com/s/tjvrscmopyyydpe/Screenshot%20%2823%29.png?dl=0&raw=1">
 </p><br>
 
-**Sprint 5** : This was the last sprint I had in the development phase. I was close to the delivery date so I basically took feedbacks from mentors other people around me on the UI of my product and then improved the UI of my app to a great extent. This added beauty to my product and made it delivery ready as well.
+**Sprint 5** : This was the last sprint I had in the development phase. I was close to the delivery date so I basically took feedbacks from mentors and other people around me on the UI of my product and then improved the UI of my app to a great extent. This added beauty to my product and made it delivery ready as well.
 <p align="center">
 <img src="https://www.dropbox.com/s/032y7mxxdbaifj7/Screenshot%20%2824%29.png?dl=0&raw=1">
 </p><br>
