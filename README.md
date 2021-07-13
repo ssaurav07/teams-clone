@@ -10,14 +10,15 @@
 <p align="center">
   <a href="#about">About</a> •
   <a href="#features">Features</a> •
-  <a href="#how-to-use">How To Use</a> 
+  <a href="#how-to-use">How To Use</a> •
+  <a href="#agile">Agile</a>
 </p>
 
 <p align="center">
   Website : <a href="https://engageclone.herokuapp.com"> Teams Clone</a>
 </p>
 <p align="center">
-  Developed by : Suman Saurav Jha
+	Developed by : <i> Suman Saurav Jha </i>
 </p>
 
 ## About
@@ -174,6 +175,35 @@ In Feed section , people in organization can post about upcoming events  and bro
 ## How to use
 [how to use?](https://youtu.be/u8yJi83vSeE) - Click to see the video , a step-by-step guide to make most of the features of the web app.
 
+## Agile
+
+I have adopted the **Scrum** methodology for the development of the product. I divided the month of the program into five sprints , four of one week each and the last sprint was a half-week long. 
+
+Before every sprint I used to set a target for that week/sprint and then worked on that.
+
+**Sprint 1** : The first sprint started from 9th June , I started planning about how to develop and design my website. I made a basic prototype of what features I was going to include and how. Later I added the mandatory feature to my website.
+<p align="center">
+<img src="https://www.dropbox.com/s/c7e7kqy42zkbkaa/Screenshot%20%2820%29.png?dl=0&raw=1"></p><br>
+
+After Sprint 1 was over I took feedback from my friends and family about what actually they would have wanted from an app like MS teams. I noted them and then worked upon them accordingly.
+
+**Sprint 2 and 3** : Now that I had mandatory feature already built and also got my mentor assigned to me , in Sprint 2 and 3 , I worked upon adding additional features to my website. During this phase/sprint I used to continuously take inputs from my mentor and friends and then modify my product as per the needs.
+
+<p align="center">
+<img src="https://www.dropbox.com/s/9jcbvqph51up18m/Screenshot%20%2821%29.png?dl=0&raw=1"><img src="https://www.dropbox.com/s/arno50y0gzdw19v/Screenshot%20%2822%29.png?dl=0&raw=1" width="">
+</p>
+
+**Sprint 4** : Now this was the sprint when we were assigned the **Adopt Feature** . This new feature was very different and something beyond my expectations and so I had to make some changes in my database to work on this feature . Also I had to dive deeper into the  world of **Web sockets** in order to link my teams conversation outside the room to that happening inside the room and that too in real time. But because I had a very structured and organized workspace I didn't face much of the difficulties and achieved it successfully.
+<p align="center">
+<img src="https://www.dropbox.com/s/tjvrscmopyyydpe/Screenshot%20%2823%29.png?dl=0&raw=1">
+</p><br>
+
+**Sprint 5** : This was the last sprint I had in the development phase. I was close to the delivery date so I basically took feedbacks from mentors other people around me on the UI of my product and then improved the UI of my app to a great extent. This added beauty to my product and made it delivery ready as well.
+<p align="center">
+<img src="https://www.dropbox.com/s/032y7mxxdbaifj7/Screenshot%20%2824%29.png?dl=0&raw=1">
+</p><br>
+
+**You can refer to my commit history [here](https://github.com/ssaurav07/teams-clone/commits/master) to see a detailed workflow of my sprints.**
 
 ## Website demo video
 [See demo](https://youtu.be/_Iz-x5iAToA) - This video has already been submitted with the "Submit your solution form".
