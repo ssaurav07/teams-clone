@@ -44,7 +44,7 @@ const db_URL = process.env.DB_URL;
 require('./0auth/googleAuth');  // For google authentication
 let inFeedRoute = false;
 let username = "";
-var sessionManager = new SessionManager()
+var sessionManager = new SessionManager();
 
 
 app.use(express.static('public'));
