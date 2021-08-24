@@ -110,7 +110,7 @@ img{
 
 .friend_img {
   float: left;
-  width: 20%;
+  width: 100%;
   height:40px
 }
 
@@ -251,7 +251,6 @@ img{
 
 #friendName{
   margin:0.3em auto;
-  margin-left: -9em;
   color: black;
 }
 
