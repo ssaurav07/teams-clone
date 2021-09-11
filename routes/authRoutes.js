@@ -86,7 +86,10 @@ router.get('/auth/google',
 router.get('/auth/google/callback',
   passport.authenticate('google', { failureRedirect: '/login' }),
   function (req, res) {
-    res.redirect('/');  // Successful authentication, redirect to home.
+    let redirectUrl = req.session.returnTo || '/';
+    delete req.session.returnTo;
+
+    res.redirect(redirectUrl);  // Successful authentication, redirect to target page / home.
   });
 
 
