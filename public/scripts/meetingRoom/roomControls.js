@@ -3,6 +3,7 @@
 // --------------------- Mute/Unmute Your Mic -------------------------------------------
 
 function muteMic() {
+  
   myStream.getAudioTracks().forEach(track => track.enabled = !track.enabled);
   let ih = document.getElementById("mute-mic");
   if (ih.innerHTML === '<i class="fas fa-microphone-slash"></i>') {

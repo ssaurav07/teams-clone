@@ -162,6 +162,7 @@ function addVideoStream(video, stream, id) {
   })
   if (id) video.id = id;
   video.className = "item";
+  video.controls = true;
   videoGrid.appendChild(video);
 
   
